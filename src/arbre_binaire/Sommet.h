@@ -1,13 +1,13 @@
 #ifndef SOMMET_H
 #define SOMMET_H
+#include <iostream>
 
 class Sommet
 {
     protected :
         char lettre;
         int freq;
-
-    public :
+    public:
         Sommet(const char =' ',const int = 0);
         Sommet(Sommet &);
         ~Sommet();

@@ -25,12 +25,13 @@ Sommet operator+(Sommet& terme1, Sommet& terme2)
     return nouveau;
 };
 
-friend std::ostream& operator<<(std::ostream& flux,Sommet& sommet)
+std::ostream& operator<<(std::ostream& flux,Sommet& sommet)
 {
     flux<<"Ce sommet a pour lettre "<<sommet.lettre<<" ,qui apparaît "<<sommet.freq<<" dans le texte\n";
+    return flux;
 };
 
 Sommet::~Sommet()
 {
-    delete this;
+    ;
 };

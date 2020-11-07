@@ -3,13 +3,12 @@
 #include "Sommet.h"
 #include <iostream>
 
-class Noeud : 
+typedef struct noeud
 {
-    public :
-        Sommet actuel ;
+    Sommet actuel ;
     struct noeud * filsg;
     struct noeud * filsd;
-};
+}Noeud;
 
 class ArbreB : public Sommet
 {
@@ -18,18 +17,19 @@ class ArbreB : public Sommet
         int taille ;
     public :
         ArbreB(Sommet * , int);
-        ArbreB(Noeud * = NULL, int = 0);
-        ~ArbreB();
+        //ArbreB(Noeud * = NULL, int = 0);
+
 
         Noeud * getRacine() {return racine;};
         int getTaille() {return taille;};
 
-        void ajout(Sommet&);
-        void ajout(Noeud*);
-        void ajout(ArbreB&);
+        void ajout(Noeud *,Sommet &);
 
-        friend std::ostream& operator<<(std::ostream&,ArbreB&);
+        void print_tree(Noeud *, int);
+        void free_tree(Noeud *);
+
         Noeud * supp_noeud(char);
+        ~ArbreB();
 
 };
 

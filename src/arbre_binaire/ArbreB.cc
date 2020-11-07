@@ -1,5 +1,6 @@
 #include "ArbreB.h"
 using namespace std;
+#define COUNT 5
 
 ArbreB::ArbreB(Sommet * sommets , int size)
 {
@@ -8,10 +9,8 @@ ArbreB::ArbreB(Sommet * sommets , int size)
         taille = 0;
         for(int i = 0 ; i < size ; i++)
         {
-            ajout(sommets[i]);
-            cout<<"taille :"<< taille<< "\n";
+            ajout(racine,sommets[i]);
         }
-
     }
     else
     {
@@ -20,7 +19,7 @@ ArbreB::ArbreB(Sommet * sommets , int size)
     }
 };
 
-ArbreB::ArbreB(Noeud * noeuds, int size)
+/*ArbreB::ArbreB(Noeud * noeuds, int size)
 {
     if(noeuds != NULL)
     {
@@ -35,120 +34,85 @@ ArbreB::ArbreB(Noeud * noeuds, int size)
         racine = NULL ;
         taille =  0 ;
     }
-};
+};*/
 
-void ArbreB::ajout(Sommet & sommet)
+void ArbreB::ajout(Noeud * existant,Sommet & sommet)
 {
-    Noeud * nouveau = new Noeud;
-    nouveau->actuel = sommet;
-    nouveau->filsg = NULL;
-    nouveau->filsd = NULL;
+    int freqNew = sommet.getFreq();
 
-    if(taille == 0)
-        racine = nouveau;
-
-    else if (taille == 1 )
-        racine->filsg = nouveau;
-
-    else if (taille == 2)
-        racine->filsd = nouveau;
-
+    if(existant == NULL)
+    {
+        Noeud * nouveau = new Noeud;
+        nouveau->actuel = sommet;
+        nouveau->filsg = NULL;
+        nouveau->filsd = NULL;
+        existant = nouveau;
+        taille++;
+        cout<<"ajout racine taille :"<<taille<<endl;
+    }
     else
     {
-        Noeud * tmp = racine ;
-
-        if(tmp->filsg != NULL)
+        int freqActual = existant->actuel.getFreq();
+        if(freqActual > freqNew)
         {
-            while(tmp->filsd != NULL)
-                tmp = tmp->filsd ;
-
-            if(tmp->filsg != NULL)
-                tmp->filsd = nouveau;
+            if(existant->filsg != NULL)
+                ajout(existant->filsg,sommet);
 
             else
-                tmp->filsg = nouveau;
+            {
+                Noeud * nouveau = new Noeud;
+                nouveau->actuel = sommet;
+                nouveau->filsg = NULL;
+                nouveau->filsd = NULL;
+                existant->filsg = nouveau ;
+                taille++;
+            }
         }
-
         else
-            tmp->filsg = nouveau;
-    }
-    taille++;
-};
-
-void ArbreB::ajout(Noeud * nouveau)
-{
-    if(taille == 0)
-        racine = nouveau;
-
-    else if (taille == 1 )
-        racine->filsg = nouveau;
-
-    else if (taille == 2)
-        racine->filsd = nouveau;
-
-    else
-    {
-        Noeud * tmp = racine ;
-
-        if(tmp->filsg != NULL)
         {
-            while(tmp->filsd != NULL)
-                tmp = tmp->filsd ;
-
-            if(tmp->filsg != NULL)
-                tmp->filsd = nouveau;
+            if(existant->filsd != NULL)
+                ajout(existant->filsd,sommet);
 
             else
-                tmp->filsg = nouveau;
-        }
+            {
 
-        else
-            tmp->filsg = nouveau;
+                Noeud * nouveau = new Noeud;
+                nouveau->actuel = sommet;
+                nouveau->filsg = NULL;
+                nouveau->filsd = NULL;
+                existant->filsd = nouveau ;
+                taille++;
+            }
+        }
     }
-    taille++;
+
 };
 
-void ArbreB::ajout(ArbreB& arbre)
-{
-    if(taille == 0)
-        racine = arbre.getRacine();
 
-    else if (taille == 1 )
-        racine->filsg = arbre.getRacine();
-
-    else if (taille == 2)
-        racine->filsd = arbre.getRacine();
-
-    else
-    {
-        Noeud * tmp = racine ;
-
-        if(tmp->filsg != NULL)
-        {
-            while(tmp->filsd != NULL)
-                tmp = tmp->filsd ;
-
-            if(tmp->filsg != NULL)
-                tmp->filsd = arbre.getRacine();
-
-            else
-                tmp->filsg = arbre.getRacine();
-        }
-
-        else
-            tmp->filsg = arbre.getRacine();
-    }
-    taille+= arbre.getTaille();
-};
-
-friend std::ostream& operator<<(std::ostream&,ArbreB&)
-{
-    Noeud * tmp = racine;
-    while
+void print_tree(Noeud *root, int space){
+   if (root == NULL)
+      return;
+   print_tree(root->filsd, space+2);
+   for (int i = 0; i < space; i++)
+      cout<<"\t";
+   cout<<" ("<<root->actuel.getLettre()<<" ; "<<root->actuel.getFreq()<<")"<<"\n";
+   print_tree(root->filsg, space+2);
 }
 
+void ArbreB::free_tree(Noeud * root)
+{
+    if(root != NULL)
+    {
+        Noeud * tmpG = root->filsg ;
+        Noeud * tmpD = root->filsd ;
+
+        delete root;
+        free_tree(tmpG);
+        free_tree(tmpD);
+    }
+};
 
 ArbreB::~ArbreB()
 {
-    ;
+    free_tree(racine);
 };
