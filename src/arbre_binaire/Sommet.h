@@ -14,6 +14,7 @@ class Sommet
 
         char getLettre() {return lettre;};
         int getFreq() {return freq;};
+        void setLettre(const char car) {lettre = car;};
         void setFreq(const int part) {freq = part;};
 
         void operator=(Sommet &);
