@@ -1,5 +1,5 @@
-#include "ArbreB.cc"
-#include "Sommet.cc"
+#include "ArbreB.h"
+
 #include <unistd.h>
 using namespace std;
 
