@@ -33,6 +33,6 @@ TestArbre
 *.app
 
 # IDE files
-.idea
+.idea/
 *.xml
 *.iml
