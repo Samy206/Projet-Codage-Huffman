@@ -1,29 +1,38 @@
+
+OUT_DIR = target
+
 ### Main
 
-exec: target/TestArbre
-	./target/TestArbre
+exec: compil
+	./${OUT_DIR}/TestArbre
+
+debug: compil
+	valgrind ./${OUT_DIR}/TestArbre
 
 
-target/TestArbre: target/TestArbre.o target/ArbreB.o target/Sommet.o
-	g++ -Wall -g -o target/TestArbre target/TestArbre.o target/ArbreB.o target/Sommet.o
+compil: ${OUT_DIR} ${OUT_DIR}/TestArbre.o ${OUT_DIR}/ArbreB.o ${OUT_DIR}/Sommet.o
+	g++ -Wall -g -o ${OUT_DIR}/TestArbre ${OUT_DIR}/TestArbre.o ${OUT_DIR}/ArbreB.o ${OUT_DIR}/Sommet.o
 
 
 ### Représentations intermédiaires
 
+${OUT_DIR}/TestArbre.o: src/TestArbre.cc headers/ArbreB.h headers/Sommet.h
+	g++ -Wall -g -c -o ${OUT_DIR}/TestArbre.o src/TestArbre.cc
 
-target/TestArbre.o: src/TestArbre.cc headers/ArbreB.h headers/Sommet.h
-	g++ -Wall -g -c -o target/TestArbre.o src/TestArbre.cc
+${OUT_DIR}/ArbreB.o: src/ArbreB.cc headers/ArbreB.h headers/Sommet.h
+	g++ -Wall -g -c -o ${OUT_DIR}/ArbreB.o src/ArbreB.cc
 
-target/ArbreB.o: src/ArbreB.cc headers/ArbreB.h headers/Sommet.h
-	g++ -Wall -g -c -o target/ArbreB.o src/ArbreB.cc
-
-target/Sommet.o: src/Sommet.cc headers/Sommet.h
-	g++ -Wall -g -c -o target/Sommet.o src/Sommet.cc
+${OUT_DIR}/Sommet.o: src/Sommet.cc headers/Sommet.h
+	g++ -Wall -g -c -o ${OUT_DIR}/Sommet.o src/Sommet.cc
 
 # ======= #
 
 ### Utilitaires
 
+${OUT_DIR}:
+	mkdir -p ${OUT_DIR}
+
 clean:
-	rm -f target/*.o
-	rm -f target/TestArbre
+	rm -f ${OUT_DIR}/*.o
+	rm -f ${OUT_DIR}/TestArbre
+	rm -r ${OUT_DIR}

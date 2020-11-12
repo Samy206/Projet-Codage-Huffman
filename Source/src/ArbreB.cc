@@ -181,6 +181,34 @@ void ArbreB::ajout(ArbreB& arbre)
 
 };
 
+void ArbreB::test_print_tree(Noeud *root, char *indent, int last) {
+    if (root == NULL)
+        return;
+
+    cout << indent << "+- " << "("<<root->actuel.getLettre()<<" : "<<root->actuel.getFreq()<< ")\n";
+    char indent2[90];
+    if (last == 0)
+        sprintf(indent2, "%s|   ", indent);
+    else
+        sprintf(indent2, "%s    ", indent);
+
+    if (root->filsg != NULL && root->filsd != NULL) {
+        test_print_tree(root->filsg, indent2, 0);
+        test_print_tree(root->filsd, indent2, 1);
+    }
+    else {
+        if (root->filsd != NULL && root->filsg == NULL)
+            test_print_tree(root->filsd, indent2, 1);
+        else
+            test_print_tree(root->filsd, indent2, 0);
+
+        if (root->filsg != NULL && root->filsd == NULL)
+            test_print_tree(root->filsg, indent2, 1);
+        else
+            test_print_tree(root->filsg, indent2, 0);
+    }
+}
+
 
 /*Cette méthode affiche l'arbre binaire dans le terminal convenablement*/
 void ArbreB::print_tree(Noeud *root, int space){
@@ -196,9 +224,13 @@ void ArbreB::print_tree(Noeud *root, int space){
 }
 
 /*Cet opérateur se contente de faire appel à la méthode précédente*/
-std::ostream& operator<<(std::ostream& flux ,ArbreB& arbre)
-{
-    arbre.print_tree(arbre.getRacine(),0);
+std::ostream& operator<<(std::ostream& flux ,ArbreB& arbre) {
+    // arbre.print_tree(arbre.getRacine(),0);
+
+    char *indent = new char[1];
+    indent[0] = '\0';
+    arbre.test_print_tree(arbre.getRacine(), indent, 1);
+    delete[] indent;
     return flux;
 }
 

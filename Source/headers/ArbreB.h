@@ -49,6 +49,7 @@ class ArbreB : public Sommet
         void ajout(ArbreB&);
         Noeud * copie_noeuds(Noeud * source);
         void print_tree(Noeud *, int);
+        void test_print_tree(Noeud *, char *, int);
         void free_tree(Noeud *);
         Noeud * recherche_noeud(Noeud*,const char);
         void supprimer_noeud(Noeud *,const char);
