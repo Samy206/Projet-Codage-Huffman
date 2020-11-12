@@ -31,6 +31,8 @@ class Sommet
         void operator=(Sommet &);
         friend Sommet operator+(Sommet & ,Sommet &);
         friend std::ostream& operator<<(std::ostream&,Sommet&);
+    
+        char* formalize_sommet();
 };
 
 

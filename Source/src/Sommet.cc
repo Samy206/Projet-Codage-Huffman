@@ -35,6 +35,12 @@ std::ostream& operator<<(std::ostream& flux,Sommet& sommet) //affichage de la le
     return flux;
 };
 
+char* Sommet::formalize_sommet() {
+    char* sommet = new char[9];
+    sprintf(sommet, "(%c : %.0f)", lettre, freq);
+    return sommet;
+}
+
 Sommet::~Sommet()
 {
     ;
