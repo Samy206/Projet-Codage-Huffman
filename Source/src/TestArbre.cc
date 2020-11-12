@@ -29,22 +29,23 @@ int main()
         arbre1.supprimer_noeud(arbre1.getRacine(),cars[i]);
         cout<<arbre1;
     }*/
-
+    cout<<"L'Arbre1 a une hauteur de valeur égale à "<< arbre1.getHauteur()<<" et comporte "
+    <<arbre1.getTaille()<< " noeuds.\n\n";
 
     ArbreB arbre2(arbre1);
     cout << " > Test constructeur par copie: Génération d'un arbre construit par copie :\n+- Arbre2:" << endl;
     cout << arbre2 << endl;
+    cout<<"l'Arbre2 a donc les mêmes caracteristiques que l'Arbre1.\n\n";
 
     cout << " > Test recherche: Recherche du noeud comportant le caractère 'j':" << endl;
     const char recherche = 'j';
     Noeud * res = arbre2.recherche_noeud(arbre2.getRacine(),recherche);
 
+
     if(res != NULL)
-        cout<<"Noeud trouvé: (" << res->actuel.getLettre() << " : " << res->actuel.getFreq() << ")" << endl;
+        cout<< "Noeud trouvé: (" << res->actuel.getLettre() << " : " << res->actuel.getFreq() << ")" << endl;
     else
         cout << "Aucun noeud ne comporte le caractère '" << recherche << "'" << endl;
-
-
 
     /*
     Noeud * table2 = new Noeud[13];

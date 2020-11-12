@@ -34,7 +34,7 @@ class ArbreB : public Sommet
     private :
         Noeud * racine;
         int taille ;
-
+        int hauteur;
     public :
         ArbreB(Sommet * , int);
         ArbreB(Noeud * = NULL, int = 0);
@@ -43,6 +43,8 @@ class ArbreB : public Sommet
 
         Noeud * getRacine() {return racine;};
         int getTaille() {return taille;};
+        int getHauteur() {return hauteur;};
+        int calcule_hauteur(Noeud *);
 
         void ajout(Noeud *,Sommet &);
         void ajout(Noeud *,Noeud *);

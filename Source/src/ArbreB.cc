@@ -1,10 +1,11 @@
 #include "../headers/ArbreB.h"
 using namespace std;
 
-ArbreB::ArbreB(Sommet * sommets , int size)
+ArbreB::ArbreB(Sommet * sommets , int size )
 {
     racine = NULL;
     taille = 0;
+
     if(sommets != NULL)
     {
         for(int i = 0 ; i < size ; i++)
@@ -16,7 +17,7 @@ ArbreB::ArbreB(Noeud * noeuds, int size)
 {
     racine = NULL ;
     taille =  0 ;
-
+    hauteur = 0 ;
     if(noeuds != NULL)
     {
         for(int i = 0 ; i < size ; i++)
@@ -40,12 +41,14 @@ void ArbreB::operator=(ArbreB& arbre)
     if(arbre.getRacine() != NULL)
     {
         taille = arbre.getTaille();
+        hauteur = arbre.getHauteur();
         ajout(arbre);
     }
     else
     {
         racine = NULL;
         taille = 0 ;
+        hauteur = 0 ;
     }
 };
 
@@ -75,6 +78,7 @@ void ArbreB::ajout(Noeud * existant,Sommet & sommet)
         nouveau->filsd = NULL;
         racine = nouveau;
         taille++;
+
     }
     else
     {
@@ -111,6 +115,7 @@ void ArbreB::ajout(Noeud * existant,Sommet & sommet)
             }
         }
     }
+    hauteur = calcule_hauteur(racine);
 };
 
 /*Cette méthode diffère de la précédente uniquement sur un point, on a pas à créer une variable noeud vu qu'elle est
@@ -150,6 +155,7 @@ void ArbreB::ajout(Noeud * existant,Noeud * nouveau)
             }
         }
     }
+    hauteur = calcule_hauteur(racine);
 };
 
 /* La méthode copie_noeuds copie tout les noeuds d'un arbre et renvoie le premier noeud qui a été copié, c'est donc
@@ -185,6 +191,7 @@ void ArbreB::test_print_tree(Noeud *root, char *indent, int last) {
     if (root == NULL)
         return;
 
+
     cout << indent << "+- " << "("<<root->actuel.getLettre()<<" : "<<root->actuel.getFreq()<< ")\n";
     char indent2[90];
     if (last == 0)
@@ -192,11 +199,11 @@ void ArbreB::test_print_tree(Noeud *root, char *indent, int last) {
     else
         sprintf(indent2, "%s    ", indent);
 
-    if (root->filsg != NULL && root->filsd != NULL) {
+    //if (root->filsg != NULL && root->filsd != NULL) {
         test_print_tree(root->filsg, indent2, 0);
         test_print_tree(root->filsd, indent2, 1);
-    }
-    else {
+   // }
+    /*else {
         if (root->filsd != NULL && root->filsg == NULL)
             test_print_tree(root->filsd, indent2, 1);
         else
@@ -206,7 +213,7 @@ void ArbreB::test_print_tree(Noeud *root, char *indent, int last) {
             test_print_tree(root->filsg, indent2, 1);
         else
             test_print_tree(root->filsg, indent2, 0);
-    }
+    }*/
 }
 
 
@@ -364,6 +371,26 @@ void ArbreB::change_etiquette(const char car,const int part)
         tmp->actuel.setFreq(part);
     }
 };
+
+/* Calcul de la hauteur d'un arbre de manière récursive :
+  on incrémente la hauteur à chaque itération, et on renvoie le maximum des deux sous-arbres + 1  à chaque fois*/
+int ArbreB::calcule_hauteur(Noeud * actuelle)
+{
+    if(actuelle != NULL)
+    {
+        int gauche , droite ;
+        gauche = calcule_hauteur(actuelle->filsg);
+        droite = calcule_hauteur(actuelle->filsd);
+
+        if(gauche > droite)
+            return (gauche + 1);
+
+        else
+            return (droite + 1);
+    }
+    return 0;
+};
+
 
 /*On parcours l'arbre et on delete les noeuds un par un*/
 void ArbreB::free_tree(Noeud * root)
