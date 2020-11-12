@@ -56,6 +56,8 @@ class ArbreB : public Sommet
         Noeud * recherche_noeud(Noeud*,const char);
         void supprimer_noeud(Noeud *,const char);
         void change_etiquette(const char,const int);
+        void decomposition(ArbreB&, ArbreB&);
+
 
         friend std::ostream& operator<<(std::ostream&,ArbreB&);
         void operator+=(ArbreB&);

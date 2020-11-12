@@ -199,11 +199,11 @@ void ArbreB::test_print_tree(Noeud *root, char *indent, int last) {
     else
         sprintf(indent2, "%s    ", indent);
 
-    //if (root->filsg != NULL && root->filsd != NULL) {
+    if (root->filsg != NULL && root->filsd != NULL) {
         test_print_tree(root->filsg, indent2, 0);
         test_print_tree(root->filsd, indent2, 1);
-   // }
-    /*else {
+    }
+    else {
         if (root->filsd != NULL && root->filsg == NULL)
             test_print_tree(root->filsd, indent2, 1);
         else
@@ -213,7 +213,7 @@ void ArbreB::test_print_tree(Noeud *root, char *indent, int last) {
             test_print_tree(root->filsg, indent2, 1);
         else
             test_print_tree(root->filsg, indent2, 0);
-    }*/
+    }
 }
 
 
@@ -389,6 +389,18 @@ int ArbreB::calcule_hauteur(Noeud * actuelle)
             return (droite + 1);
     }
     return 0;
+};
+
+/*Copie des noeuds en partant du fils gauche et du fils droit de la racine, et stockage de ces copies dans les
+ArbreB passés en paramètre*/
+void ArbreB::decomposition(ArbreB& a_gauche, ArbreB& a_droit)
+{
+    if(racine->filsg != NULL)
+        a_gauche.ajout(a_gauche.getRacine(),copie_noeuds(racine->filsg));
+
+    if(racine->filsd != NULL)
+        a_droit.ajout(a_droit.getRacine(),copie_noeuds(racine->filsd));
+
 };
 
 

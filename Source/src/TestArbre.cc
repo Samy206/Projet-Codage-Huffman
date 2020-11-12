@@ -43,12 +43,24 @@ int main()
 
 
     if(res != NULL)
-        cout<< "Noeud trouvé: (" << res->actuel.getLettre() << " : " << res->actuel.getFreq() << ")" << endl;
+        cout<< "Noeud trouvé: (" << res->actuel.getLettre() << " : " << res->actuel.getFreq() << ")\n" << endl;
     else
-        cout << "Aucun noeud ne comporte le caractère '" << recherche << "'" << endl;
+        cout << "Aucun noeud ne comporte le caractère '" << recherche << "'\n" << endl;
 
-    /*
-    Noeud * table2 = new Noeud[13];
+    ArbreB arbre3, arbre4;
+    cout<<"Décomposition de l'Arbre2 :\n\n";
+    arbre2.decomposition(arbre3,arbre4);
+    if(arbre3.getRacine() != NULL)
+        cout<<"Affichage de l'Arbre3 (sous-arbre gauche) : \n\n"<<arbre3<<"\n\n";
+    else
+        cout<<"Arbre3 (sous-arbre gauche) : inexistant dans l'Arbre2\n\n";
+
+    if(arbre4.getRacine() != NULL)
+        cout<<"Affichage de l'Arbre4 (sous-arbre droit) : \n\n"<<arbre4<<"\n\n";
+    else
+        cout<<"Arbre4 (sous-arbre gauche) : inexistant dans l'Arbre2\n\n";
+
+    /*Noeud * table2 = new Noeud[13];
     for(int i = 0 ; i < 13 ; i++)
     {
         numbers[i] = rand() % 100;
@@ -63,7 +75,7 @@ int main()
 
     cout<<"\nAffichage arbre3 , on l'initialise avec des variables de type Noeud\n\n"<<arbre3;
     arbre3.change_etiquette(cars[2],19);
-    cout<<"\nChangement de la fréquence de c à 19\n\n"<<arbre3; */
+    cout<<"\nChangement de la fréquence de c à 19\n\n"<<arbre3;*/
 }
 
 
