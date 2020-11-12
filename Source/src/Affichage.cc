@@ -21,9 +21,8 @@ QByteArray Affichage::_prepareGraph(ArbreB arbre){
 }
 
 void Affichage::_graphWalk(Noeud* p, QTextStream *stream) {
-    // std::cout << formalize_sommet(p->actuel) << std::endl;
     if (p != NULL){
-        *stream << "\t\t" << "n" << p->actuel.getLettre() << "[label=\"" << formalize_sommet(p->actuel) <<"\"];" << Qt::endl;
+        *stream << "\t\t" << "n" << p->actuel.getLettre() << "[label=\"" << p->actuel.formalize_sommet() <<"\"];" << Qt::endl;
 
         if(p->filsg != NULL) {
             *stream << "\t\tn" << p->actuel.getLettre() << "--" << "n" << p->filsg->actuel.getLettre() << ";" << Qt::endl;
