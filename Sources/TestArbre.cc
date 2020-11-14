@@ -1,11 +1,20 @@
-#include "../headers/ArbreB.h"
-// #include "../headers/Affichage.h"
+#include "ArbreB.h"
+#include "Affichage.h"
 
 #include <unistd.h>
+#include <QApplication>
 using namespace std;
 
-int main()
-{
+int main(int argc, char* argv[]) {
+    QApplication app(argc, argv);
+    QGraphicsScene scene;
+    QGraphicsView view(&scene);
+
+    view.setRenderHints(QPainter::SmoothPixmapTransform);
+
+    Affichage *a = new Affichage(&scene, &view);
+
+
     srand(getpid());
     const char cars[13] = {'a','b','c','d','e','f','j','h','i','g','k','l','m'};
 
@@ -23,6 +32,8 @@ int main()
     cout << " > Test constructeur: Génération d'un arbre binaire avec fréquences aléatoires :\n+- Arbre1:" << endl;
     ArbreB arbre1(table1,13);
     cout << arbre1 << endl;
+    a->show(arbre1);
+
     /*for(int i = 0 ; i < 6 ; i++)
     {
         cout<<"Suppression de la lettre "<<cars[i]<<" -----------------------------------------------------\n\n";
@@ -45,7 +56,7 @@ int main()
         cout << "Aucun noeud ne comporte le caractère '" << recherche << "'" << endl;
 
 
-
+    return app.exec();
     /*
     Noeud * table2 = new Noeud[13];
     for(int i = 0 ; i < 13 ; i++)

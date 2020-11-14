@@ -1,4 +1,4 @@
-#include "../headers/ArbreB.h"
+#include "ArbreB.h"
 using namespace std;
 
 ArbreB::ArbreB(Sommet * sommets , int size)

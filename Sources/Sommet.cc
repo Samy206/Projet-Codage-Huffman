@@ -1,4 +1,4 @@
-#include "../headers/Sommet.h"
+#include "Sommet.h"
 
 
 Sommet::Sommet(const char car, const float part) //on assigne chaque attribut à une valeur
@@ -29,7 +29,7 @@ Sommet operator+(Sommet& terme1, Sommet& terme2)
     return nouveau;
 };
 
-std::ostream& operator<<(std::ostream& flux,Sommet& sommet) //affichage de la lettre et de sa fréquence
+std::ostream& operator<<(std::ostream& flux, Sommet& sommet) //affichage de la lettre et de sa fréquence
 {
     flux<<"Ce sommet a pour lettre "<<sommet.lettre<<" ,qui apparaît "<<sommet.freq<<" fois dans le texte\n";
     return flux;
