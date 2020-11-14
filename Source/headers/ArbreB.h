@@ -54,6 +54,7 @@ class ArbreB : public Sommet
         void test_print_tree(Noeud *, char *, int);
         void free_tree(Noeud *);
         Noeud * recherche_noeud(Noeud*,const char);
+        Noeud * recherche_noeud(Noeud*,const int);
         void supprimer_noeud(Noeud *,const char);
         void change_etiquette(const char,const int);
         void decomposition(ArbreB&, ArbreB&);

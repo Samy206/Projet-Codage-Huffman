@@ -280,6 +280,37 @@ Noeud * ArbreB::recherche_noeud(Noeud* noeud,const char car)
 	}
 };
 
+/*Surcharge de la méthode recherche avec en paramètre une fréquence à la place d'un char. Cette recherche est plus
+efficace que la précédente car l'arbre crée est un ABR basé sur l'occurence d'apparence des lettres.
+    Quand on est sur un noeud on vérifie qu'il ne soit pas nul:
+        S'il l'est on renvoit null
+        Sinon on compare la fréquence qu'on recherche à la fréquence actuelle, et selon le résultat de cette comparaison
+        on cherche à gauche ou à droite*/
+Noeud * ArbreB::recherche_noeud(Noeud* noeud,const int part)
+{
+
+    if (noeud == NULL){
+		return NULL;
+	}
+	else
+	{
+	    Noeud* tmp= NULL;
+        Noeud* tmp1 = NULL;
+        int freq_actuel = noeud->actuel.getFreq();
+		if (freq_actuel == part)
+			tmp= noeud;
+
+		else if(freq_actuel > part)
+		    tmp = recherche_noeud(noeud->filsg,part);
+
+		else
+		   tmp = recherche_noeud(noeud->filsd,part);
+
+		return tmp;
+
+	}
+};
+
 /*Mis à part les actions à appliquer, cette méthode ne diffère pas de la précédente, en effet ici à la place de
 renvoyer le noeud correspondant au caractère on récupère l'adresse des ses fils, on le supprime, et on ajoute ses fils
 à nouveau.
