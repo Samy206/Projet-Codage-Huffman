@@ -6,15 +6,19 @@
 QT = core gui widgets
 
 HEADERS = \
-   $$PWD/Headers/Affichage.h \
+   $$PWD/Headers/DessineArbre.h \
    $$PWD/Headers/ArbreB.h \
-   $$PWD/Headers/Sommet.h
+   $$PWD/Headers/Sommet.h \
+   $$PWD/Headers/MainMenu.h \
+   $$PWD/Headers/MainWindow.h
 
 SOURCES = \
-   $$PWD/Sources/Affichage.cc \
+   $$PWD/Sources/DessineArbre.cc \
    $$PWD/Sources/ArbreB.cc \
    $$PWD/Sources/Sommet.cc \
-   $$PWD/Sources/TestArbre.cc
+   $$PWD/Sources/TestArbre.cc \
+   $$PWD/Sources/MainMenu.cc \
+   $$PWD/Sources/MainWindow.cc
 
 INCLUDEPATH = \
     $$PWD/Headers

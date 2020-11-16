@@ -1,5 +1,6 @@
 #include "ArbreB.h"
-#include "Affichage.h"
+// #include "Affichage.h"
+#include "MainWindow.h"
 
 #include <unistd.h>
 #include <QApplication>
@@ -30,7 +31,8 @@ int main(int argc, char* argv[]) {
     ArbreB arbre2(arbre1);
     cout << " > Test constructeur par copie: Génération d'un arbre construit par copie :\n+- Arbre2:" << endl;
     cout << arbre2 << endl;
-    Affichage aff(arbre2);
+
+    MainWindow aff(arbre2);
     aff.show();
 
     cout << " > Test recherche: Recherche du noeud comportant le caractère 'j':" << endl;
