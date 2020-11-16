@@ -2,26 +2,24 @@
 #define AFFICHAGE_H
 
 #include "ArbreB.h"
+#include <QMainWindow>
+#include <QWidget>
+#include <QPushButton>
+#include <QtGui/QPainter>
+#include <QtGui/QPaintDevice>
 
-#include <QGraphicsView>
-#include <QTextStream>
-#include <QProcess>
+class Affichage : public QWidget{
+    private :
+      QPushButton * quitter;
+      QPushButton * afficher;
+      ArbreB arbre;
 
-class Affichage {
-    public:
-        Affichage(QGraphicsScene* scene, QGraphicsView* view);
+    public :
+       Affichage(ArbreB&);
+       ~Affichage();
 
-        // void preorderWalk();
-
-        void show(ArbreB);
-
-    private:
-        QGraphicsScene* _scene;
-        QGraphicsView* _view;
-
-        // void preorderWalk(Noeud* p);
-        QByteArray _prepareGraph(ArbreB);
-        void _graphWalk(Noeud* p,  QTextStream* stream);
+       void paintEvent(QPaintEvent * painter);
+       void paint_tree(Noeud * racine, int x , int y);
 };
 
 #endif // AFFICHAGE_H

@@ -1,66 +1,41 @@
 #include "Affichage.h"
+#include <QtGui/QPaintDevice>
+#include <QPushButton>
 
-Affichage::Affichage(QGraphicsScene* scene, QGraphicsView* view) {
-    this->_scene = scene;
-    this->_view = view;
-}
+Affichage::Affichage(ArbreB& arbreB)
+{
+    quitter = new QPushButton("quitter",this);
+    afficher = new QPushButton("afficher",this);
+    afficher->move(0,400);
+    afficher->show();
+    quitter->show();
+    arbre = arbreB;
+};
 
-QByteArray Affichage::_prepareGraph(ArbreB arbre){
-    QByteArray a = QByteArray();
+Affichage::~Affichage()
+{
+    delete quitter;
+    delete afficher;
+};
 
-    QTextStream stream(&a, QIODevice::ReadWrite);
-    stream << "graph ""{" << Qt::endl;
-    stream << "\tnode[fontsize=10,margin=0,width=\".4\", height=\".3\"];" << Qt::endl;
-    stream << "\tsubgraph cluster17{" << Qt::endl;
+void Affichage::paint_tree(Noeud * racine, int x , int y)
+{
 
-    this->_graphWalk(arbre.getRacine(), &stream);
-    stream << "\t}\n" << "}" << Qt::endl;
-    stream.flush();
-
-    return a;
-}
-
-void Affichage::_graphWalk(Noeud* p, QTextStream *stream) {
-    if (p != NULL){
-        *stream << "\t\t" << "n" << p->actuel.getLettre() << "[label=\"" << p->actuel.formalize_sommet() <<"\"];" << Qt::endl;
-
-        if(p->filsg != NULL) {
-            *stream << "\t\tn" << p->actuel.getLettre() << "--" << "n" << p->filsg->actuel.getLettre() << ";" << Qt::endl;
-            this->_graphWalk(p->filsg, stream);
-        } /*
-        else {
-            *stream << "\t\t" << "n" << p->actuel.getLettre() << "leftNull" << "[style=\"filled\",label=\"NULL\"];" << Qt::endl;
-            *stream << "\t\tn" << p->actuel.getLettre() << "--" << "n" << p->actuel.getLettre() << "leftNull" << Qt::endl;
-        } */
-
-        if(p->filsd != NULL) {
-            *stream << "\t\tn" << p->actuel.getLettre() << "--" << "n" << p->filsd->actuel.getLettre() << ";" << Qt::endl;
-            this->_graphWalk(p->filsd, stream);
-        } /*
-        else{
-            *stream << "\t\t" << "n" << p->actuel.getLettre() << "rightNull" << "[style=\"filled\",label=\"NULL\"];" << Qt::endl;
-            *stream << "\t\tn" << p->actuel.getLettre() << "--" << "n" << p->actuel.getLettre() << "rightNull" << Qt::endl;
-        } */
+    if(racine != NULL)
+    {
+        QPainter paint(this);
+        paint.drawText(x,y,racine->actuel.formalize_sommet());
+        paint.drawLine(x,y-20,x,y+100);
+        paint.drawLine(x,y+100,x+150,y+100);
+        paint.drawLine(x,y-20,x,y+200);
+        paint.drawLine(x,y+200,x+150,y+200);
+        paint_tree(racine->filsg, x + 150 , y + 100 );
+        paint_tree(racine->filsd, x + 150,  y + 200);
     }
-}
+};
 
-void Affichage::show(ArbreB arbre) {
-    QProcess* p = new QProcess();
-    QByteArray a = this->_prepareGraph(arbre);
-
-    p->setProcessChannelMode(QProcess::MergedChannels);
-    p->start("dot", QStringList() << "-Tpng");
-    p->write(a);
-
-    QByteArray data;
-    QPixmap pixmap = QPixmap();
-
-    while(p->waitForReadyRead(100)){
-        data.append(p->readAll());
-    }
-
-    pixmap.loadFromData(data);
-
-    this->_scene->addPixmap(pixmap);
-    this->_view->show();
-}
+void Affichage::paintEvent(QPaintEvent * painter)
+{
+   if(arbre.getRacine() != NULL)
+       paint_tree(arbre.getRacine(),50,50);
+};
