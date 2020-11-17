@@ -17,8 +17,8 @@ int main(int argc, char* argv[]) {
 
     for(int i = 0 ; i < 13 ; i++)
     {
-        numbers[i] = rand() % 100; // Initialisation aléatoires des occurrences des lettres
-        Sommet * random = new Sommet(cars[i],numbers[i]);
+        numbers[i%13] = rand() % 100; // Initialisation aléatoires des occurrences des lettres
+        Sommet * random = new Sommet(cars[i%13],numbers[i%13]);
         table1[i] = *random;
         delete random;
     }

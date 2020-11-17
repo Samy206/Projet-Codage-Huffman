@@ -4,7 +4,7 @@
 
 DessineArbre::DessineArbre(ArbreB& arbreB) {
     arbre = arbreB;
-    setFixedSize(700, 500);
+    setFixedSize(700, 2000);
 };
 
 void DessineArbre::write(QPainter *p, int x, int y, QString txt) {
@@ -35,14 +35,14 @@ void DessineArbre::paint_tree_scales(Noeud *racine, int x , int *y, int last, QP
     if (racine == NULL)
         return;
 
-    p->drawEllipse(x, *y, 5, 5);
-    p->drawText(x+5, *y, racine->actuel.formalize_sommet());
+    //p->drawEllipse(x, *y, 5, 5);
+    p->drawText(x,*y, "+- ");
+    p->drawText(x+15, *y, racine->actuel.formalize_sommet());
 
     if (last == 0) {
         // Ancien espace + ligne verticale + nouvel espace
-        p->drawLine(x, *y, x, *y+30);
+        //p->drawLine(x, *y, x, *y+10);
         *y += 30;
-        // p->drawLine(x, *y, x+30, *y);
     }
     else {
         // Ancien espace + nouvel espace
@@ -50,21 +50,46 @@ void DessineArbre::paint_tree_scales(Noeud *racine, int x , int *y, int last, QP
         // p->drawLine(x, *y, x+30, *y);
     }
 
-    if (racine->filsg != NULL && racine->filsd != NULL) {
+    /*if (racine->filsg != NULL && racine->filsd != NULL) {
         paint_tree_scales(racine->filsg, x+30, y, 0, p);
         paint_tree_scales(racine->filsd, x+30, y, 1, p);
     }
     else {
-        if (racine->filsd != NULL && racine->filsg == NULL)
+        if (racine->filsd != NULL )
             paint_tree_scales(racine->filsd, x+30, y, 1, p);
+
         else
             paint_tree_scales(racine->filsd, x+30, y, 0, p);
 
-        if (racine->filsg != NULL && racine->filsd == NULL)
+        if (racine->filsg != NULL)
+
             paint_tree_scales(racine->filsg, x+30, y, 1, p);
         else
             paint_tree_scales(racine->filsg, x+30, y, 0, p);
+    }*/
+
+    if(racine->filsg != NULL || racine->filsd != NULL)
+    {
+        if(racine->filsg != NULL && racine->filsd != NULL)
+        {
+            int i = *y;
+            while(i != *y+30)
+            {
+                i += 5;
+                p->drawLine(x+30,i-5,x+30,i);
+                i+= 5;
+            }
+            paint_tree_scales(racine->filsg, x+30,y,1,p);
+            paint_tree_scales(racine->filsd, x+30,y,0,p);
+        }
+        else if (racine->filsg != NULL && racine->filsd == NULL)
+               paint_tree_scales(racine->filsg, x+30,y,1,p);
+
+        else if (racine->filsg == NULL && racine->filsd != NULL)
+               paint_tree_scales(racine->filsd, x+30,y,1,p);
     }
+
+
 }
 
 void DessineArbre::paint_tree(Noeud *racine, int x , int y, int angle, bool isLeft, int depth, QPainter *p) {
