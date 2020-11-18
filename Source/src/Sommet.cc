@@ -23,9 +23,8 @@ void Sommet::operator=(Sommet& source) // on copie les champs un par un
 };
 
 
-//la somme de deux sommets nous donne un sommet sans lettre ( avec le caractère espace ) et la somme de leur fréquence
-Sommet operator+(Sommet& terme1, Sommet& terme2)
-{
+// la somme de deux sommets nous donne un sommet sans lettre (avec le caractère espace) et la somme de leur fréquence
+Sommet operator+(Sommet& terme1, Sommet& terme2) {
     if ( (terme2.filsg == NULL && terme2.filsd == NULL) &&
          (terme1.filsg == NULL && terme1.filsd == NULL)
        )
@@ -37,7 +36,7 @@ Sommet operator+(Sommet& terme1, Sommet& terme2)
         return nouveau;
     }
     else
-    cout<<"On ne peut pas additionner deux sommets s'ils ont des fils, car cela reviendrait  à additionner des arbres.\n";
+        cout<<"On ne peut pas additionner deux sommets s'ils ont des fils, car cela reviendrait  à additionner des arbres.\n";
 };
 
 std::ostream& operator<<(std::ostream& flux,Sommet& sommet) //affichage de la lettre et de sa fréquence
@@ -53,11 +52,4 @@ char* Sommet::formalize_sommet() {
     return sommet;
 }
 
-Sommet::~Sommet()
-{
-    if(filsg != NULL)
-        delete filsg;
-
-    if(filsd != NULL)
-        delete filsd;
-};
+Sommet::~Sommet() { };

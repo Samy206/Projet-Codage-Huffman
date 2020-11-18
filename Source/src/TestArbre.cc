@@ -1,5 +1,4 @@
 #include "../headers/ArbreB.h"
-// #include "../headers/Affichage.h"
 
 #include <unistd.h>
 using namespace std;
@@ -11,22 +10,28 @@ int main()
     'w','x','y','z'};
 
     float numbers [26];
-    Sommet  table1 [26];
-    for(int i = 0 ; i < 26 ; i++)
-    {
+    Sommet table1 [26];
+
+    for(int i = 0 ; i < 26 ; i++) {
         numbers[i] = rand() % 100; // Initialisation aléatoires des occurrences des lettres
-        Sommet * random = new Sommet(cars[i],numbers[i]);
+        Sommet * random = new Sommet(cars[i], numbers[i]);
         table1[i] = *random;
         delete random;
     }
 
-    ArbreB *arbre1 =  new ArbreB(table1,26);
+    ArbreB *arbre1 =  new ArbreB(table1, 26);
+
+
     cout << " > Test constructeur: Génération d'un arbre binaire avec fréquences aléatoires :\n+- Arbre1:" << endl;
 
-   cout << *arbre1 << endl;
+    cout << *arbre1 << endl;
 
-    cout<<"L'Arbre1 a une hauteur de valeur égale à "<< arbre1->getHauteur()<<" et comporte "
-    <<arbre1->getTaille()<< " noeuds.\n\n";
+    cout<<"L'Arbre1 a une hauteur de valeur égale à "<< arbre1->getHauteur() <<" et comporte "
+    << arbre1->getTaille()<< " nœuds.\n\n";
+
+    // arbre1->free_tree(arbre1->getRacine());
+
+
 
     ArbreB arbre2(*arbre1);
     cout << " > Test constructeur par copie: Génération d'un arbre construit par copie :\n+- Arbre2:" << endl;
@@ -44,7 +49,7 @@ int main()
         cout << "Aucun noeud ne comporte le caractère '" << recherche << "'\n" << endl;
 
     ArbreB arbre3, arbre4;
-    cout<<"Décomposition de l'Arbre2 :\n\n";
+    cout<< "Décomposition de l'Arbre2 :\n\n";
     arbre2.decomposition(arbre3,arbre4);
     if(arbre3.getRacine() != NULL)
         cout<<"Affichage de l'Arbre3 (sous-arbre gauche) : \n\n"<<arbre3<<"\n\n";

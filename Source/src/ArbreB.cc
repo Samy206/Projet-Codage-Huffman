@@ -4,19 +4,13 @@ using namespace std;
 
 /*Ce constructeur se base sur la méthode ajout qui est implémentée pour ajouter un sommet dans toutes les situations
 (y compris quand l'arbreB est vide), et on peut donc ajouter plusieurs sommets via un tableau*/
-ArbreB::ArbreB(Sommet * sommets , int size )
-{
+ArbreB::ArbreB(Sommet * sommets , int size) {
     racine = NULL;
     taille = 0;
 
-    if(sommets != NULL)
-    {
-        cout<<"entered the condition\n";
+    if(sommets != NULL) {
         for(int i = 0 ; i < size ; i++)
-        {
-            ajout(racine,&sommets[i]);
-        }
-
+            ajout(racine, &sommets[i]);
     }
 };
 
@@ -378,10 +372,17 @@ void ArbreB::decomposition(ArbreB& a_gauche, ArbreB& a_droit)
 
 
 /*On parcours l'arbre et on delete les noeuds un par un*/
-void ArbreB::free_tree(Sommet * root)
-{
-    if(root != NULL)
-    {
+void ArbreB::free_tree(Sommet * root) {
+    if (root == NULL)
+        return;
+
+    free_tree(root->getFilsG());
+    free_tree(root->getFilsD());
+    delete root;
+
+    /*
+    if(root != NULL) {
+        this->racine = NULL;
         Sommet * tmpG = root->getFilsG() ;
         Sommet * tmpD = root->getFilsD() ;
 
@@ -389,11 +390,10 @@ void ArbreB::free_tree(Sommet * root)
         root = NULL;
         free_tree(tmpG);
         free_tree(tmpD);
-    }
+    } */
 };
 
-/*Le destructeur fait appel à la méthode précèdente*/
-ArbreB::~ArbreB()
-{
+/* Le destructeur fait appel à la méthode précédente*/
+ArbreB::~ArbreB() {
     free_tree(racine);
 };
