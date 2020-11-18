@@ -22,7 +22,7 @@ public :
 
 
     void paint_tree_samy(Noeud *racine, int x , int y, QPainter*);
-    void paint_tree_scales(Noeud *racine, int x , int *y, int last, QPainter*);
+    void paint_tree_scales(Noeud *racine, int x , int *y, int last, int k, QPainter*);
     void paint_tree(Noeud * racine,  int x , int y, int angle, bool isLeft, int depth, QPainter*);
 
     void paintEvent(QPaintEvent * painter);

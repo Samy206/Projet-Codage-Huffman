@@ -14,7 +14,7 @@ MainWindow::MainWindow(ArbreB arbre) {
     QRect rect(0, 0, 700, 100);
     QPixmap cropped = pixmap_img->copy(rect); // Rogner l'image à la taille 700x100
     label_img->setPixmap(cropped.scaled(700, 100, Qt::KeepAspectRatio));
-    label_img->setFixedSize(700, 100);
+    // label_img->setFixedSize(700, 100);
     label_img->setAlignment(Qt::AlignCenter);
     layout->addWidget(label_img, 0, 0);
 
