@@ -1,10 +1,13 @@
 #include "../headers/Sommet.h"
-
+using namespace std;
 
 Sommet::Sommet(const char car, const float part) //on assigne chaque attribut à une valeur
 {
     lettre = car;
     freq = part;
+    taille = 1;
+    filsd = NULL;
+    filsg = NULL;
 };
 
 Sommet::Sommet(Sommet& source) //on utilise l'opérateur = pour le constructeur par recopie
@@ -14,19 +17,27 @@ Sommet::Sommet(Sommet& source) //on utilise l'opérateur = pour le constructeur 
 
 void Sommet::operator=(Sommet& source) // on copie les champs un par un
 {
-    lettre = source.getLettre();
-    freq = source.getFreq();
+
+        setLettre(source.getLettre());
+        setFreq(source.getFreq());
 };
 
 
 //la somme de deux sommets nous donne un sommet sans lettre ( avec le caractère espace ) et la somme de leur fréquence
 Sommet operator+(Sommet& terme1, Sommet& terme2)
 {
-    Sommet nouveau;
-    const char c = ' ';
-    nouveau.setLettre(c);                                       //caractère vide assignée
-    nouveau.setFreq ( terme1.getFreq() + terme2.getFreq() );    //somme des fréquences assignée
-    return nouveau;
+    if ( (terme2.filsg == NULL && terme2.filsd == NULL) &&
+         (terme1.filsg == NULL && terme1.filsd == NULL)
+       )
+    {
+        Sommet nouveau;
+        const char c = ' ';
+        nouveau.setLettre(c);                                       //caractère vide assignée
+        nouveau.setFreq ( terme1.getFreq() + terme2.getFreq() );    //somme des fréquences assignée
+        return nouveau;
+    }
+    else
+    cout<<"On ne peut pas additionner deux sommets s'ils ont des fils, car cela reviendrait  à additionner des arbres.\n";
 };
 
 std::ostream& operator<<(std::ostream& flux,Sommet& sommet) //affichage de la lettre et de sa fréquence
@@ -36,12 +47,17 @@ std::ostream& operator<<(std::ostream& flux,Sommet& sommet) //affichage de la le
 };
 
 char* Sommet::formalize_sommet() {
-    char* sommet = new char[9];
+    char* sommet = new char[10];
     sprintf(sommet, "(%c : %.0f)", lettre, freq);
+    sommet[9] = '\0';
     return sommet;
 }
 
 Sommet::~Sommet()
 {
-    ;
+    if(filsg != NULL)
+        delete filsg;
+
+    if(filsd != NULL)
+        delete filsd;
 };

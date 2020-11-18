@@ -15,18 +15,28 @@
     //Ps : les accesseurs et les setteurs sont inline car ce sont des méthodes assez basiques
 class Sommet
 {
-    protected :
+    private :
         char lettre;
         float freq;
-    public:
+        Sommet * filsg;
+        Sommet * filsd;
+        int taille;
+
+    public :
         Sommet(const char =' ',const float = 0);
         Sommet(Sommet &);
         ~Sommet();
 
         char getLettre() {return lettre;};
         float getFreq() {return freq;};
+        Sommet * getFilsG() {return filsg;};
+        Sommet * getFilsD() {return filsd;};
+        int getTaille() {return taille;};
         void setLettre(const char car) {lettre = car;};
         void setFreq(const float part) {freq = part;};
+        void setFilsG(Sommet * sommet) {filsg = sommet ;};
+        void setFilsD(Sommet * sommet) {filsd = sommet ;};
+        void setTaille(const int size) {taille = size;};
 
         void operator=(Sommet &);
         friend Sommet operator+(Sommet & ,Sommet &);

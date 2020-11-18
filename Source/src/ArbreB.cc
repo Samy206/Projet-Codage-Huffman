@@ -1,6 +1,9 @@
 #include "../headers/ArbreB.h"
 using namespace std;
 
+
+/*Ce constructeur se base sur la méthode ajout qui est implémentée pour ajouter un sommet dans toutes les situations
+(y compris quand l'arbreB est vide), et on peut donc ajouter plusieurs sommets via un tableau*/
 ArbreB::ArbreB(Sommet * sommets , int size )
 {
     racine = NULL;
@@ -8,27 +11,16 @@ ArbreB::ArbreB(Sommet * sommets , int size )
 
     if(sommets != NULL)
     {
+        cout<<"entered the condition\n";
         for(int i = 0 ; i < size ; i++)
-            ajout(racine,sommets[i]);
+        {
+            ajout(racine,&sommets[i]);
+        }
+
     }
 };
 
-ArbreB::ArbreB(Noeud * noeuds, int size)
-{
-    racine = NULL ;
-    taille =  0 ;
-    hauteur = 0 ;
-    if(noeuds != NULL)
-    {
-        for(int i = 0 ; i < size ; i++)
-            ajout(racine,&noeuds[i]);
-    }
-};
-
-/*Les deux premiers constructeurs se basent sur la méthode ajout, et grâce à la surcharge de cette dernière elle est
-effective dans les deux cas*/
-
-ArbreB::ArbreB(ArbreB& arbre) //ce troisième constructeur se base sur l'opérateur =
+ArbreB::ArbreB(ArbreB& arbre) //ce deuxième constructeur se base sur l'opérateur =
 {
     *this = arbre;
 
@@ -66,115 +58,61 @@ void ArbreB::operator=(ArbreB& arbre)
             et bien sûr on incrémente l'attribut 'taille'
 
    Grâce à ça on obtient un arbre binaire de recherche classé selon la fréquence*/
-void ArbreB::ajout(Noeud * existant,Sommet & sommet)
+void ArbreB::ajout(Sommet * existant,Sommet *nouveau)
 {
-    int freqNew = sommet.getFreq();
+    int freqNew = nouveau->getFreq();
 
     if(existant == NULL)
     {
-        Noeud * nouveau = new Noeud;
-        nouveau->actuel = sommet;
-        nouveau->filsg = NULL;
-        nouveau->filsd = NULL;
         racine = nouveau;
-        taille++;
-
+        taille+= nouveau->getTaille();
     }
     else
     {
-        int freqActual = existant->actuel.getFreq();
+        int freqActual = existant->getFreq();
         if(freqActual > freqNew)
         {
-            if(existant->filsg != NULL)
-                ajout(existant->filsg,sommet);
+            if(existant->getFilsG() != NULL)
+                ajout(existant->getFilsG(),nouveau);
 
             else
             {
-                Noeud * nouveau = new Noeud;
-                nouveau->actuel = sommet;
-                nouveau->filsg = NULL;
-                nouveau->filsd = NULL;
-                existant->filsg = nouveau ;
-                taille++;
+                existant->setFilsG(nouveau);
+                taille+= nouveau->getTaille();
             }
         }
         else
         {
-            if(existant->filsd != NULL)
-                ajout(existant->filsd,sommet);
+            if(existant->getFilsD() != NULL)
+                ajout(existant->getFilsD(),nouveau);
 
             else
             {
-
-                Noeud * nouveau = new Noeud;
-                nouveau->actuel = sommet;
-                nouveau->filsg = NULL;
-                nouveau->filsd = NULL;
-                existant->filsd = nouveau ;
-                taille++;
+                existant->setFilsD(nouveau);
+                taille+= nouveau->getTaille();
             }
         }
     }
     hauteur = calcule_hauteur(racine);
 };
 
-/*Cette méthode diffère de la précédente uniquement sur un point, on a pas à créer une variable noeud vu qu'elle est
-déjà passée en paramètre*/
-void ArbreB::ajout(Noeud * existant,Noeud * nouveau)
+/* La méthode copie_noeuds copie tout les sommets d'un arbre et renvoie le premier sommet qui a été copié, c'est donc
+la copie totale d'un arbre qui est faite. On se base ici sur la surcharge de l'opérateur '=' de défini dans la classe
+Sommet*/
+Sommet * ArbreB::copie_sommets(Sommet * source)
 {
-    int freqNew = nouveau->actuel.getFreq();
+    Sommet * nouveau = new Sommet;
+    *nouveau = *source;
 
-    if(existant == NULL)
-    {
-        racine = nouveau;
-        taille++;
-    }
+    if(source->getFilsG() != NULL)
+        nouveau->setFilsG(copie_sommets(source->getFilsG()));
     else
-    {
-        int freqActual = existant->actuel.getFreq();
-        if(freqActual > freqNew)
-        {
-            if(existant->filsg != NULL)
-                ajout(existant->filsg,nouveau);
+        nouveau->setFilsG(NULL);
 
-            else
-            {
-                existant->filsg = nouveau ;
-                taille++;
-            }
-        }
-        else
-        {
-            if(existant->filsd != NULL)
-                ajout(existant->filsd,nouveau);
-
-            else
-            {
-                existant->filsd = nouveau ;
-                taille++;
-            }
-        }
-    }
-    hauteur = calcule_hauteur(racine);
-};
-
-/* La méthode copie_noeuds copie tout les noeuds d'un arbre et renvoie le premier noeud qui a été copié, c'est donc
-la copie totale d'un arbre qui est faite*/
-Noeud * ArbreB::copie_noeuds(Noeud * source)
-{
-    Noeud * nouveau = new Noeud;
-
-    nouveau->actuel = source->actuel;
-
-    if(source->filsg != NULL)
-        nouveau->filsg = copie_noeuds(source->filsg);
+    if(source->getFilsD() != NULL)
+        nouveau->setFilsD(copie_sommets(source->getFilsD()));
     else
-        nouveau->filsg = NULL;
-
-    if(source->filsd != NULL)
-        nouveau->filsd = copie_noeuds(source->filsd);
-    else
-        nouveau->filsd = NULL;
+        nouveau->setFilsD(NULL);
     return nouveau;
 };
 
@@ -183,51 +121,51 @@ on ajoute sa racine à l'arbre *this . On fait cela pour éviter les problèmes 
 code.*/
 void ArbreB::ajout(ArbreB& arbre)
 {
-    racine = copie_noeuds(arbre.getRacine());
+    racine = copie_sommets(arbre.getRacine());
 
 };
 
-void ArbreB::test_print_tree(Noeud *root, char *indent, int last) {
+void ArbreB::test_print_tree(Sommet *root, char *indent, int last) {
     if (root == NULL)
         return;
 
 
-    cout << indent << "+- " << "("<<root->actuel.getLettre()<<" : "<<root->actuel.getFreq()<< ")\n";
+    cout << indent << "+- " << "("<<root->getLettre()<<" : "<<root->getFreq()<< ")\n";
     char indent2[90];
     if (last == 0)
         sprintf(indent2, "%s|   ", indent);
     else
         sprintf(indent2, "%s    ", indent);
 
-    if (root->filsg != NULL && root->filsd != NULL) {
-        test_print_tree(root->filsg, indent2, 0);
-        test_print_tree(root->filsd, indent2, 1);
+    if (root->getFilsG() != NULL && root->getFilsD() != NULL) {
+        test_print_tree(root->getFilsG(), indent2, 0);
+        test_print_tree(root->getFilsD(), indent2, 1);
     }
     else {
-        if (root->filsd != NULL && root->filsg == NULL)
-            test_print_tree(root->filsd, indent2, 1);
+        if (root->getFilsD() != NULL && root->getFilsG() == NULL)
+            test_print_tree(root->getFilsD(), indent2, 1);
         else
-            test_print_tree(root->filsd, indent2, 0);
+            test_print_tree(root->getFilsD(), indent2, 0);
 
-        if (root->filsg != NULL && root->filsd == NULL)
-            test_print_tree(root->filsg, indent2, 1);
+        if (root->getFilsG() != NULL && root->getFilsD() == NULL)
+            test_print_tree(root->getFilsG(), indent2, 1);
         else
-            test_print_tree(root->filsg, indent2, 0);
+            test_print_tree(root->getFilsG(), indent2, 0);
     }
 }
 
 
 /*Cette méthode affiche l'arbre binaire dans le terminal convenablement*/
-void ArbreB::print_tree(Noeud *root, int space){
+void ArbreB::print_tree(Sommet *root, int space){
    if (root == NULL)
       return;
-   print_tree(root->filsd, space+2);
+   print_tree(root->getFilsD(), space+2);
    for (int i = 0; i < space; i++)
       cout<<"\t";
 
-   cout<<" ("<<root->actuel.getLettre()<<" ; "<<root->actuel.getFreq()<<")"<<"\n";
+   cout<<" ("<<root->getLettre()<<" ; "<<root->getFreq()<<")"<<"\n";
 
-   print_tree(root->filsg, space+2);
+   print_tree(root->getFilsG(), space+2);
 }
 
 /*Cet opérateur se contente de faire appel à la méthode précédente*/
@@ -251,27 +189,30 @@ void ArbreB::operator+=(ArbreB& arbre)
 /*Grâce au paramètre noeud la récursivité est permise et à chaque itération on compare sa lettre à celle qui est
 recherchée et on renvoie un pointeur sur le noeud correspondant si on le trouve, sinon on applique cela sur les fils
 gauche et droite. Dans le cas où la lettre n'est pas dans l'arbre on renvoie NULL*/
-Noeud * ArbreB::recherche_noeud(Noeud* noeud,const char car)
+Sommet * ArbreB::recherche_sommet(Sommet* sommet,const char car)
 {
 
-    if (noeud == NULL){
+    if (sommet == NULL){
 		return NULL;
 	}
 	else
 	{
-	    Noeud* tmp= NULL;
-        Noeud* tmp1 = NULL;
-		if (noeud->actuel.getLettre() == car){
-			tmp= noeud;
+	    Sommet * tmp= NULL;
+        Sommet * tmp1 = NULL;
+		if (sommet->getLettre() == car){
+			tmp= sommet;
 		}
 		else{
-            if (noeud->filsd != NULL){
-               tmp1 = recherche_noeud(noeud->filsd,car);
+            if (sommet->getFilsD() != NULL){
+               tmp1 = recherche_sommet(sommet->getFilsD(),car);
+
             if(tmp1 != NULL)
                tmp = tmp1;
             }
-            if (noeud->filsg != NULL){
-               tmp1 = recherche_noeud(noeud->filsg,car);
+
+            if (sommet->getFilsG() != NULL){
+               tmp1 = recherche_sommet(sommet->getFilsG(),car);
+
             if(tmp1 != NULL)
                 tmp = tmp1;
             }
@@ -286,25 +227,26 @@ efficace que la précédente car l'arbre crée est un ABR basé sur l'occurence 
         S'il l'est on renvoit null
         Sinon on compare la fréquence qu'on recherche à la fréquence actuelle, et selon le résultat de cette comparaison
         on cherche à gauche ou à droite*/
-Noeud * ArbreB::recherche_noeud(Noeud* noeud,const int part)
+Sommet * ArbreB::recherche_sommet(Sommet * sommet,const char car,const int part)
 {
 
-    if (noeud == NULL){
+    if (sommet == NULL){
 		return NULL;
 	}
 	else
 	{
-	    Noeud* tmp= NULL;
-        Noeud* tmp1 = NULL;
-        int freq_actuel = noeud->actuel.getFreq();
-		if (freq_actuel == part)
-			tmp= noeud;
+	    Sommet* tmp= NULL;
+        int freq_actuel = sommet->getFreq();
+        char c_actuel = sommet->getLettre();
+
+		if (freq_actuel == part && c_actuel == car)
+			tmp= sommet;
 
 		else if(freq_actuel > part)
-		    tmp = recherche_noeud(noeud->filsg,part);
+		    tmp = recherche_sommet(sommet->getFilsG(),car,part);
 
 		else
-		   tmp = recherche_noeud(noeud->filsd,part);
+		   tmp = recherche_sommet(sommet->getFilsD(),car,part);
 
 		return tmp;
 
@@ -315,22 +257,22 @@ Noeud * ArbreB::recherche_noeud(Noeud* noeud,const int part)
 renvoyer le noeud correspondant au caractère on récupère l'adresse des ses fils, on le supprime, et on ajoute ses fils
 à nouveau.
 PS: on ajout en premier le fils droit car il a une valeur supérieure.*/
-void ArbreB::supprimer_noeud(Noeud * noeud ,const char car)
+void ArbreB::supprimer_sommet(Sommet * sommet ,const char car)
 {
 
-	if(noeud != NULL )
+	if(sommet != NULL )
 	{
-	    Noeud * tmp1 = NULL;
-	    Noeud * tmp2 = NULL;
-	    Noeud * tmp3 = NULL;
+	    Sommet * tmp1 = NULL;
+	    Sommet * tmp2 = NULL;
+	    Sommet * tmp3 = NULL;
 
-        if(noeud->actuel.getLettre() == car)
+        if(sommet->getLettre() == car)
         {
-            if(noeud->filsg != NULL)
-                tmp1 = noeud->filsg;
+            if(sommet->getFilsG() != NULL)
+                tmp1 = sommet->getFilsG();
 
-            if(noeud->filsd != NULL)
-                tmp2 = noeud->filsd;
+            if(sommet->getFilsD() != NULL)
+                tmp2 = sommet->getFilsD();
 
             delete racine;
             racine = NULL;
@@ -343,18 +285,18 @@ void ArbreB::supprimer_noeud(Noeud * noeud ,const char car)
 
         }
 
-		if (noeud->filsg != NULL && noeud->filsg->actuel.getLettre() == car){
-		    tmp1 = noeud->filsg;
+		if (sommet->getFilsG() != NULL && sommet->getFilsG()->getLettre() == car){
+		    tmp1 = sommet->getFilsG();
 
 
-		    if(tmp1->filsg != NULL)
-		        tmp2 = tmp1->filsg;
+		    if(tmp1->getFilsG() != NULL)
+		        tmp2 = tmp1->getFilsG();
 
-		    if(tmp1->filsd != NULL)
-            	tmp3 = tmp1->filsd;
+		    if(tmp1->getFilsD() != NULL)
+            	tmp3 = tmp1->getFilsD();
 
             delete tmp1;
-            noeud->filsg = NULL;
+            sommet->setFilsG(NULL);
 
             if(tmp3 != NULL)
                 ajout(racine,tmp3);
@@ -363,18 +305,18 @@ void ArbreB::supprimer_noeud(Noeud * noeud ,const char car)
                 ajout(racine,tmp2);
 
 		}
-		else if (noeud->filsd != NULL && noeud->filsd->actuel.getLettre() == car){
-		    tmp1 = noeud->filsd;
+		else if (sommet->getFilsD() != NULL && sommet->getFilsD()->getLettre() == car){
+		    tmp1 = sommet->getFilsD();
 
 
-            if(tmp1->filsg != NULL)
-                tmp2 = tmp1->filsg;
+            if(tmp1->getFilsG() != NULL)
+                tmp2 = tmp1->getFilsG();
 
-            if(tmp1->filsd != NULL)
-               	tmp3 = tmp1->filsd;
+            if(tmp1->getFilsD() != NULL)
+               	tmp3 = tmp1->getFilsD();
 
             delete tmp1;
-            noeud->filsd = NULL;
+            sommet->setFilsD(NULL);
 
             if(tmp3 != NULL)
                 ajout(racine,tmp3);
@@ -384,8 +326,8 @@ void ArbreB::supprimer_noeud(Noeud * noeud ,const char car)
 		}
 		else
 		{
-             supprimer_noeud(noeud->filsd,car);
-             supprimer_noeud(noeud->filsg,car);
+             supprimer_sommet(sommet->getFilsD(),car);
+             supprimer_sommet(sommet->getFilsG(),car);
 		}
 		taille--;
 	}
@@ -396,22 +338,22 @@ void ArbreB::supprimer_noeud(Noeud * noeud ,const char car)
 /*On recherche un noeud et on met simplement à jour sa fréquence*/
 void ArbreB::change_etiquette(const char car,const int part)
 {
-    Noeud * tmp = recherche_noeud(racine,car);
+    Sommet * tmp = recherche_sommet(racine,car);
     if(tmp != NULL)
     {
-        tmp->actuel.setFreq(part);
+        tmp->setFreq(part);
     }
 };
 
 /* Calcul de la hauteur d'un arbre de manière récursive :
   on incrémente la hauteur à chaque itération, et on renvoie le maximum des deux sous-arbres + 1  à chaque fois*/
-int ArbreB::calcule_hauteur(Noeud * actuelle)
+int ArbreB::calcule_hauteur(Sommet * actuelle)
 {
     if(actuelle != NULL)
     {
         int gauche , droite ;
-        gauche = calcule_hauteur(actuelle->filsg);
-        droite = calcule_hauteur(actuelle->filsd);
+        gauche = calcule_hauteur(actuelle->getFilsG());
+        droite = calcule_hauteur(actuelle->getFilsD());
 
         if(gauche > droite)
             return (gauche + 1);
@@ -426,22 +368,22 @@ int ArbreB::calcule_hauteur(Noeud * actuelle)
 ArbreB passés en paramètre*/
 void ArbreB::decomposition(ArbreB& a_gauche, ArbreB& a_droit)
 {
-    if(racine->filsg != NULL)
-        a_gauche.ajout(a_gauche.getRacine(),copie_noeuds(racine->filsg));
+    if(racine->getFilsG() != NULL)
+        a_gauche.ajout(a_gauche.getRacine(),copie_sommets(racine->getFilsG()));
 
-    if(racine->filsd != NULL)
-        a_droit.ajout(a_droit.getRacine(),copie_noeuds(racine->filsd));
+    if(racine->getFilsD() != NULL)
+        a_droit.ajout(a_droit.getRacine(),copie_sommets(racine->getFilsD()));
 
 };
 
 
 /*On parcours l'arbre et on delete les noeuds un par un*/
-void ArbreB::free_tree(Noeud * root)
+void ArbreB::free_tree(Sommet * root)
 {
     if(root != NULL)
     {
-        Noeud * tmpG = root->filsg ;
-        Noeud * tmpD = root->filsd ;
+        Sommet * tmpG = root->getFilsG() ;
+        Sommet * tmpD = root->getFilsD() ;
 
         delete root;
         root = NULL;
