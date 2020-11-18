@@ -29,7 +29,7 @@ MainWindow::MainWindow(ArbreB arbre) {
     wZoneArbre = new QScrollArea(this);
     wZoneArbre->setWidget(dessin);
     wZoneArbre->show();
-    wZoneArbre->setMinimumSize(700, 500);
+    wZoneArbre->setMinimumSize(800, 500);
     layout->addWidget(wZoneArbre, 1, 0);
 }
 
