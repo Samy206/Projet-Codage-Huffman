@@ -24,7 +24,7 @@ class ArbreB : public Sommet
 {
     private :
         Sommet * racine;
-        int taille ;
+        int taille;
         int hauteur;
     public :
         ArbreB(Sommet * = NULL , int = 0);
