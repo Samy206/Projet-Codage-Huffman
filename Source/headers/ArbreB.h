@@ -9,13 +9,14 @@
 //Ps : les accesseurs et les setteurs sont inline car ce sont des méthodes assez basiques
 
 //Pour les méthodes simples on a :
-    //les accesseurs : getRacine et getTaille . "getRacine" renvoie un pointeur car elle est utilisée dans les méthodes
-        //récursives
+    //les accesseurs : getRacine , getTaille et calcule_hauteur .
+    //"getRacine" renvoie un pointeur car elle est utilisée dans les méthodes récursives
+    //calcule_hauteur parcours l'arbre en cherchant la feuille la plus éloignée de la racine de maière récursive
 
     //on surcharge la méthode ajout afin d'ajouter un élément de plusieurs manières
 
-    //on a trois constructeurs (plutôt quatre si on compte le constructeur vide implicitement déclaré par le
-        //constructeurs aux paramètres par défaut
+    //on a deux constructeurs (plutôt trois si on compte le constructeur vide implicitement déclaré par le
+        //constructeurs aux paramètres par défaut)
 
     //on redéfinit les opérateurs += , = et <<
 
@@ -38,11 +39,11 @@ class ArbreB : public Sommet
         void ajout(Sommet *,Sommet* );
         void ajout(ArbreB&);
         Sommet * copie_sommets(Sommet * source);
-        void print_tree(Sommet *, int);
-        void test_print_tree(Sommet *, char *, int);
+        void print_tree(Sommet *root, char *indent, int last);
         void free_tree(Sommet *);
         Sommet * recherche_sommet(Sommet*,const char);
         Sommet * recherche_sommet(Sommet*,const char ,const int);
+        void fusion_arbre(ArbreB&, ArbreB&);
         void supprimer_sommet(Sommet *,const char);
         void change_etiquette(const char,const int);
         void decomposition(ArbreB&, ArbreB&);
