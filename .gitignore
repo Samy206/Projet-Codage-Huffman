@@ -6,7 +6,7 @@
 *.lo
 *.o
 *.obj
-TestArbre
+build*/
 
 # Precompiled Headers
 *.gch
@@ -36,6 +36,6 @@ TestArbre
 .idea/
 *.xml
 *.iml
-codage.pro
-codage.pro.user
+
+
 
