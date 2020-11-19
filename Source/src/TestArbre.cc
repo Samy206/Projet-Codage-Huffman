@@ -37,7 +37,8 @@ int main()
     ArbreB arbre2(*arbre1);
     cout << ">Test constructeur par copie: Génération d'un arbre construit par copie :\n+- Arbre2:" << endl;
     cout <<arbre2 << endl;
-    cout<<"  l'Arbre2 a donc les mêmes caracteristiques que l'Arbre1.\n\n";
+    cout<<"  L'Arbre2 a une hauteur de valeur égale à "<< arbre2.getHauteur()<<" et comporte "
+       <<arbre2.getTaille()<< " noeuds.\n\n";
 
     /*Test de recherche d'un sommet dans un arbre*/
     cout << ">Test recherche: Recherche du sommet comportant le caractère 'j':" << endl;

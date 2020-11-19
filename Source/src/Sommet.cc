@@ -38,6 +38,9 @@ Sommet operator+(Sommet& terme1, Sommet& terme2)
    Sommet nouveau;
    nouveau.setLettre(' ');                                       //caractère vide assignée
    nouveau.setFreq ( terme1.getFreq() + terme2.getFreq() );    //somme des fréquences assignée
+   nouveau.filsg = &terme1;
+   nouveau.filsd = &terme2;
+   nouveau.setTaille(3);
 
    return nouveau;
 };

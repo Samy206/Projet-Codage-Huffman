@@ -17,6 +17,7 @@ ArbreB::ArbreB(Sommet * sommets , int size )
         for(int i = 0 ; i < size ; i++)
         {
             ajout(racine,&sommets[i]);
+            taille++;
         }
     }
     hauteur = calcule_hauteur(racine);
@@ -25,6 +26,9 @@ ArbreB::ArbreB(Sommet * sommets , int size )
 /*Ce deuxième constructeur se base entièrement sur l'opérateur '='*/
 ArbreB::ArbreB(ArbreB& arbre)
 {
+    racine = NULL;
+    taille = arbre.getTaille();
+    hauteur = arbre.getHauteur();
     *this = arbre;
 };
 
@@ -35,19 +39,8 @@ ArbreB::ArbreB(ArbreB& arbre)
 */
 void ArbreB::operator=(ArbreB& arbre)
 {
-    if(taille == 0)
-    {
-       taille = arbre.getTaille();
-       hauteur = arbre.getHauteur();
-       ajout(arbre);
-    }
-    else
-    {
-        this->~ArbreB();
-        taille = arbre.getTaille();
-        hauteur = arbre.getHauteur();
-        ajout(arbre);
-    }
+    free_tree(racine);
+    ajout(arbre);
 };
 
 /* Pour la première méthode récursive on a la méthode ajout avec un sommet :
@@ -71,7 +64,6 @@ void ArbreB::ajout(Sommet * existant,Sommet *nouveau)
     if(existant == NULL)
     {
         racine = nouveau;
-        taille+= nouveau->getTaille();
     }
     else
     {
@@ -82,10 +74,7 @@ void ArbreB::ajout(Sommet * existant,Sommet *nouveau)
                 ajout(existant->filsg,nouveau);
 
             else
-            {
                 existant->filsg = nouveau;
-                taille+= nouveau->getTaille();
-            }
         }
         else
         {
@@ -93,10 +82,7 @@ void ArbreB::ajout(Sommet * existant,Sommet *nouveau)
                 ajout(existant->filsd,nouveau);
 
             else
-            {
                 existant->filsd = nouveau;
-                taille+= nouveau->getTaille();
-            }
         }
     }
 };
