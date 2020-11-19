@@ -17,7 +17,7 @@ int main()
     for(int i = 0 ; i < 26 ; i++)
     {
         numbers[i] = rand() % 100; // Initialisation aléatoires des occurrences des lettres
-        Sommet * random = new Sommet(cars[i],numbers[i]);
+        Sommet * random = new Sommet(cars[i],numbers[i],1);
         table1[i] = *random;
         delete random;
     }

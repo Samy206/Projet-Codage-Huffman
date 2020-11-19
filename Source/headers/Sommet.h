@@ -27,7 +27,7 @@ class Sommet
 
     public :
 
-        Sommet(const char =' ',const float = 0);
+        Sommet(const char =' ',const float = 0, const int = 0);
         Sommet(Sommet &);
         ~Sommet();
 

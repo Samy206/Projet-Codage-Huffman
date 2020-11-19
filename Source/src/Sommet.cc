@@ -7,11 +7,11 @@ principe qu'on a affaire à des sommets sans fils car ces derniers feront l'obje
 
 /*Quand on créer un sommet on ne lui donne qu'un caractère et qu'une occurence, ses fils seront ajoutés lors de la
 créations de l'arbre*/
-Sommet::Sommet(const char car, const float part)
+Sommet::Sommet(const char car, const float part,const int size)
 {
     lettre = car;
     freq = part;
-    taille = 1;
+    taille = size;
     filsd = NULL;
     filsg = NULL;
 };
