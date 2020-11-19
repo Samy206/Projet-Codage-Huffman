@@ -29,7 +29,7 @@ void DessineArbre::paint_tree_scales(Sommet *racine, int x , int *y, int last, i
     int hauteur_texte = p->fontMetrics().height();
     int longueur_texte = p->fontMetrics().horizontalAdvance(racine->formalize_sommet());
     longueur_texte = 55;
-    qDebug() << "Longueur: " << longueur_texte << ", hauteur: " << hauteur_texte;
+    // qDebug() << "Longueur: " << longueur_texte << ", hauteur: " << hauteur_texte;
     const QRectF Rect(x, *y, longueur_texte+20, hauteur_texte+8);
     p->drawText(Rect, Qt::AlignCenter, racine->formalize_sommet());
     p->drawRoundedRect(Rect, 10, 10);

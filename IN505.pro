@@ -24,4 +24,3 @@ INCLUDEPATH = \
     $$PWD/Headers
 
 #DEFINES = 
-

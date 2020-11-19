@@ -14,9 +14,9 @@ MainMenu::MainMenu()
     bSuivant->show();
     layout->addWidget(bSuivant);
 
-    // On défini le style de Frame
+    // On définit le style de Frame
     setFrameShape(Panel);
-    // On défini l'ombre de frame
+    // On définit l'ombre de frame
     setFrameShadow(Sunken);
     setMaximumHeight(75);
 
