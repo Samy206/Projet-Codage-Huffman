@@ -27,6 +27,7 @@ void Sommet::operator=(Sommet& source)
 {
     setLettre(source.getLettre());
     setFreq(source.getFreq());
+    setTaille(source.getTaille());
 };
 
 
@@ -37,6 +38,7 @@ Sommet operator+(Sommet& terme1, Sommet& terme2)
    Sommet nouveau;
    nouveau.setLettre(' ');                                       //caractère vide assignée
    nouveau.setFreq ( terme1.getFreq() + terme2.getFreq() );    //somme des fréquences assignée
+
    return nouveau;
 };
 
