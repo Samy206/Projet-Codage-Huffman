@@ -20,10 +20,8 @@ public :
 
     void write(QPainter*, int, int, QString);
 
-
-    void paint_tree_samy(Noeud *racine, int x , int y, QPainter*);
-    void paint_tree_scales(Noeud *racine, int x , int *y, int last, int k, QPainter*);
-    void paint_tree(Noeud * racine,  int x , int y, int angle, bool isLeft, int depth, QPainter*);
+    void paint_tree_scales(Sommet *, int x , int *y, int last, int k, QPainter*, QPen*);
+    void paint_tree(Sommet *,  int x , int y, int angle, bool isLeft, int depth, QPainter*);
 
     void paintEvent(QPaintEvent * painter);
 

@@ -2,64 +2,56 @@
 #define ARBREB_H
 #include "Sommet.h"
 
-
-//Le type noeud nous permet de ne pas trop surcharger les attributs de la classe ArbreB
-
-typedef struct noeud
-{
-    Sommet actuel ;
-    struct noeud * filsg;
-    struct noeud * filsd;
-}Noeud;
-
-//La classe ArbreB a pour attribut privé un pointeur sur un noeud ( c'est la racine ) et à partir de celui ci on peut
-//avoir accès à tout les autres noeuds de manière récursive, ainsi qu'une taille correspondant au nombre de noeuds.
+//La classe ArbreB a pour attribut privé un pointeur sur un sommet ( c'est la racine ) et à partir de celui ci on peut
+//avoir accès à tout les autres de manière récursive, mais elle a aussi une taille correspondante au nombre de sommets.
 //Les méthodes "complexes" seront détaillées dans le ".cc" .
 
 //Ps : les accesseurs et les setteurs sont inline car ce sont des méthodes assez basiques
 
 //Pour les méthodes simples on a :
-    //les accesseurs : getRacine et getTaille . "getRacine" renvoie un pointeur car elle est utilisée dans les méthodes
-        //récursives
+    //les accesseurs : getRacine , getTaille et calcule_hauteur .
+    //"getRacine" renvoie un pointeur car elle est utilisée dans les méthodes récursives
+    //calcule_hauteur parcours l'arbre en cherchant la feuille la plus éloignée de la racine de maière récursive
 
     //on surcharge la méthode ajout afin d'ajouter un élément de plusieurs manières
 
-    //on a trois constructeurs (plutôt quatre si on compte le constructeur vide implicitement déclaré par le
-        //constructeurs aux paramètres par défaut
+    //on a deux constructeurs (plutôt trois si on compte le constructeur vide implicitement déclaré par le
+        //constructeurs aux paramètres par défaut)
 
     //on redéfinit les opérateurs += , = et <<
 
 class ArbreB : public Sommet
 {
     private :
-        Noeud * racine;
-        int taille ;
-
+        Sommet * racine;
+        int taille;
+        int hauteur;
     public :
-        ArbreB(Sommet * , int);
-        ArbreB(Noeud * = NULL, int = 0);
+        ArbreB(Sommet * = NULL , int = 0);
         ArbreB(ArbreB&);
         ~ArbreB();
 
-        Noeud * getRacine() {return racine;};
+        Sommet * getRacine() {return racine;};
         int getTaille() {return taille;};
+        int getHauteur() {return hauteur;};
+        int calcule_hauteur(Sommet *);
 
-        void ajout(Noeud *,Sommet &);
-        void ajout(Noeud *,Noeud *);
+        void ajout(Sommet *,Sommet* );
         void ajout(ArbreB&);
-        Noeud * copie_noeuds(Noeud * source);
-        void print_tree(Noeud *, int);
-        void test_print_tree(Noeud *, char *, int);
-        void free_tree(Noeud *);
-        Noeud * recherche_noeud(Noeud*,const char);
-        void supprimer_noeud(Noeud *,const char);
+        Sommet * copie_sommets(Sommet * source);
+        void print_tree(Sommet *root, char *indent, int last);
+        void free_tree(Sommet *);
+        Sommet * recherche_sommet(Sommet*,const char);
+        Sommet * recherche_sommet(Sommet*,const char ,const int);
+        void fusion_arbre(ArbreB&, ArbreB&);
+        void supprimer_sommet(Sommet *,const char);
         void change_etiquette(const char,const int);
+        void decomposition(ArbreB&, ArbreB&);
+
 
         friend std::ostream& operator<<(std::ostream&,ArbreB&);
         void operator+=(ArbreB&);
         void operator=(ArbreB&);
-
-
 };
 
 

@@ -5,7 +5,7 @@
 
 DessineArbre::DessineArbre(ArbreB& arbreB) {
     arbre = arbreB;
-    setFixedSize(700, 2000);
+    resize(800, 500);
 };
 
 void DessineArbre::write(QPainter *p, int x, int y, QString txt) {
@@ -14,59 +14,73 @@ void DessineArbre::write(QPainter *p, int x, int y, QString txt) {
 }
 
 /* */
-int compte_profondeur(Noeud *courant) {
+int compte_profondeur(Sommet *courant) {
     if (courant == NULL)
         return 0;
-    return 1 + compte_profondeur(courant->filsg) + compte_profondeur(courant->filsd);
+    return 1 + compte_profondeur(courant->getFilsG()) + compte_profondeur(courant->getFilsD());
 }
 
-void DessineArbre::paint_tree_scales(Noeud *racine, int x , int *y, int last, int k, QPainter *p) {
+void DessineArbre::paint_tree_scales(Sommet *racine, int x , int *y, int last, int k, QPainter *p, QPen *pen) {
     if (racine == NULL)
         return;
+    if (x > 800)
+        resize(x, *y);
 
     int hauteur_texte = p->fontMetrics().height();
-    int longueur_texte = p->fontMetrics().horizontalAdvance(racine->actuel.formalize_sommet());
-    // p->drawText(x, *y, racine->actuel.formalize_sommet());
-    // p->drawRoundedRect(QRectF(x, *y-hauteur_texte, longueur_texte, hauteur_texte), 10, 10);
-
+    int longueur_texte = p->fontMetrics().horizontalAdvance(racine->formalize_sommet());
+    longueur_texte = 55;
+    qDebug() << "Longueur: " << longueur_texte << ", hauteur: " << hauteur_texte;
     const QRectF Rect(x, *y, longueur_texte+20, hauteur_texte+8);
-    p->drawText(Rect, Qt::AlignCenter, racine->actuel.formalize_sommet());
+    p->drawText(Rect, Qt::AlignCenter, racine->formalize_sommet());
     p->drawRoundedRect(Rect, 10, 10);
 
-
+    /* Possède un frère: ligne verticale liant les deux frères */
     if (last == 0) {
-        // Ancien espace + ligne verticale + nouvel espace
-        // x+((longueur_texte+20)/2)
+        // pen->setColor(Qt::green);
+        pen->setStyle(Qt::DashDotLine);
+        p->setPen(*pen);
         p->drawLine(x + 20, *y+hauteur_texte+8,x+20, *y+(k*compte_profondeur(racine)));
-        *y += k;
+    }
+    /* N'a pas d'autre frère: */
+    // else { }
+    /* Possède au moins un fils */
+    if (racine->getFilsG() != NULL || racine->getFilsD() != NULL) {
+        pen->setColor(Qt::blue);
+        pen->setStyle(Qt::SolidLine);
+        p->setPen(*pen);
+
+        int new_y = (*y+hauteur_texte+8)+k - hauteur_texte/2;
+
+        p->drawLine(x+longueur_texte, *y+hauteur_texte+8, x+longueur_texte, new_y);
+        p->drawLine(x+longueur_texte, new_y, x+longueur_texte+17, new_y);
+    }
+    *y += k;
+
+
+    pen->setColor(Qt::black);
+    pen->setStyle(Qt::SolidLine);
+    p->setPen(*pen);
+    if (racine->getFilsG() != NULL && racine->getFilsD() != NULL) {
+        paint_tree_scales(racine->getFilsG(), x+1.8*k, y, 0, k, p, pen);
+        paint_tree_scales(racine->getFilsD(), x+1.8*k, y, 1, k, p, pen);
     }
     else {
-        // Ancien espace + nouvel espace
-        *y += k;
-        // p->drawLine(x, *y, x+30, *y);
-    }
-
-    if (racine->filsg != NULL && racine->filsd != NULL) {
-        paint_tree_scales(racine->filsg, x+1.5*k, y, 0, k, p);
-        paint_tree_scales(racine->filsd, x+1.5*k, y, 1, k, p);
-    }
-    else {
-        if (racine->filsd != NULL )
-            paint_tree_scales(racine->filsd, x+1.5*k, y, 1, k, p);
+        if (racine->getFilsD() != NULL )
+            paint_tree_scales(racine->getFilsD(), x+1.8*k, y, 1, k, p, pen);
 
         else
-            paint_tree_scales(racine->filsd, x+1.5*k, y, 0, k, p);
+            paint_tree_scales(racine->getFilsD(), x+1.8*k, y, 0, k, p, pen);
 
-        if (racine->filsg != NULL)
+        if (racine->getFilsG() != NULL)
 
-            paint_tree_scales(racine->filsg, x+1.5*k, y, 1, k, p);
+            paint_tree_scales(racine->getFilsG(), x+1.8*k, y, 1, k, p, pen);
         else
-            paint_tree_scales(racine->filsg, x+1.5*k, y, 0, k, p);
+            paint_tree_scales(racine->getFilsG(), x+1.8*k, y, 0, k, p, pen);
     }
 
 }
 
-void DessineArbre::paint_tree(Noeud *racine, int x , int y, int angle, bool isLeft, int depth, QPainter *p) {
+void DessineArbre::paint_tree(Sommet *racine, int x , int y, int angle, bool isLeft, int depth, QPainter *p) {
     // std::cout << "Painter: start " << racine->actuel.formalize_sommet() << std::endl;
     int leftAngle, rightAngle;
     int dx, dy, nx, ny;
@@ -74,10 +88,10 @@ void DessineArbre::paint_tree(Noeud *racine, int x , int y, int angle, bool isLe
         return;
 
     p->drawEllipse(x, y, 5, 5);
-    write(p, x, y-10, racine->actuel.formalize_sommet());
+    write(p, x, y-10, racine->formalize_sommet());
     // p->drawText(x,y, racine->actuel.formalize_sommet());
 
-    if (racine->filsg != NULL) {
+    if (racine->getFilsG() != NULL) {
 
         if (depth<2)
             leftAngle = angle + rand()%15;
@@ -96,9 +110,9 @@ void DessineArbre::paint_tree(Noeud *racine, int x , int y, int angle, bool isLe
 
         // std::cout << "Painter: end->left " << racine->filsg->actuel.formalize_sommet() << std::endl;
         p->drawLine(x,y, nx, ny);
-        paint_tree(racine->filsg,nx,ny,leftAngle,true,depth+1, p);
+        paint_tree(racine->getFilsG(),nx,ny,leftAngle,true,depth+1, p);
     }
-    if (racine->filsd != NULL) {
+    if (racine->getFilsD() != NULL) {
 
         if (depth<2)
                     rightAngle = angle + rand()%15;
@@ -117,14 +131,17 @@ void DessineArbre::paint_tree(Noeud *racine, int x , int y, int angle, bool isLe
 
         // std::cout << "Painter: end->right " << racine->filsd->actuel.formalize_sommet() << std::endl;
         p->drawLine(x,y,nx,ny);
-        paint_tree(racine->filsd, nx, ny, rightAngle, false, depth+1, p);
+        paint_tree(racine->getFilsD(), nx, ny, rightAngle, false, depth+1, p);
     }
 
-    if (racine->filsg==NULL && racine->filsd==NULL) {return ; }
+    if (racine->getFilsG()==NULL && racine->getFilsD()==NULL) {return ; }
 };
 
 void DessineArbre::paintEvent(QPaintEvent *e) {
     QPainter paint(this);
+    QPen pen(Qt::black, 2);
+    paint.setPen(pen);
+
     paint.setRenderHint(QPainter::Antialiasing);
     int y = 70;
 
@@ -132,9 +149,11 @@ void DessineArbre::paintEvent(QPaintEvent *e) {
     write(&paint, width()/2, 40, "Génération d'un arbre construit par copie");
 
     // paint_tree(arbre.getRacine(), width()/2, y, 10, true, 0, &paint);
-    // paint_tree_samy(arbre.getRacine(), 10, y, &paint);
 
-    paint_tree_scales(arbre.getRacine(), 10, &y, 1, 50, &paint);
+    paint_tree_scales(arbre.getRacine(), 10, &y, 1, 40, &paint, &pen);
+    resize(800, y);
+
+    // paint_tree_scales_2(arbre.getRacine(), width()/2, &y, 1, 50, &paint);
 };
 
 DessineArbre::~DessineArbre() { };
