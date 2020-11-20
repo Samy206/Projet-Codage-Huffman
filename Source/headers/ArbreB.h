@@ -37,6 +37,7 @@ class ArbreB
         int calcule_hauteur(Sommet *);
 
         void ajout(Sommet *,Sommet* );
+        void ajout(Sommet*,const char, const int);
         void ajout(ArbreB&);
         Sommet * copie_sommets(Sommet * source);
         void print_tree(Sommet *root, char *indent, int last);
