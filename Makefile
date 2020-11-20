@@ -16,3 +16,4 @@ clean:
 	rm -f ProjetPartie1
 	rm -f QMakefile
 	rm -rf doc/
+	rm moc_*

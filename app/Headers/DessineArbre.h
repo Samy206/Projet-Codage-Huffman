@@ -18,8 +18,11 @@
  * @arbre   ArbreB      Arbre binaire à afficher
  */
 class DessineArbre : public QWidget{
+
+    Q_OBJECT
+
 private :
-    ArbreB arbre;
+    ArbreB *arbre;
 
 public :
     /**
@@ -56,7 +59,7 @@ public slots:
     void setArbre();
 
     /**
-     * @brief Update the label if the nom changed
+     * @brief Réaffiche le nouvel arbre quand il change
      * 
      */
     void arbreChanged();

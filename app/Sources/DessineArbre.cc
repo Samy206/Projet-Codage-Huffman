@@ -40,6 +40,7 @@ int compte_profondeur(Sommet *courant) {
  * Un fils est lié à son père par un trait angulaire bleu.
  */  
 void DessineArbre::paint_tree_scales(Sommet *racine, int x , int *y, int last, int k, QPainter *p, QPen *pen) {
+    std::cout << "Picasso: En action." << std::endl;
     // Condition d'arrêt de la récursion
     if (racine == NULL)
         return;
@@ -108,6 +109,8 @@ void DessineArbre::paint_tree_scales(Sommet *racine, int x , int *y, int last, i
  * Déclenche l'évènement "dessin" à l'exécution du programme 
  */  
 void DessineArbre::paintEvent(QPaintEvent *e) {
+    std::cout << "PaintEvent: Je fais mon taff de suite !" << std::endl;
+
     QPainter paint(this);
     QPen pen(Qt::black, 2);
     paint.setPen(pen);
@@ -117,13 +120,20 @@ void DessineArbre::paintEvent(QPaintEvent *e) {
     write(&paint, width()/2, 40, "Génération d'un arbre construit par copie");
     
     int y = 70;
-    paint_tree_scales(arbre.getRacine(), 10, &y, 1, 40, &paint, &pen);
+    paint_tree_scales(arbre->getRacine(), 10, &y, 1, 40, &paint, &pen);
     resize(max_x+90, y);
 };
 
 DessineArbre::~DessineArbre() { };
 
+void DessineArbre::setArbre() {
+    std::cout << "DessineArbre::setArbre: jsp pk jsuis la moi" << std::endl;
+    // Context::getInstance().setArbre(arbre);
+}
 
 void DessineArbre::arbreChanged() {
+    std::cout << "ArbreChanged: Signal reçu par ici, j'appelle le getter !" << std::endl;
     arbre = Context::getInstance().getArbre();
+    std::cout << "ArbreChanged: Nouvel arbre reçu :" << std::endl;
+    std::cout << *arbre << std::endl;
 }

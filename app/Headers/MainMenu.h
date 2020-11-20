@@ -19,6 +19,8 @@ class MainMenu : public QFrame {
 private:
     QPushButton* bGenerer;
     QPushButton* bCopie;
+    QPushButton* bDecomposeGauche;
+    QPushButton* bDecomposeDroite;
     QPushButton* bQuitter;
     QVBoxLayout* layout; // Box Layout pour le menu
 
