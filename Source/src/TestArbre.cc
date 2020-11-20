@@ -57,6 +57,10 @@ int main()
      else
          cout << "   Aucun sommet ne comporte le caractère '" << recherche << "'\n\n" << endl;
 
+    /*Test de suppression d'un sommet dans un arbre */
+    cout<<">Test suppression : Suppression du sommet comportant le caractère 'j':" << endl;
+    arbre2.supprimer_sommet(arbre2.getRacine(),'j');
+    cout<<"  Affichage de l'arbre après la suppression de 'j': \n\n"<<arbre2<<endl<<endl;
 
     /*Test de la décomposition d'un arbre en deux sous-arbre et affichage de ces derniers*/
     ArbreB arbre3, arbre4;
