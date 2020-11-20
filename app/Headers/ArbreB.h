@@ -19,14 +19,12 @@ class ArbreB
         int hauteur;
     public :
         /** 
-         * - Constructeur aux paramètres par défaut
+         * Constructeurs:
+         * - Paramètres par défaut
          * - Constructeur vide déclaré implicitement
+         * - Constructeur par copie
          */
         ArbreB(Sommet * = NULL , int = 0);
-        
-        /**
-         * Constructeur par copie
-         */
         ArbreB(ArbreB&);
 
         /**
@@ -50,6 +48,7 @@ class ArbreB
          *  Méthode ajout surchargée pour ajouter un élément de plusieurs manières 
          * */
         void ajout(Sommet *,Sommet*);
+        void ajout(Sommet *,const char,const int);
         void ajout(ArbreB&);
         Sommet * copie_sommets(Sommet * source);
 
