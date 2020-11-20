@@ -10,7 +10,7 @@ MainWindow::MainWindow(ArbreB arbre) {
 
     // Top image banner
     QLabel  *label_img  = new QLabel(this);
-    QPixmap *pixmap_img = new QPixmap("pocker.jpeg");
+    QPixmap *pixmap_img = new QPixmap("banner.jpeg");
     QRect rect(0, 0, 800, 100);
     QPixmap cropped = pixmap_img->copy(rect); // Rogner l'image à la taille 700x100
     label_img->setPixmap(cropped.scaled(800, 100, Qt::KeepAspectRatio));
