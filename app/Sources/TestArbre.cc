@@ -18,28 +18,27 @@ int main(int argc, char* argv[])
     'w','x','y','z'};
 
     float numbers [26];
-    Sommet  table1 [26];
-    for(int i = 0 ; i < 26 ; i++)
-    {
-        numbers[i] = rand() % 100; // Initialisation aléatoires des occurrences des lettres
-        Sommet * random = new Sommet(cars[i],numbers[i],1);
-        table1[i] = *random;
-        delete random;
-    }
+
 /*------------------------------------------------------------------------------------------------------------------
     Création des arbres et test des méthodes implémentées
 -----------------------------------------------------------------------------------------------------------------*/
 
-    /*Génération d'un arbre binaire avec fréquences aléatoires et affichage de ce dernier (ainsi que sa taille et
-    sa hauteur*/
-    ArbreB *arbre1 =  new ArbreB(table1,26);
-    cout << ">Test constructeur: Génération d'un arbre binaire avec fréquences aléatoires :\n+- Arbre1:" << endl;
-    cout <<*arbre1 << endl;
-    cout<<"  L'Arbre1 a une hauteur de valeur égale à "<< arbre1->getHauteur()<<" et comporte "
-    <<arbre1->getTaille()<< " noeuds.\n\n";
+     /*Génération d'un arbre binaire avec fréquences aléatoires et affichage de ce dernier (ainsi que sa taille et
+     sa hauteur*/
+     ArbreB arbre1;
+     for(int i = 0 ; i < 26 ; i++)
+     {
+         numbers[i] = rand() % 100; // Initialisation aléatoires des occurrences des lettres
+         arbre1.ajout(arbre1.getRacine(),cars[i],numbers[i]);
+     }
 
-    /*Test constructeur par copie: Génération d'un arbre construit par copie, et même affichage que le précédent*/
-    ArbreB arbre2(*arbre1);
+     cout << ">Test constructeur: Génération d'un arbre binaire avec fréquences aléatoires :\n+- Arbre1:" << endl;
+     cout <<arbre1 << endl;
+     cout<<"  L'Arbre1 a une hauteur de valeur égale à "<< arbre1.getHauteur()<<" et comporte "
+     <<arbre1.getTaille()<< " noeuds.\n\n";
+
+     /*Test constructeur par copie: Génération d'un arbre construit par copie, et même affichage que le précédent*/
+     ArbreB arbre2(arbre1);
     cout << ">Test constructeur par copie: Génération d'un arbre construit par copie :\n+- Arbre2:" << endl;
     cout <<arbre2 << endl;
     // Affichage graphique //

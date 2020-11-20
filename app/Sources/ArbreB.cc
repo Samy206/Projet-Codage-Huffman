@@ -87,6 +87,46 @@ void ArbreB::ajout(Sommet * existant,Sommet *nouveau)
     }
 };
 
+/*Cette méthode reprend les grandes lignes des lignes de la méthode précédente mais à partir d'un caractère et une
+fréquence on crée un sommet tout en l'ajoutant à l'arbre*/
+void ArbreB::ajout(Sommet* existant,const char car, const int occurence)
+{
+
+    if(existant == NULL)
+    {
+        racine = new Sommet(car,occurence,1);
+        taille++;
+    }
+    else
+    {
+        int freqActual = existant->getFreq();
+        if(freqActual > occurence)
+        {
+            if(existant->filsg != NULL)
+                ajout(existant->filsg,car,occurence);
+
+            else
+            {
+                existant->filsg = new Sommet(car,occurence,1);
+                taille++;
+            }
+        }
+        else
+        {
+            if(existant->filsd != NULL)
+                ajout(existant->filsd,car,occurence);
+
+            else
+            {
+                existant->filsd = new Sommet(car,occurence,1);
+                taille++;
+            }
+        }
+
+    }
+    hauteur = calcule_hauteur(getRacine());
+};
+
 /* La méthode copie_sommets copie tout les sommets d'un arbre et renvoie le premier sommet qui a été copié, c'est donc
 la copie totale d'un arbre qui est faite. On se base ici sur la surcharge de l'opérateur '=' de défini dans la classe
 Sommet*/
