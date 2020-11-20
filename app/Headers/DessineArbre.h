@@ -3,6 +3,7 @@
 
 #include "ArbreB.h"
 #include "MainMenu.h"
+#include "Context.h"
 
 #include <QMainWindow>
 #include <QScrollArea>
@@ -24,7 +25,7 @@ public :
     /**
      * Constructeur par défaut
      */ 
-    DessineArbre(ArbreB&);
+    DessineArbre();
 
     /**
      * Destructeur de classe
@@ -40,15 +41,28 @@ public :
      * Représente l'arbre binaire sur l'interface
      */ 
     void paint_tree_scales(Sommet *, int x , int *y, int last, int k, QPainter*, QPen*);
-    void paint_tree(Sommet *,  int x , int y, int angle, bool isLeft, int depth, QPainter*);
 
     /**
      * Déclenche l'évènement "dessin" à l'exécution du programme 
      */  
     void paintEvent(QPaintEvent * painter);
 
-    const int rootLengt=160;
-    const double PI=3.1415926;
+
+public slots:
+    /**
+     * @brief Set Arbre
+     * 
+     */
+    void setArbre();
+
+    /**
+     * @brief Update the label if the nom changed
+     * 
+     */
+    void arbreChanged();
+
+signals: 
+
 };
 
 #endif // DESSINEARBRE_H

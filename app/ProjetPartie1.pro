@@ -10,7 +10,8 @@ HEADERS = \
    $$PWD/Headers/DessineArbre.h \
    $$PWD/Headers/MainMenu.h \
    $$PWD/Headers/MainWindow.h \
-   $$PWD/Headers/Sommet.h
+   $$PWD/Headers/Sommet.h \
+   $$PWD/Headers/Context.h 
 
 SOURCES = \
    $$PWD/Sources/ArbreB.cc \

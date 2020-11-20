@@ -19,12 +19,14 @@ class ArbreB
         int hauteur;
     public :
         /** 
-         * Constructeurs:
-         * - Paramètres par défaut
+         * - Constructeur aux paramètres par défaut
          * - Constructeur vide déclaré implicitement
-         * - Constructeur par copie
          */
         ArbreB(Sommet * = NULL , int = 0);
+        
+        /**
+         * Constructeur par copie
+         */
         ArbreB(ArbreB&);
 
         /**

@@ -1,7 +1,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "ArbreB.h"
 #include "MainMenu.h"
 #include "DessineArbre.h"
 
@@ -31,7 +30,7 @@ public :
     /**
      * Constructeur par défaut
      */ 
-    MainWindow(ArbreB);
+    MainWindow();
     
     /**
      * Destructeur de classe

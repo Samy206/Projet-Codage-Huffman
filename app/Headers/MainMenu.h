@@ -6,6 +6,7 @@
 #include <QPushButton>
 #include <QBoxLayout>
 #include <QFrame>
+#include "Context.h"
 
 /**
  * Menu de boutons pour la gestion du déroulement du programme.
@@ -16,9 +17,10 @@
  */ 
 class MainMenu : public QFrame {
 private:
-    QPushButton* bSuivant;
+    QPushButton* bGenerer;
+    QPushButton* bCopie;
     QPushButton* bQuitter;
-    QHBoxLayout* layout; // Box Layout pour le menu
+    QVBoxLayout* layout; // Box Layout pour le menu
 
 public:
     /**

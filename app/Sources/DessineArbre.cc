@@ -3,12 +3,17 @@
 #include <QDebug>
 #include <QtGui/QPaintDevice>
 
+int max_x = 200;
 /**
  * Constructeur par défaut
  */ 
-DessineArbre::DessineArbre(ArbreB& arbreB) {
-    arbre = arbreB;
-    resize(800, 500);
+DessineArbre::DessineArbre() {
+    qDebug() << "DessineArbre: Chargement de l'arbre..";
+    arbre = Context::getInstance().getArbre();
+    qDebug() << "DessineArbre: Arbre chargé";
+    resize(max_x, 500);
+
+    connect(&Context::getInstance(), SIGNAL(arbreChanged()), this, SLOT(arbreChanged()));
 };
 
 /**
@@ -38,10 +43,12 @@ void DessineArbre::paint_tree_scales(Sommet *racine, int x , int *y, int last, i
     // Condition d'arrêt de la récursion
     if (racine == NULL)
         return;
-    
+
     // On réajuste la taille de la zone si l'arbre dépasse la zone de base
-    if (x > 800)
-        resize(x, *y);
+    if (x > max_x) {
+        max_x = x;
+    }
+
 
     int hauteur_texte = p->fontMetrics().height();
     int longueur_texte = p->fontMetrics().horizontalAdvance(racine->formalize_sommet());
@@ -111,7 +118,12 @@ void DessineArbre::paintEvent(QPaintEvent *e) {
     
     int y = 70;
     paint_tree_scales(arbre.getRacine(), 10, &y, 1, 40, &paint, &pen);
-    resize(800, y);
+    resize(max_x+90, y);
 };
 
 DessineArbre::~DessineArbre() { };
+
+
+void DessineArbre::arbreChanged() {
+    arbre = Context::getInstance().getArbre();
+}
