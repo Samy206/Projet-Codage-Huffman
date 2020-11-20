@@ -20,7 +20,7 @@
 
     //on redéfinit les opérateurs += , = et <<
 
-class ArbreB : public Sommet
+class ArbreB
 {
     private :
         Sommet * racine;
