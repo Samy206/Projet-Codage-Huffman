@@ -39,7 +39,7 @@ int main(int argc, char* argv[])
     ArbreB arbre2(arbre1);
     cout << ">Test constructeur par copie: Génération d'un arbre construit par copie :\n+- Arbre2:" << endl;
     cout <<arbre2 << endl;
-    
+
     cout<<"  L'Arbre2 a une hauteur de valeur égale à "<< arbre2.getHauteur()<<" et comporte "
        <<arbre2.getTaille()<< " noeuds.\n\n";
 

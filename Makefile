@@ -22,8 +22,8 @@ listing:
 	firefox doc/html/files.html
 
 # Compilation CLI
-compil: ${OUT_DIR} ${OUT_DIR}/TestArbre.o ${OUT_DIR}/ArbreB.o ${OUT_DIR}/Sommet.o
-	g++ -Wall -g -o ${OUT_DIR}/TestArbre ${OUT_DIR}/TestArbre.o ${OUT_DIR}/ArbreB.o ${OUT_DIR}/Sommet.o
+compil: ${OUT_DIR} ${OUT_DIR}/TestArbre.o ${OUT_DIR}/ArbreB.o ${OUT_DIR}/Sommet.o ${OUT_DIR}/Lecteur.o
+	g++ -Wall -g -o ${OUT_DIR}/TestArbre ${OUT_DIR}/TestArbre.o ${OUT_DIR}/ArbreB.o ${OUT_DIR}/Sommet.o ${OUT_DIR}/Lecteur.o
 
 
 ### Représentations intermédiaires
@@ -36,6 +36,9 @@ ${OUT_DIR}/ArbreB.o: app/CLI/ArbreB.cc app/CLI/ArbreB.h app/CLI/Sommet.h
 
 ${OUT_DIR}/Sommet.o: app/CLI/Sommet.cc app/CLI/Sommet.h
 	g++ -Wall -g -c -o ${OUT_DIR}/Sommet.o app/CLI/Sommet.cc
+
+${OUT_DIR}/Lecteur.o: app/CLI/Lecteur.cc app/CLI/Lecteur.h
+	g++ -Wall -g -c -o ${OUT_DIR}/Lecteur.o app/CLI/Lecteur.cc
 
 # ======= #
 
