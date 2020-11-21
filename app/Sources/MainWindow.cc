@@ -1,12 +1,8 @@
 #include "MainWindow.h"
 
-#include <QDebug>
-
 MainWindow::MainWindow() {
     layout = new QGridLayout();
     setLayout(layout);
-
-    qDebug() << "App path : " << qApp->applicationDirPath();
 
     // Top image banner
     QLabel  *label_img  = new QLabel(this);

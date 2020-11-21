@@ -13,7 +13,7 @@ class Context : public QObject {
     Q_OBJECT
 
 private:
-    ArbreB arbre[3];
+    ArbreB arbre[6];
     ArbreB *arbre_courant;
 
     Context() {
@@ -25,7 +25,7 @@ private:
         /*Génération d'un arbre binaire avec fréquences aléatoires et affichage de ce dernier (ainsi que sa taille et
         sa hauteur*/
 
-        for(int i = 0 ; i < 26 ; i++) {
+        for(int i = 0 ; i < 13 ; i++) {
             numbers[i] = rand() % 100; // Initialisation aléatoires des occurrences des lettres
             arbre[0].ajout(arbre[0].getRacine(),cars[i],numbers[i]);
         }
@@ -35,10 +35,10 @@ private:
 
         /* Décomposition */
         arbre[0].decomposition(arbre[1], arbre[2]);
-        // std::cout << arbre[1] << std::endl;
 
-        // remplir la table
-        // Boutons lier à des sets d'autres elems de la tables
+        /* Fusion */
+        arbre[4].fusion_arbre(arbre[1], arbre[2]);
+
         setArbre(0);
     }
 
@@ -66,13 +66,8 @@ public:
      */
     void setArbre(int pos) {
         arbre_courant = &(arbre[pos]);
-        
-        std::cout << "SetArbre: Le nouvel arbre est chargé, j'envoie le signal ArbreChanged !" << std::endl;
-        if (arbre_courant == NULL) 
-             std::cout << "SetArbre: Pas bien chargé.." << std::endl;
         emit arbreChanged();
     }
-
 
 
     /**
@@ -80,13 +75,7 @@ public:
      *
      * @return ArbreB
      */
-    ArbreB* getArbre() { 
-        std::cout << "GetArbre: Okep, je te renvoie l'arbre qu'il te faut !" << std::endl;
-        if (arbre_courant == NULL) 
-             std::cout << "GetArbre: Mais.." << std::endl;
-
-        return arbre_courant;
-    };
+    ArbreB* getArbre() { return arbre_courant; };
 
 
 public slots:
@@ -95,27 +84,18 @@ public slots:
      * @brief Re-génère un arbre binaire étiqueté aléatoire
      *
      */
-    void genereArbre() {   
-        const char cars[10] = {'a','b','c','d','e','f','g','h','i','j' };
-        float numbers [10];
-
-        /*Génération d'un arbre binaire avec fréquences aléatoires et affichage de ce dernier (ainsi que sa taille et
-        sa hauteur*/
-
-        for(int i = 0 ; i < 10 ; i++) {
-            numbers[i] = rand() % 100; // Initialisation aléatoires des occurrences des lettres
-            arbre[0].ajout(arbre[0].getRacine(),cars[i],numbers[i]);
-        }
-
+    void genereArbre() {
         setArbre(0);
     }
 
     void decomposeGauche() {
-        std::cout << "Bouton: Hello, je set l'abre dont VOUS avez besoin !" << std::endl;
         setArbre(1);
     }
     void decomposeDroite() {
         setArbre(2);
+    }
+    void fusion() {
+        setArbre(4);
     }
 
 

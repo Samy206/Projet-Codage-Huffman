@@ -110,6 +110,9 @@ void DessineArbre::paintEvent(QPaintEvent *e) {
     paint.setPen(pen);
     paint.setRenderHint(QPainter::Antialiasing);
     
+    write(&paint, width()/2, 20, "Test: Constructeur par copie");
+    write(&paint, width()/2, 40, "Génération d'un arbre construit par copie");
+    
     int y = 70;
     paint_tree_scales(arbre->getRacine(), 10, &y, 1, 40, &paint, &pen);
     resize(max_x+90, y);

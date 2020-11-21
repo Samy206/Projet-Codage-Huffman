@@ -19,7 +19,7 @@ SOURCES = \
    $$PWD/Sources/MainMenu.cc \
    $$PWD/Sources/MainWindow.cc \
    $$PWD/Sources/Sommet.cc \
-   $$PWD/Sources/TestArbre.cc
+   $$PWD/Sources/graphicMain.cc
 
 INCLUDEPATH = \
     $$PWD/Headers

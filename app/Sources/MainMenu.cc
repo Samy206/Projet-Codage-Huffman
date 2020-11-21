@@ -1,18 +1,14 @@
 #include "MainMenu.h"
-#include <QDebug>
+
 MainMenu::MainMenu()
 {
     layout = new QVBoxLayout();
     setLayout(layout);
     layout->setAlignment(Qt::AlignCenter);
 
-    bGenerer = new QPushButton("Générer un arbre", this);
+    bGenerer = new QPushButton("Arbre généré", this);
     bGenerer->show();
     layout->addWidget(bGenerer);
-
-    bCopie = new QPushButton("Construire par copie", this);
-    bCopie->show();
-    layout->addWidget(bCopie);
 
     bDecomposeGauche = new QPushButton("Décomposition: Arbre gauche", this);
     bDecomposeGauche->show();
@@ -21,6 +17,10 @@ MainMenu::MainMenu()
     bDecomposeDroite = new QPushButton("Décomposition: Arbre droit", this);
     bDecomposeDroite->show();
     layout->addWidget(bDecomposeDroite);
+
+    bFusion = new QPushButton("Fusion de deux arbres", this);
+    bFusion->show();
+    layout->addWidget(bFusion);
 
     bQuitter = new QPushButton("Quitter", this);
     bQuitter->show();
@@ -38,11 +38,8 @@ MainMenu::MainMenu()
 
     connect(bDecomposeGauche, SIGNAL(clicked()), &Context::getInstance(), SLOT(decomposeGauche()));
     connect(bDecomposeDroite, SIGNAL(clicked()), &Context::getInstance(), SLOT(decomposeDroite()));
-    
 
-    // connect(bReinitialiser, SIGNAL(clicked()), &Context::getInstance(), SLOT(resetNom()));
-    // connect(bReinitialiser, SIGNAL(clicked()), &Context::getInstance(), SLOT(resetPrenom()));
+    connect(bFusion, SIGNAL(clicked()), &Context::getInstance(), SLOT(fusion()));
 };
-
 
 MainMenu::~MainMenu() { }

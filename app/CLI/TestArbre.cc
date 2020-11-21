@@ -1,8 +1,4 @@
 #include "ArbreB.h"
-#include "MainWindow.h"
-
-
-#include <QApplication>
 #include <unistd.h>
 using namespace std;
 
@@ -24,7 +20,7 @@ int main(int argc, char* argv[])
      /*Génération d'un arbre binaire avec fréquences aléatoires et affichage de ce dernier (ainsi que sa taille et
      sa hauteur*/
      ArbreB arbre1;
-     for(int i = 0 ; i < 26 ; i++)
+     for(int i = 0 ; i < 13 ; i++)
      {
          numbers[i] = rand() % 100; // Initialisation aléatoires des occurrences des lettres
          arbre1.ajout(arbre1.getRacine(),cars[i],numbers[i]);
@@ -79,8 +75,4 @@ int main(int argc, char* argv[])
     ArbreB arbre5;
     arbre5.fusion_arbre(arbre3,arbre4);
     cout<<"Affichage de l'Arbre5 ( fusion des deux arbres précédents ) : \n\n"<<arbre5<<endl<<endl;
-
-    return app.exec();
 }
-
-

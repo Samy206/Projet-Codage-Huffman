@@ -52,11 +52,6 @@ public :
 
 
 public slots:
-    /**
-     * @brief Set Arbre
-     * 
-     */
-    void setArbre();
 
     /**
      * @brief Réaffiche le nouvel arbre quand il change
