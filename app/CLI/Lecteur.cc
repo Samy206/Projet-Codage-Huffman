@@ -22,11 +22,7 @@ Lecteur::Lecteur(Lecteur& autre)
 
 void Lecteur::operator=(Lecteur& donneur)
 {
-    vector<float>  tmp2 (donneur.getOccurences());
-
-    occurences = tmp2;
-
-
+    occurences = donneur.getOccurences();
     contenu = donneur.getContenu();
 };
 
@@ -67,11 +63,48 @@ void Lecteur::lecture(ifstream& myfile)
                 continue;
 
         }
-        cout<<compteur<<" wsh, size : "<<size<<"\n";
-        cout<<contenu<<endl;
-        for(int i = 0 ; i < compteur ; i++)
+        for(int i = 0 ; i < 26 ; i++)
         {
-            occurences[i] /= compteur;
+            if(occurences[i] != 0.00000)
+               occurences[i] = occurences[i]*100 / compteur;
+        }
+    }
+
+}
+
+void Lecteur::lecture(string& chaine)
+{
+    contenu = chaine;
+    int size = contenu.size();
+    if(size != 0)
+    {
+        int compteur = 0 ;
+        int ascii = -1;
+
+        for(int i = 0 ; i < size ; i++)
+        {
+            ascii = -1;
+            ascii = int(contenu[i]);
+
+            if(ascii >= 65 && ascii <= 90)
+            {
+                compteur++;
+                occurences[ascii-65] ++;
+            }
+            else if(ascii >= 97 && ascii <= 122)
+            {
+                compteur++;
+                occurences[ascii-97] = occurences[ascii-97] +1  ;
+
+            }
+            else
+                continue;
+
+        }
+        for(int i = 0 ; i < 26 ; i++)
+        {
+            if(occurences[i] != 0.00000)
+               occurences[i] = occurences[i]*100 / compteur;
         }
     }
 
@@ -79,21 +112,26 @@ void Lecteur::lecture(ifstream& myfile)
 
 ostream& operator<<(ostream& flux,Lecteur& lecteur)
 {
-    flux<<"Lecteur : { ";
+
     int i = 0;
+    flux<<"Pour le texte : \n[ "<<lecteur.contenu<<" ] on obtient :\n\n";
+    flux<<"Lecteur : { ";
     for(i = 0 ; i < 26 ; i++)
     {
         if(lecteur.occurences[i] != 0.0)
         {
-            if(i != 25 )
-                flux<< "( " <<lecteur.lettres[i] <<" ; "<<lecteur.occurences[i]<<" ) |";
+            if(i == 0 )
+                flux<< "( " <<lecteur.lettres[i] <<" ; "<<lecteur.occurences[i]<<" )";
+
             else
-                flux<< "( " <<lecteur.lettres[i] <<" ; "<<lecteur.occurences[i]<<" ) }"<<endl;
+                flux<< " | ( " <<lecteur.lettres[i] <<" ; "<<lecteur.occurences[i]<<" )";
         }
 
     }
+    flux<<"} \n";
     return flux;
 };
+
 
 Lecteur::~Lecteur()
 {

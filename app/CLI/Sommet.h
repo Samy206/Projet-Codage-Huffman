@@ -52,8 +52,8 @@ class Sommet
          * */
         void setLettre(const char car) {lettre = car;};
         void setFreq(const float part) {freq = part;};
-        void setFilsG(Sommet * sommet) {filsg = sommet ;};
-        void setFilsD(Sommet * sommet) {filsd = sommet ;};
+        void setFilsG(Sommet * sommet) {filsg = sommet ; taille++;};
+        void setFilsD(Sommet * sommet) {filsd = sommet ;taille++;};
         void setTaille(const int size) {taille = size;};
 
         /**

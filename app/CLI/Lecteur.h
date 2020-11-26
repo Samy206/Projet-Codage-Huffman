@@ -6,6 +6,7 @@
 #include <string>
 #include <vector>
 
+
 class Lecteur
 {
     private :
@@ -22,8 +23,9 @@ class Lecteur
         std::vector<float> getOccurences() {return occurences;};
         std::string getContenu() {return contenu;};
 
-        void lecture(std::ifstream&);
 
+        void lecture(std::ifstream&);
+        void lecture(std::string&);
         void operator=(Lecteur&);
         friend std::ostream& operator<<(std::ostream&,Lecteur&);
 };

@@ -48,7 +48,7 @@ class ArbreB
          *  Méthode ajout surchargée pour ajouter un élément de plusieurs manières 
          * */
         void ajout(Sommet *,Sommet*);
-        void ajout(Sommet *,const char,const int);
+        void ajout(Sommet *,const char,const float);
         void ajout(ArbreB&);
         Sommet * copie_sommets(Sommet * source);
 

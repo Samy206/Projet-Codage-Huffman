@@ -17,7 +17,6 @@ ArbreB::ArbreB(Sommet * sommets , int size )
         for(int i = 0 ; i < size ; i++)
         {
             ajout(racine,&sommets[i]);
-            taille++;
         }
     }
     hauteur = calcule_hauteur(racine);
@@ -64,6 +63,7 @@ void ArbreB::ajout(Sommet * existant,Sommet *nouveau)
     if(existant == NULL)
     {
         racine = nouveau;
+        taille++;
     }
     else
     {
@@ -74,7 +74,10 @@ void ArbreB::ajout(Sommet * existant,Sommet *nouveau)
                 ajout(existant->filsg,nouveau);
 
             else
+            {
                 existant->filsg = nouveau;
+                taille++;
+            }
         }
         else
         {
@@ -82,14 +85,18 @@ void ArbreB::ajout(Sommet * existant,Sommet *nouveau)
                 ajout(existant->filsd,nouveau);
 
             else
+            {
                 existant->filsd = nouveau;
+                taille++;
+            }
         }
     }
+
 };
 
 /*Cette méthode reprend les grandes lignes des lignes de la méthode précédente mais à partir d'un caractère et une
 fréquence on crée un sommet tout en l'ajoutant à l'arbre*/
-void ArbreB::ajout(Sommet* existant,const char car, const int occurence)
+void ArbreB::ajout(Sommet* existant,const char car, const float occurence)
 {
 
     if(existant == NULL)
