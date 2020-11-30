@@ -31,7 +31,9 @@ class Sommet
          * - Constructeur par copie
          */
         Sommet(const char =' ',const float = 0, const int = 0);
-        Sommet(Sommet &);
+        // Sommet(Sommet &);
+        // CONST PAR COPIE 2
+        Sommet(const Sommet& source);
 
         /**
          *  Destructeur de classe 
@@ -52,8 +54,8 @@ class Sommet
          * */
         void setLettre(const char car) {lettre = car;};
         void setFreq(const float part) {freq = part;};
-        void setFilsG(Sommet * sommet) {filsg = sommet ; taille++;};
-        void setFilsD(Sommet * sommet) {filsd = sommet ;taille++;};
+        void setFilsG(Sommet * sommet) {filsg = sommet ; taille += sommet->getTaille();};    
+        void setFilsD(Sommet * sommet) {filsd = sommet ; taille += sommet->getTaille();};
         void setTaille(const int size) {taille = size;};
 
         /**
@@ -67,6 +69,8 @@ class Sommet
         void operator=(Sommet &);
         friend Sommet operator+(Sommet & ,Sommet &);
         friend std::ostream& operator<<(std::ostream&,Sommet&);
+
+        
 
         /**
          *  Classe ArbreB déclarée classe amie afin de pouvoir modifier les données de l'arbre de manière optimale 

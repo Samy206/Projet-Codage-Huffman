@@ -63,7 +63,7 @@ void ArbreB::ajout(Sommet * existant,Sommet *nouveau)
     if(existant == NULL)
     {
         racine = nouveau;
-        taille++;
+        taille+= nouveau->getTaille();
     }
     else
     {
@@ -76,7 +76,7 @@ void ArbreB::ajout(Sommet * existant,Sommet *nouveau)
             else
             {
                 existant->filsg = nouveau;
-                taille++;
+                taille+= nouveau->getTaille();
             }
         }
         else
@@ -87,7 +87,7 @@ void ArbreB::ajout(Sommet * existant,Sommet *nouveau)
             else
             {
                 existant->filsd = nouveau;
-                taille++;
+                taille+= nouveau->getTaille();
             }
         }
     }
