@@ -48,10 +48,22 @@ Sommet::Sommet(const Sommet& s)
 /*L'opérateur '=' utilise les setteurs afin de reprendre et copier les données du sommet passé en param*/
 void Sommet::operator=(Sommet& source)
 {
-    setLettre(source.getLettre());
-    setFreq(source.getFreq());
-    setTaille(source.getTaille());
-
+    filsg = nullptr;
+    filsd = nullptr;
+    lettre = source.lettre;
+    freq = source.freq;
+    taille = source.taille;
+    
+    if (source.filsd != nullptr) {
+        delete filsd;
+        filsd = new Sommet(*source.filsd);
+    }
+    if (source.filsg != nullptr) {
+        delete filsg;
+        filsg = new Sommet(*source.filsg);
+    }
+    
+/*
     if(source.getFilsD() != NULL && filsd == NULL)
         filsd = new Sommet(source.getFilsD()->getLettre(), source.getFilsD()->getFreq());
 
@@ -71,6 +83,7 @@ void Sommet::operator=(Sommet& source)
         setFreq(source.getFilsG()->getFreq());
         setTaille(source.getFilsG()->getTaille());
     }
+*/
 };
 
 

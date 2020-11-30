@@ -10,9 +10,12 @@ class Cryptage
      private :
         Lecteur lecteur;
         ArbreB arbre;
-        Sommet * sommets;
-        std::string contenu;
+        Sommet * sommets_restants;
         int nb_sommets;
+        std::string contenu;
+
+        std::vector<Sommet> sommets_restants_vect;
+
      public :
 
         Cryptage(Lecteur&);
