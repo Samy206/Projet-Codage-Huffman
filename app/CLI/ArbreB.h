@@ -65,8 +65,8 @@ class ArbreB
         /**
          *  Recherche un sommet de l'arbre par une @lettre ou une @freq 
         */
-        Sommet * recherche_sommet(Sommet*, const char);
-        Sommet * recherche_sommet(Sommet*, const char, const int);
+        std::string recherche_sommet(Sommet*, const char,std::string&,int*);
+        std::string recherche_sommet(Sommet*, const char, const int,std::string&);
 
         /**
          *  Fusionne deux arbre binaires 

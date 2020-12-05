@@ -102,34 +102,36 @@ void Cryptage::construction_arbre() {
     }
 
     // On trie les arbres restants par occurence à l'aide d'un Tri Fusion
-    bubbleSort(&arbres_restants, arbres_restants.size());
-    
+    vector<Sommet> * combinaisons = new vector<Sommet>;
+    *combinaisons = arbres_restants;
+    bubbleSort(combinaisons, combinaisons->size());
+
     Sommet A1, A2; // Deux sommets avec les plus faibles occurences
     Sommet *newSomm; // Nouveau sommet créé, racine de A1 et A2
 
     // Condition d'arrêt: Tant qu'il y a plus d'un arbre dans le vecteur de gestion des arbres restants
-    while(arbres_restants.size() > 1) {
+    while(combinaisons->size() > 1) {
         // On considère les deux sommets ayant l'occurence la plus faible
-        A1 = arbres_restants.back();  arbres_restants.pop_back();
-        A2 = arbres_restants.back();  arbres_restants.pop_back();
+        A1 = combinaisons->back();  combinaisons->pop_back();
+        A2 = combinaisons->back();  combinaisons->pop_back();
 
         // Création de l'arbre A (Sommet newSomm) étiqueté e1 + e2
         newSomm = new Sommet(' ', A1.getFreq() + A2.getFreq(), 1);
 
         // Le nouvel arbre a pour fils les racines de A1 et A2
-        newSomm->setFilsD(&A1);
-        newSomm->setFilsG(&A2);
+        newSomm->setFilsD(&A2);
+        newSomm->setFilsG(&A1);
 
         // On place le nouvel arbre dans la liste des sommets courants (La surcharde de l'opérateur = copie aussi les fils)
-        arbres_restants.push_back(*newSomm); 
+        combinaisons->push_back(*newSomm);
         
         delete newSomm; // Suppression de l'arbre A maintenant stocké dans la liste des sommets restants
 
-        bubbleSort(&arbres_restants, arbres_restants.size()); // On re-trie la liste des sommets restants 
+        bubbleSort(combinaisons, combinaisons->size()); // On re-trie la liste des sommets restants
     }
 
     // À la fin de cette boucle, le vecteur de gestion des arbres restants contient l'abre de cryptage fina
-    if (arbres_restants.size() != 1) {
+    if (combinaisons->size() != 1) {
         std::cout << "Erreur lors de la création de l'arbre de cryptage" << std::endl;
         return;
     }
@@ -139,13 +141,67 @@ void Cryptage::construction_arbre() {
     //// *** PARTIE À RETIRER QUAND ON RÉUSSIRA L'AJOUT DU SOMMET À L'ARBRE DE LA CLASSE *** ////
 
     char *indent = new char[1]; indent[0] = '\0'; // Utile pour afficher les arbres dans le terminal
-    std::cout << "Resultat temporaire (Depuis le vecteur des Sommets) :" << endl;
-    tst_print_sommet(&arbres_restants.back(), indent, 1);
     delete[] indent;
 
-    std::cout << "Passage en arbre (Double free detected) :" << endl;
-    arbre_huffman.ajout(arbre_huffman.getRacine(), &arbres_restants.back());
-    std::cout<<"Taille arbre: "<< arbre_huffman.getTaille() << endl;
+    arbre_huffman.ajout(arbre_huffman.getRacine(), &combinaisons->back());
+    //std::cout<<"Taille arbre: "<< arbre_huffman.getTaille() << endl;
     std::cout << arbre_huffman << endl;
+
 };
 
+
+int Cryptage::get_code(pair<char,string> * vec, char lettre, int size)
+{
+    int indice = -1;
+    for(int i = 0 ; i < size ; i++)
+    {
+        if(vec[i].first == lettre)
+        {
+            indice = i;
+            break;
+        }
+    }
+    return indice;
+};
+
+void Cryptage::encodage()
+{
+    int taille = arbres_restants.size();
+    codage = new std::pair <char,string> [taille];
+    int found = 0;
+    for(int i = 0 ; i < taille ; i++)
+    {
+        codage[i].first = arbres_restants[i].getLettre();
+        codage[i].second ="";
+
+        arbre_huffman.recherche_sommet(arbre_huffman.getRacine(),arbres_restants[i].getLettre(),
+                                       codage[i].second,&found);
+        found = 0;
+    }
+
+    string contenunew;
+    int ascii;
+    int code;
+    char c;
+    for(int i = 0 ; i < lecteur.getContenu().size() ; i++)
+    {
+        ascii = -1;
+        ascii = int(lecteur.getContenu()[i]);
+
+        if(ascii >= 65 && ascii <= 90)
+        {
+            c = (char) (ascii+32);
+            code = get_code(codage,c,taille);
+            contenunew += codage[code].second;
+        }
+        else if(ascii >= 97 && ascii <= 122)
+        {
+             code = get_code(codage,(lecteur.getContenu()[i]),taille);
+             contenunew += codage[code].second;
+        }
+        else
+            contenunew += lecteur.getContenu()[i];
+    }
+
+    cout<<"Nouveau texte : "<<contenunew<<endl;
+}

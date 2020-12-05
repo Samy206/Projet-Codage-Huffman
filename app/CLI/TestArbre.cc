@@ -8,7 +8,9 @@ int main(int argc, char* argv[]) {
     Lecteur l;
     ifstream mytext("Texte.txt");
     l.lecture(mytext);
-    std::cout << "Text: " << l.getContenu() << endl; 
+    std::cout << "Text: " << l.getContenu() << endl;
     Cryptage cr(l);
     cr.construction_arbre();
+    cr.encodage();
+
 }

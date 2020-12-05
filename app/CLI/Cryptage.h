@@ -4,6 +4,7 @@
 #include "ArbreB.h"
 #include "Sommet.h"
 #include <string>
+#include <utility>
 
 class Cryptage
 {
@@ -12,7 +13,7 @@ class Cryptage
       ArbreB arbre_huffman;
       std::vector<Sommet> arbres_restants;
       std::string contenu;
-
+      std::pair <char,std::string> * codage;
 
    public :
       /**
@@ -34,7 +35,8 @@ class Cryptage
        * 2. Création de l'arbre A (Sommet `newSomm`) étiqueté e1 + e2 et attribution de ses fils A1 et A2
        */ 
       void construction_arbre();
-
+      void encodage();
+      int get_code(std::pair<char,std::string> *, char,int);
 
 };
 

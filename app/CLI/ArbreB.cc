@@ -212,36 +212,39 @@ void ArbreB::operator+=(ArbreB& arbre)
 /*Grâce au paramètre 'sommet' la récursivité est permise et à chaque itération on compare sa lettre à celle qui est
 recherchée et on renvoie un pointeur sur le sommet correspondant si on le trouve, sinon on applique cela sur les fils
 gauche et droite. Dans le cas où la lettre n'est pas dans l'arbre on renvoie NULL*/
-Sommet * ArbreB::recherche_sommet(Sommet* sommet,const char car)
+string ArbreB::recherche_sommet(Sommet* sommet,const char car,string& res,int * found)
 {
-
-    if (sommet == NULL)
-		return NULL;
+    if (sommet == NULL || *found == 1)
+		return "fin";
 
 	else
 	{
-	    Sommet * tmp= NULL;
-        Sommet * tmp1 = NULL;
+
+        string tmp;
 		if (sommet->getLettre() == car)
-			tmp= sommet;
+		{
+		    *found = 1;
+			return res;
+		}
 
 		else
 		{
             if (sommet->filsd != NULL){
-               tmp1 = recherche_sommet(sommet->filsd,car);
 
-               if(tmp1 != NULL)
-                    tmp = tmp1;
+               tmp = recherche_sommet(sommet->filsd,car,res,found);
+
+               if(tmp != "fin")
+                    res+= '1';
             }
 
             if (sommet->filsg != NULL){
-               tmp1 = recherche_sommet(sommet->filsg,car);
+               tmp = recherche_sommet(sommet->filsg,car,res,found);
 
-               if(tmp1 != NULL)
-                   tmp = tmp1;
+               if(tmp != "fin")
+                   res+= '0';
             }
 		}
-		return tmp;
+		return res;
 	}
 };
 
@@ -251,30 +254,37 @@ efficace que la précédente car l'arbre crée est un ABR basé sur l'occurence 
         S'il l'est on renvoit null
         Sinon on compare la fréquence et la lettre qu'on recherche aux données du sommet, et selon le résultat
         de cette comparaison on cherche à gauche ou à droite*/
-Sommet * ArbreB::recherche_sommet(Sommet * sommet,const char car,const int part)
+string ArbreB::recherche_sommet(Sommet * sommet,const char car,const int part,string& res)
 {
 
-    if (sommet == NULL){
-		return NULL;
-	}
-	else
+	if(sommet != nullptr)
 	{
-	    Sommet* tmp= NULL;
+
+
         int freq_actuel = sommet->getFreq();
         char c_actuel = sommet->getLettre();
 
 		if (freq_actuel == part && c_actuel == car)
-			tmp= sommet;
+			return res;
+
 
 		else if(freq_actuel > part)
-		    tmp = recherche_sommet(sommet->filsg,car,part);
+		{
+		    res += '0';
+
+		    recherche_sommet(sommet->filsg,car,part,res);
+	    }
 
 		else
-		   tmp = recherche_sommet(sommet->filsd,car,part);
+		{
+		   res += '1';
+		   recherche_sommet(sommet->filsd,car,part,res);
+		}
 
-		return tmp;
-
+		return res;
 	}
+	else
+	  return NULL;
 };
 
 /*Mis à part les actions à appliquer, cette méthode ne diffère pas de la précédente, en effet ici à la place de
@@ -360,14 +370,14 @@ void ArbreB::supprimer_sommet(Sommet * sommet ,const char car)
 };
 
 /*On recherche un noeud et on met simplement à jour sa fréquence*/
-void ArbreB::change_etiquette(const char car,const int part)
+/*void ArbreB::change_etiquette(const char car,const int part)
 {
     Sommet * tmp = recherche_sommet(racine,car);
     if(tmp != NULL)
     {
         tmp->freq = part;
     }
-};
+};*/
 
 /* Calcul de la hauteur d'un arbre de manière récursive :
   on incrémente la hauteur à chaque itération, et on renvoie le maximum des deux sous-arbres + 1  à chaque fois*/
