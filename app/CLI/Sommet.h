@@ -20,8 +20,8 @@ class Sommet
         char lettre;
         float freq;
         int taille;
-        Sommet * filsg;
-        Sommet * filsd;
+        Sommet * filsg ;
+        Sommet * filsd ;
 
     public :
          /** 
@@ -70,6 +70,11 @@ class Sommet
         friend Sommet operator+(Sommet & ,Sommet &);
         friend std::ostream& operator<<(std::ostream&,Sommet&);
 
+        /**
+         * Libère la mémoire de tout les fils d'un sommet avant de copier de nouvelles données dans un sommet
+           (utilisée juste avant l'opérateur '=')
+         * */
+        void clean_sommet();
         
 
         /**

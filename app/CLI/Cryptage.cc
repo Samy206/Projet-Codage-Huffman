@@ -42,8 +42,8 @@ void swap(Sommet* tab, int i, int j) {
     tab[j] = S1;
 }
 
-// An optimized version of Bubble Sort 
-void bubbleSort(std::vector<Sommet> *vect, int n) { 
+// An optimized version of Bubble Sort
+void bubbleSort(std::vector<Sommet> *vect, int n) {
     Sommet *tmp_tab = new Sommet[vect->size()];
     int i = 0;
     for (Sommet s : *vect) {
@@ -52,45 +52,45 @@ void bubbleSort(std::vector<Sommet> *vect, int n) {
     }
 
     int j;
-    bool swapped; 
-    for (i = 0; i < n-1; i++) 
-    { 
-        swapped = false; 
-        for (j = 0; j < n-i-1; j++) 
-        { 
-            if (tmp_tab[j].getFreq() > tmp_tab[j+1].getFreq()) 
-            { 
+    bool swapped;
+    for (i = 0; i < n-1; i++)
+    {
+        swapped = false;
+        for (j = 0; j < n-i-1; j++)
+        {
+            if (tmp_tab[j].getFreq() > tmp_tab[j+1].getFreq())
+            {
                 swap(tmp_tab, j, j+1);
-                swapped = true; 
-            } 
-        } 
-  
-        // IF no two elements were swapped by inner loop, then break 
-        if (swapped == false) 
-            break; 
-    } 
-    
+                swapped = true;
+            }
+        }
+
+        // IF no two elements were swapped by inner loop, then break
+        if (swapped == false)
+            break;
+    }
+
     for(i = n-1; i >= 0; i--)
         vect->push_back(tmp_tab[i]);
-    
+
     delete[] tmp_tab;
-} 
+}
 
 /**
  * @brief Algorithme de cryptage: création de l'arbre de Huffman à partir d'un vecteur de lettres et occurences.
- * 
+ *
  * Initialement: On créé un arbre (Sommet) étiqueté par l'occurence de chacune des lettres du `lecteur`
  * Le vecteur `arbres_restants` gère le nombre d'arbres restants lors de l'exécution de l'algorithme
- * 
+ *
  * Condition d'arrêt de la boucle: Tant qu'il reste plus d'un arbre dans le vecteur arbres_restants
  * 1. On tri le vecteur de sorte à considérer A1 et A2 les deux arbres portant les étiquettes e1 et e2 les plus faibles
  * 2. Création de l'arbre A (Sommet `newSomm`) étiqueté e1 + e2 et attribution de ses fils A1 et A2
- */ 
+ */
 void Cryptage::construction_arbre() {
     // Les deux std::vector sont à passer idéalement en Map
     vector<float> tmp2 = lecteur.getOccurences(); // Vector des occurences
     vector<char> tmp1 = lecteur.getLettres(); // Vector des lettres
-    
+
     // Initialement, on créé un Sommet pour chacune des lettre dont l'occurence n'est pas nulle
         // À optimiser: on devrait pouvoir avoir le nombre exacte de lettre différentes au lieu de tester sur l'alphabet
     for(int i = 0 ; i < 26 ; i++) {
@@ -124,7 +124,7 @@ void Cryptage::construction_arbre() {
 
         // On place le nouvel arbre dans la liste des sommets courants (La surcharde de l'opérateur = copie aussi les fils)
         combinaisons->push_back(*newSomm);
-        
+
         delete newSomm; // Suppression de l'arbre A maintenant stocké dans la liste des sommets restants
 
         bubbleSort(combinaisons, combinaisons->size()); // On re-trie la liste des sommets restants
@@ -136,7 +136,7 @@ void Cryptage::construction_arbre() {
         return;
     }
 
-    // On ajoute maintenant ce Sommet à l'Arbre de la classe Cryptage 
+    // On ajoute maintenant ce Sommet à l'Arbre de la classe Cryptage
 
     //// *** PARTIE À RETIRER QUAND ON RÉUSSIRA L'AJOUT DU SOMMET À L'ARBRE DE LA CLASSE *** ////
 
@@ -178,7 +178,10 @@ void Cryptage::encodage()
                                        codage[i].second,&found);
         found = 0;
     }
-
+    for(int i = 0 ;i < arbres_restants.size() ; i++)
+    {
+        cout<<codage[i].first<<" ; "<<codage[i].second<<endl;
+    }
     string contenunew;
     int ascii;
     int code;

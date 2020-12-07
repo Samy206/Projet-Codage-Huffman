@@ -12,8 +12,8 @@ Sommet::Sommet(const char car, const float part,const int size)
     lettre = car;
     freq = part;
     taille = size;
-    filsd = nullptr;
-    filsg = nullptr;
+    filsd = NULL;
+    filsg = NULL;
 };
 
 /*on utilise l'opérateur '=' pour le constructeur par recopie*/
@@ -25,65 +25,51 @@ Sommet::Sommet(const char car, const float part,const int size)
 // CONST PAR COPIE AVEC UN CONST
 Sommet::Sommet(const Sommet& s) 
 {
-    filsg = nullptr;
-    filsd = nullptr;
-    if (s.filsd != nullptr) {
-        // delete filsd;
-        filsd = new Sommet(*s.filsd);
-        // filsd = new Sommet (s.filsd->getLettre(), s.filsd->getFreq(), s.filsd->getTaille());
-    }
-    
-    if (s.filsg != nullptr) {
-        // delete filsg;
-        filsg = new Sommet(*(s.filsg));
-        // filsg = new Sommet (s.filsg->getLettre(), s.filsg->getFreq(), s.filsg->getTaille());
-    }
-
+    filsg = NULL;
+    filsd = NULL;
     freq = s.freq;
     lettre = s.lettre;
     taille = s.taille;
+
+    if (s.filsd != NULL) {
+        if(filsd != NULL) delete filsd;
+        filsd = new Sommet(*s.filsd);
+    }
+
+    if (s.filsg != NULL) {
+        if(filsg != NULL) delete filsg;
+        filsg = new Sommet(*s.filsg);
+    }
 };
 
 
 /*L'opérateur '=' utilise les setteurs afin de reprendre et copier les données du sommet passé en param*/
 void Sommet::operator=(Sommet& source)
 {
-    filsg = nullptr;
-    filsd = nullptr;
+
     lettre = source.lettre;
     freq = source.freq;
     taille = source.taille;
-    
-    if (source.filsd != nullptr) {
-        delete filsd;
-        filsd = new Sommet(*source.filsd);
-    }
-    if (source.filsg != nullptr) {
-        delete filsg;
-        filsg = new Sommet(*source.filsg);
-    }
-    
-/*
-    if(source.getFilsD() != NULL && filsd == NULL)
-        filsd = new Sommet(source.getFilsD()->getLettre(), source.getFilsD()->getFreq());
-
-    else if (source.getFilsD() != NULL && filsd != NULL)
+    if(source.filsd != NULL )
     {
-        setLettre(source.getFilsD()->getLettre());
-        setFreq(source.getFilsD()->getFreq());
-        setTaille(source.getFilsD()->getTaille());
+        if(filsd != NULL) delete filsd;
+        filsd = new Sommet;
+        *filsd = (*source.filsd);
     }
-
-    if(source.getFilsG() != NULL && filsg == NULL)
-        filsg = new Sommet(source.getFilsG()->getLettre(),source.getFilsG()->getFreq());
-
-    else if (source.getFilsG() != NULL && filsg != NULL)
+    if(source.filsg != NULL )
     {
-        setLettre(source.getFilsG()->getLettre());
-        setFreq(source.getFilsG()->getFreq());
-        setTaille(source.getFilsG()->getTaille());
+        if(filsg != NULL) delete filsg;
+        filsg = new Sommet;
+        *filsg = (*source.filsg);
     }
-*/
+    if(source.filsg == NULL && source.filsd == NULL)
+    {
+        if(filsg != NULL) filsg->clean_sommet();
+        if(filsd != NULL) filsd->clean_sommet();
+        filsg = NULL;
+        filsd = NULL;
+    }
+
 };
 
 
@@ -116,6 +102,21 @@ char* Sommet::formalize_sommet() {
     sommet[14] = '\0';
     return sommet;
 }
+
+void Sommet::clean_sommet()
+{
+    Sommet * tmp1 = filsg;
+    Sommet * tmp2 = filsd;
+
+    if(tmp2 != NULL)
+        tmp2->clean_sommet();
+
+    if(tmp1 != NULL)
+        tmp1->clean_sommet();
+
+    delete this;
+}
+
 
 /*Le destructeur ne fait rien car quand on crée un sommet seul ses fils sont initiés à NULL, et les autres attributs
 sont déclarés de manière statique*/
