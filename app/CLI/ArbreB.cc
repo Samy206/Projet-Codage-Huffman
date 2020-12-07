@@ -226,24 +226,29 @@ string ArbreB::recherche_sommet(Sommet* sommet,const char car,string& res,int * 
 		    *found = 1;
 			return res;
 		}
-
 		else
 		{
             if (sommet->filsd != NULL){
-
-               tmp = recherche_sommet(sommet->filsd,car,res,found);
-
-               if(tmp != "fin")
-                    res+= '1';
+		       tmp = recherche_sommet(sommet->filsd,car,res,found);
+               if(tmp != "fin" )
+                   res += '1';
+               if(*found == 1)
+               {
+                   res[res.size()-1] = '1';
+               }
             }
 
             if (sommet->filsg != NULL){
-               tmp = recherche_sommet(sommet->filsg,car,res,found);
+            	tmp = recherche_sommet(sommet->filsg,car,res,found);
+                if(tmp != "fin" )
+                    res += '0';
 
-               if(tmp != "fin")
-                   res+= '0';
-            }
-		}
+                if(*found == 1)
+                {
+                    res[res.size()-1] = '0';
+                }
+		    }
+	    }
 		return res;
 	}
 };
@@ -259,8 +264,6 @@ string ArbreB::recherche_sommet(Sommet * sommet,const char car,const int part,st
 
 	if(sommet != nullptr)
 	{
-
-
         int freq_actuel = sommet->getFreq();
         char c_actuel = sommet->getLettre();
 

@@ -46,7 +46,6 @@ Sommet::Sommet(const Sommet& s)
 /*L'opérateur '=' utilise les setteurs afin de reprendre et copier les données du sommet passé en param*/
 void Sommet::operator=(Sommet& source)
 {
-
     lettre = source.lettre;
     freq = source.freq;
     taille = source.taille;

@@ -63,11 +63,6 @@ void Lecteur::lecture(ifstream& myfile)
                 continue;
 
         }
-        // for(int i = 0 ; i < 26 ; i++)
-        // {
-        //     if(occurences[i] != 0.00000)
-        //        occurences[i] = occurences[i]*100 / compteur;
-        // }
     }
 
 }
