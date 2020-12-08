@@ -1,6 +1,7 @@
 #ifndef SOMMET_H
 #define SOMMET_H
 #include <iostream>
+#include <vector>
 
 
 /**
@@ -66,7 +67,7 @@ class Sommet
         /**
          *  Surcharge des opérateurs =, + et << 
          * */
-        void operator=(Sommet &);
+        void operator=(const Sommet &);
         friend Sommet operator+(Sommet & ,Sommet &);
         friend std::ostream& operator<<(std::ostream&,Sommet&);
 

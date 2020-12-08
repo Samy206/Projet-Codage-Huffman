@@ -212,45 +212,43 @@ void ArbreB::operator+=(ArbreB& arbre)
 /*Grâce au paramètre 'sommet' la récursivité est permise et à chaque itération on compare sa lettre à celle qui est
 recherchée et on renvoie un pointeur sur le sommet correspondant si on le trouve, sinon on applique cela sur les fils
 gauche et droite. Dans le cas où la lettre n'est pas dans l'arbre on renvoie NULL*/
-string ArbreB::recherche_sommet(Sommet* sommet,const char car,string& res,int * found)
-{
-    if (sommet == NULL || *found == 1)
-		return "fin";
 
-	else
-	{
+//////
 
-        string tmp;
-		if (sommet->getLettre() == car)
-		{
-		    *found = 1;
-			return res;
-		}
-		else
-		{
-            if (sommet->filsd != NULL){
-		       tmp = recherche_sommet(sommet->filsd,car,res,found);
-               if(tmp != "fin" )
-                   res += '1';
-               if(*found == 1)
-               {
-                   res[res.size()-1] = '1';
-               }
-            }
-
-            if (sommet->filsg != NULL){
-            	tmp = recherche_sommet(sommet->filsg,car,res,found);
-                if(tmp != "fin" )
-                    res += '0';
-
-                if(*found == 1)
-                {
-                    res[res.size()-1] = '0';
-                }
-		    }
-	    }
-		return res;
-	}
+/**
+ * Algorithme d'encodage d'une lettre par parcours d'un arbre donné.
+ * 
+ * @sommet      Sommet courant de l'arbre de Huffman final
+ * @car         Caractère à encoder 
+ * @s           Chaine de caractère pour stocker l'encodage
+ * @curr        Sert de condition d'arrêt à la récursion (lorsque la lettre est encodé)
+ * 
+ * ! Cette méthode ne fonctionne que si le @car est bien dans l'arbre.
+ * – Pour chaque noeud, l’arête vers son fils gauche est étiquetée 0 et celle vers son fils droit 1
+ * – Le code associé à une lettre est le mot binaire composé des étiquettes entre la racinela feuille-lettre
+ */ 
+int ArbreB::create_code(Sommet *sommet, const char car, string& s, int curr) {
+    if (curr == 1) // Condition d'arrêt
+        return 1;
+    
+    if (sommet->getLettre() == car) // La lettre du sommet est celle que l'on cherche
+        return 1;
+    else {
+        if (sommet->filsg != NULL){
+            s.push_back('0'); // Branche gauche: On ajoute '0' au code huffman de la lettre courante
+            curr = create_code(sommet->filsg, car, s, curr);
+        }
+        // On vérifie que le sommet n'a pas été trouvé dans la branche gauche en vérifiant que curr tjrs == 0
+        if (!curr && sommet->filsd != NULL) {
+            s.push_back('1'); // Branche droite: On ajoute '1' au code huffman de la lettre courante
+            curr = create_code(sommet->filsd, car, s, curr);
+        }
+    }
+    
+    if (!curr) // Si le sommet a été trouvé dans l'une des deux branches, on pop_back pas
+        s.pop_back(); // On annule la dernière étiquette ajouté
+	
+    return curr;
 };
 
 /*Surcharge de la méthode recherche avec en paramètre une fréquence et une fréquence . Cette recherche est plus
@@ -259,36 +257,36 @@ efficace que la précédente car l'arbre crée est un ABR basé sur l'occurence 
         S'il l'est on renvoit null
         Sinon on compare la fréquence et la lettre qu'on recherche aux données du sommet, et selon le résultat
         de cette comparaison on cherche à gauche ou à droite*/
-string ArbreB::recherche_sommet(Sommet * sommet,const char car,const int part,string& res)
-{
+// string ArbreB::recherche_sommet(Sommet * sommet,const char car,const int part,string& res)
+// {
 
-	if(sommet != nullptr)
-	{
-        int freq_actuel = sommet->getFreq();
-        char c_actuel = sommet->getLettre();
+// 	if(sommet != nullptr)
+// 	{
+//         int freq_actuel = sommet->getFreq();
+//         char c_actuel = sommet->getLettre();
 
-		if (freq_actuel == part && c_actuel == car)
-			return res;
+// 		if (freq_actuel == part && c_actuel == car)
+// 			return res;
 
 
-		else if(freq_actuel > part)
-		{
-		    res += '0';
+// 		else if(freq_actuel > part)
+// 		{
+// 		    res += '0';
 
-		    recherche_sommet(sommet->filsg,car,part,res);
-	    }
+// 		    recherche_sommet(sommet->filsg,car,part,res);
+// 	    }
 
-		else
-		{
-		   res += '1';
-		   recherche_sommet(sommet->filsd,car,part,res);
-		}
+// 		else
+// 		{
+// 		   res += '1';
+// 		   recherche_sommet(sommet->filsd,car,part,res);
+// 		}
 
-		return res;
-	}
-	else
-	  return NULL;
-};
+// 		return res;
+// 	}
+// 	else
+// 	  return NULL;
+// };
 
 /*Mis à part les actions à appliquer, cette méthode ne diffère pas de la précédente, en effet ici à la place de
 renvoyer le sommet correspondant au caractère on récupère l'adresse des ses fils, on le supprime, et on ajoute

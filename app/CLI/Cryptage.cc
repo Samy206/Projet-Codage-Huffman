@@ -6,7 +6,12 @@ Cryptage::Cryptage(Lecteur& l) {
     lecteur = l;
 };
 
-Cryptage::~Cryptage() { };
+
+Cryptage::~Cryptage() {
+    arbres_restants.clear();
+    // delete[] codage;
+}; 
+
 
 void tst_print_sommet(Sommet *root, char *indent, int last) {
     if (root == NULL)
@@ -164,29 +169,24 @@ int Cryptage::get_code(pair<char,string> * vec, char lettre, int size)
     return indice;
 };
 
-void Cryptage::encodage()
-{
+void Cryptage::encodage() {
     int taille = arbres_restants.size();
-    codage = new std::pair <char,string> [taille];
-    int found = 0;
-    for(int i = 0 ; i < taille ; i++)
-    {
+    codage = new std::pair <char, string> [taille];
+    for(int i = 0 ; i < taille; i++) {
         codage[i].first = arbres_restants[i].getLettre();
-        codage[i].second ="";
+        codage[i].second = "";
 
-        arbre_huffman.recherche_sommet(arbre_huffman.getRacine(),arbres_restants[i].getLettre(),
-                                       codage[i].second,&found);
-        found = 0;
+        arbre_huffman.create_code(arbre_huffman.getRacine(), arbres_restants[i].getLettre(), codage[i].second, 0);
     }
-    for(int i = 0 ;i < arbres_restants.size() ; i++)
-    {
-        cout<<codage[i].first<<" ; "<<codage[i].second<<endl;
-    }
+
+    for(size_t i = 0; i < arbres_restants.size(); i++)
+        cout<<codage[i].first << ": " << codage[i].second<<endl;
+
     string contenunew;
     int ascii;
     int code;
     char c;
-    for(int i = 0 ; i < lecteur.getContenu().size() ; i++)
+    for(size_t i = 0 ; i < lecteur.getContenu().size() ; i++)
     {
         ascii = -1;
         ascii = int(lecteur.getContenu()[i]);
@@ -208,3 +208,4 @@ void Cryptage::encodage()
 
     cout<<"Nouveau texte : "<<contenunew<<endl;
 }
+
