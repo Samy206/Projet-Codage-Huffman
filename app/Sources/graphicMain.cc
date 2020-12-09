@@ -1,4 +1,3 @@
-#include "ArbreB.h"
 #include "MainWindow.h"
 
 #include <QApplication>
@@ -10,8 +9,6 @@ int main(int argc, char* argv[])
 {
     /* Qt application graphique */
     QApplication app(argc, argv);
-
-    srand(getpid());
 
     // Affichage graphique //
     MainWindow aff;

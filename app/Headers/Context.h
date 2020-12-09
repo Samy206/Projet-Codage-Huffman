@@ -1,7 +1,9 @@
 #pragma once
 
-#include "ArbreB.h"
-#include <unistd.h>
+#include "CLI/Sommet.h"
+#include "CLI/ArbreB.h"
+#include "CLI/Lecteur.h"
+#include "CLI/Cryptage.h"
 #include <QtCore/QObject>
 
 /**
@@ -13,33 +15,22 @@ class Context : public QObject {
     Q_OBJECT
 
 private:
-    ArbreB arbre[6];
-    ArbreB *arbre_courant;
+    std::string texte;
+    ArbreB arbre_courant;
 
     Context() {
-        const char cars[26] = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v',
-        'w','x','y','z'};
+        Lecteur l;
+        std::ifstream mytext("Texte.txt");
+        l.lecture(mytext);
+        std::cout << "Text: " << l.getContenu() << std::endl;
 
-        float numbers [26];
-
-        /*Génération d'un arbre binaire avec fréquences aléatoires et affichage de ce dernier (ainsi que sa taille et
-        sa hauteur*/
-
-        for(int i = 0 ; i < 13 ; i++) {
-            numbers[i] = rand() % 100; // Initialisation aléatoires des occurrences des lettres
-            arbre[0].ajout(arbre[0].getRacine(),cars[i],numbers[i]);
-        }
+        Cryptage cr(l);
+        cr.construction_arbre();
+        cr.encodage();
         
-        /* Constructeur par copie */
-        // arbre[1](arbre[0]);
+        std::cout << cr.get_arbre() << std::endl; // Ok !
 
-        /* Décomposition */
-        arbre[0].decomposition(arbre[1], arbre[2]);
-
-        /* Fusion */
-        arbre[4].fusion_arbre(arbre[1], arbre[2]);
-
-        setArbre(0);
+        setArbre(cr.get_arbre());
     }
 
 public:
@@ -64,8 +55,14 @@ public:
      *
      * @param e_arbre
      */
-    void setArbre(int pos) {
-        arbre_courant = &(arbre[pos]);
+    void setArbre(ArbreB arbre) {
+        // if (arbre_courant.getTaille() != 0) 
+        //     arbre_courant.free_tree(arbre_courant.getRacine());
+        
+        // arbre_courant.ajout(arbre);
+
+        arbre_courant = arbre;
+        std::cout << "Done !" << std::endl;
         emit arbreChanged();
     }
 
@@ -75,27 +72,55 @@ public:
      *
      * @return ArbreB
      */
-    ArbreB* getArbre() { return arbre_courant; };
+    ArbreB* getArbre() { return &arbre_courant; };
+
+    std::string getTexte() { return texte; };
+
+    // Nouveau texte reçu, on emet le signal textEntered pour actualiser l'affichage texte
+    void setText(std::string const& val)
+    {
+        texte = val;
+        std::cout << "Nouveau texte: " << val << std::endl;
+        emit textEntered();
+
+
+        Lecteur l;
+        l.lecture(val);
+        std::cout << "Text: " << l.getContenu() << std::endl;
+
+        Cryptage cr(l);
+        cr.construction_arbre();
+        cr.encodage();
+        
+        std::cout << cr.get_arbre() << std::endl; // Ok !
+
+        // Vider l'arbre courant d'abord
+
+        std::cout << "Set de l'arbre" << std::endl;
+        setArbre(cr.get_arbre());
+        // Faire un nouvel arbre
+        // Le mettre dans arbre_courant
+        // emit arbreChanged()
+    }
 
 
 public slots:
-
     /**
      * @brief Re-génère un arbre binaire étiqueté aléatoire
      *
      */
     void genereArbre() {
-        setArbre(0);
+        // setArbre(0);
     }
 
     void decomposeGauche() {
-        setArbre(1);
+        // setArbre(1);
     }
     void decomposeDroite() {
-        setArbre(2);
+        // setArbre(2);
     }
     void fusion() {
-        setArbre(4);
+        // setArbre(4);
     }
 
 
@@ -105,4 +130,6 @@ signals:
      *
      */
    void arbreChanged();
+
+   void textEntered();
 };

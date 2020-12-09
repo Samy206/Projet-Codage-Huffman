@@ -6,6 +6,7 @@
 #include <QPushButton>
 #include <QBoxLayout>
 #include <QFrame>
+#include <QLineEdit>
 #include "Context.h"
 
 /**
@@ -16,13 +17,19 @@
  * @layout      QHBoxLayout*    Layout en 'boîte' pour l'affichage des boutons
  */ 
 class MainMenu : public QFrame {
+    // Q_OBJECT
 private:
+    QLineEdit *input_txt;
+
+
     QPushButton* bGenerer;
     QPushButton* bDecomposeGauche;
     QPushButton* bDecomposeDroite;
     QPushButton* bFusion;
+
+    QPushButton* bValider;
     QPushButton* bQuitter;
-    QVBoxLayout* layout; // Box Layout pour le menu
+    QHBoxLayout* layout; // Box Layout pour le menu
 
 public:
     /**
@@ -34,6 +41,12 @@ public:
      * Destructeur de classe
      */ 
     ~MainMenu();
+
+// public slots:
+//     void textEntered();
+
+// signals:
+
 };
 
 

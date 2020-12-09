@@ -2,25 +2,17 @@
 
 MainMenu::MainMenu()
 {
-    layout = new QVBoxLayout();
+    layout = new QHBoxLayout();
     setLayout(layout);
     layout->setAlignment(Qt::AlignCenter);
 
-    bGenerer = new QPushButton("Arbre généré", this);
-    bGenerer->show();
-    layout->addWidget(bGenerer);
+    // input_txt = new QLineEdit();
+    // input_txt->show();
+    // layout->addWidget(input_txt);
 
-    bDecomposeGauche = new QPushButton("Décomposition: Arbre gauche", this);
-    bDecomposeGauche->show();
-    layout->addWidget(bDecomposeGauche);
-
-    bDecomposeDroite = new QPushButton("Décomposition: Arbre droit", this);
-    bDecomposeDroite->show();
-    layout->addWidget(bDecomposeDroite);
-
-    bFusion = new QPushButton("Fusion de deux arbres", this);
-    bFusion->show();
-    layout->addWidget(bFusion);
+    // bValider = new QPushButton("Valider", this);
+    // bValider->show();
+    // layout->addWidget(bValider);
 
     bQuitter = new QPushButton("Quitter", this);
     bQuitter->show();
@@ -31,15 +23,25 @@ MainMenu::MainMenu()
     // On définit l'ombre de frame
     setFrameShadow(Sunken);
 
+    // connect(bGenerer, SIGNAL(clicked()), &Context::getInstance(), SLOT(genereArbre()));
+
+    // connect(bDecomposeGauche, SIGNAL(clicked()), &Context::getInstance(), SLOT(decomposeGauche()));
+    // connect(bDecomposeDroite, SIGNAL(clicked()), &Context::getInstance(), SLOT(decomposeDroite()));
+
+    // connect(bFusion, SIGNAL(clicked()), &Context::getInstance(), SLOT(fusion()));
+
     // On connect le bouton quitter au quitter de l'application Qt
     connect(bQuitter, SIGNAL(clicked()), qApp, SLOT(quit()));
 
-    connect(bGenerer, SIGNAL(clicked()), &Context::getInstance(), SLOT(genereArbre()));
+    // // On connect le bouton Valider et la touche enter au slot textEntered pour actualiser le texte 
+    // connect(input_txt, SIGNAL(returnPressed()), this, SLOT(textEntered()));
+    // connect(bValider, SIGNAL(clicked()), this, SLOT(textEntered()));
 
-    connect(bDecomposeGauche, SIGNAL(clicked()), &Context::getInstance(), SLOT(decomposeGauche()));
-    connect(bDecomposeDroite, SIGNAL(clicked()), &Context::getInstance(), SLOT(decomposeDroite()));
-
-    connect(bFusion, SIGNAL(clicked()), &Context::getInstance(), SLOT(fusion()));
 };
 
 MainMenu::~MainMenu() { }
+
+// void MainMenu::textEntered() {
+//     std::string tmp = input_txt->text().toStdString();
+//     std::cout << tmp << std::endl;
+// }

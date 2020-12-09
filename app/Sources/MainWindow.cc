@@ -1,5 +1,6 @@
 #include "MainWindow.h"
 
+
 MainWindow::MainWindow() {
     layout = new QGridLayout();
     setLayout(layout);
@@ -17,7 +18,12 @@ MainWindow::MainWindow() {
     // Main menu (Bottom)
     wMenu = new MainMenu();
     wMenu->show();
-    layout->addWidget(wMenu, 1, 0);
+    layout->addWidget(wMenu, 3, 0, 3, 2);
+
+
+    wInput = new GetUserText();
+    wInput->show();
+    layout->addWidget(wInput, 2, 0, 1, 2);
 
     // Zone de dessin (Mid)
     dessin = new DessineArbre();

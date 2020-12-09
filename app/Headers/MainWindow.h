@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include "MainMenu.h"
+#include "GetUserText.h"
 #include "DessineArbre.h"
 
 #include <QMainWindow>
@@ -20,6 +21,7 @@
 class MainWindow : public QWidget {
 private :
     MainMenu* wMenu;
+    GetUserText* wInput;
     QGridLayout* layout; // Grid Layout pour l'affichage
 
     QScrollArea* wZoneArbre;
