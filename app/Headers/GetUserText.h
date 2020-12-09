@@ -21,7 +21,7 @@ private:
     QGridLayout* layout; // Grid Layout pour la saisie + quit
 
     QLabel* wContenu;
-    QLabel* wResultat;
+    QLabel* wResult;
 
 public:
     /**

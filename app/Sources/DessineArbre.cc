@@ -110,7 +110,7 @@ void DessineArbre::paintEvent(QPaintEvent *e) {
     paint.setPen(pen);
     paint.setRenderHint(QPainter::Antialiasing);
     
-    int y = 70;
+    int y = 20;
     paint_tree_scales(arbre->getRacine(), 10, &y, 1, 40, &paint, &pen);
     resize(max_x+90, y);
 };

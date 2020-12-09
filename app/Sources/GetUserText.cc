@@ -14,17 +14,24 @@ GetUserText::GetUserText()
     // QLineEdit pour la saisie de texte
     input_txt = new QLineEdit();
     input_txt->show();
-    layout->addWidget(input_txt, 2, 0);
+    layout->addWidget(input_txt, 2, 0); // Deuxième de la grille de menu, à gauche
 
     // Bouton Valider
     bValider = new QPushButton("Valider", this);
     bValider->show();
     layout->addWidget(bValider, 2, 1);
 
-    std::string tmp = "Text: " + Context::getInstance().getTexte();
+    // Label pour le texte initial
+    std::string tmp = "Text: " + Context::getInstance().getText();
     wContenu = new QLabel(QString::fromStdString(tmp));
     wContenu->show();
-    layout->addWidget(wContenu, 0, 0, 1, 3);
+    layout->addWidget(wContenu, 0, 0, 1, 3); // Premier de la grille de menu
+
+    // Label pour le texte codé
+    tmp = "Crypted: " + Context::getInstance().getResult();
+    wResult = new QLabel(QString::fromStdString(tmp));
+    wResult->show();
+    layout->addWidget(wResult, 1, 0, 1, 3); // Premier de la grille de menu
 
     // On connect le bouton Valider et la touche enter au slot setText pour actualiser le texte 
     connect(bValider, SIGNAL(clicked()), this, SLOT(setText()));
@@ -54,8 +61,13 @@ void GetUserText::setText() {
 // Signal reçu par le contexte après enregistrement du nouveau texte
 void GetUserText::textEntered() {
     // On actualise l'affichage du texte 
-    std::string tmp = "Text: " + Context::getInstance().getTexte();
+    std::string tmp = "Text: " + Context::getInstance().getText();
     wContenu->setText(QString::fromStdString(tmp));
+    
+    // On actualise l'affichage du resultat
+    tmp = "Crypted: " + Context::getInstance().getResult();
+    wResult->setText(QString::fromStdString(tmp));
+    
     // On clear la barre de saisie
     input_txt->setText("");
 }

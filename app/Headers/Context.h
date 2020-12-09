@@ -15,22 +15,21 @@ class Context : public QObject {
     Q_OBJECT
 
 private:
-    std::string texte;
+    std::string txt_to_crypt; // Texte initial à crypter
+    std::string crypted_text; // Résultat crypté
     ArbreB arbre_courant;
 
     Context() {
-        std::ifstream mytext("Texte.txt");
-        Lecteur l;
-        l.lecture(mytext);
-        std::cout << "Text: " << l.getContenu() << std::endl;
+        std::ifstream myfile("Texte.txt");
+        std::stringstream strStream;
+        std::string contenu;
+        if(myfile.is_open()) {
+            strStream << myfile.rdbuf(); //read the file
+            contenu = strStream.str(); //str holds the content of the file
+        }
+        myfile.close();
 
-        Cryptage cr(l);
-        cr.construction_arbre();
-        cr.encodage();
-        
-        std::cout << cr.get_arbre() << std::endl; // Ok !
-
-        setArbre(cr.get_arbre());
+        setText(contenu);
     }
 
 public:
@@ -74,14 +73,21 @@ public:
      */
     ArbreB* getArbre() { return &arbre_courant; };
 
-    std::string getTexte() { return texte; };
+    /**
+     * @brief Getter pour le texte en entrée
+     * 
+     * @return std::string texte
+     */ 
+    std::string getText() { return txt_to_crypt; };
+
+    std::string getResult() { return crypted_text; };
 
     // Nouveau texte reçu, on emet le signal textEntered pour actualiser l'affichage texte
     void setText(std::string const& val)
     {
-        texte = val;
+        txt_to_crypt = val;
         std::cout << "Nouveau texte: " << val << std::endl;
-        emit textEntered();
+
         Lecteur l;
         l.lecture(val);
         std::cout << "Text: " << l.getContenu() << std::endl;
@@ -89,7 +95,9 @@ public:
         // Faire un nouvel arbre
         Cryptage cr(l);
         cr.construction_arbre();
-        cr.encodage();
+        crypted_text = cr.encodage();
+
+        emit textEntered();
         
         std::cout << cr.get_arbre() << std::endl; // Ok !
 
