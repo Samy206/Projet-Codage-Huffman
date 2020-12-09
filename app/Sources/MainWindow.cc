@@ -6,6 +6,7 @@ MainWindow::MainWindow() {
     setLayout(layout);
 
     // Top image banner
+    /*
     QLabel  *label_img  = new QLabel(this);
     QPixmap *pixmap_img = new QPixmap("banner.jpeg");
     QRect rect(0, 0, 870, 100);
@@ -14,11 +15,12 @@ MainWindow::MainWindow() {
     // label_img->setFixedSize(700, 100);
     label_img->setAlignment(Qt::AlignCenter);
     layout->addWidget(label_img, 0, 0, 1, 2);
+    */
 
     // Main menu (Bottom)
-    wMenu = new MainMenu();
-    wMenu->show();
-    layout->addWidget(wMenu, 3, 0, 3, 2);
+    // wMenu = new MainMenu();
+    // wMenu->show();
+    // layout->addWidget(wMenu, 3, 0, 3, 2);
 
 
     wInput = new GetUserText();
@@ -32,7 +34,7 @@ MainWindow::MainWindow() {
     wZoneArbre->setWidget(dessin);
     wZoneArbre->show();
     wZoneArbre->setMinimumSize(800, 300);
-    layout->addWidget(wZoneArbre, 1, 1);
+    layout->addWidget(wZoneArbre, 0, 0);
 }
 
 MainWindow::~MainWindow() { }

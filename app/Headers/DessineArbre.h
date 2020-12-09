@@ -1,8 +1,7 @@
 #ifndef DESSINEARBRE_H
 #define DESSINEARBRE_H
 
-#include "ArbreB.h"
-#include "MainMenu.h"
+#include "CLI/ArbreB.h"
 #include "Context.h"
 
 #include <QMainWindow>

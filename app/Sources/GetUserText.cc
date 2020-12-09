@@ -31,13 +31,24 @@ GetUserText::GetUserText()
     connect(input_txt, SIGNAL(returnPressed()), this, SLOT(setText()));
 
     connect(&Context::getInstance(), SIGNAL(textEntered()), this, SLOT(textEntered()));
+    
+    ////
+
+    // Bouton Quitter
+    bQuitter = new QPushButton("Quitter", this);
+    bQuitter->show();
+    layout->addWidget(bQuitter, 2, 2);
+
+    // On connect le bouton quitter au quitter de l'application Qt
+    connect(bQuitter, SIGNAL(clicked()), qApp, SLOT(quit()));
 }
 
 GetUserText::~GetUserText() { }
 
 // Quand nouveau texte est entré, on l'envoie directement au setText du contexte
 void GetUserText::setText() {
-    Context::getInstance().setText(input_txt->text().toStdString());
+    if (!input_txt->text().isEmpty()) // En cas de Valider sans rien pour pas seg-fault
+        Context::getInstance().setText(input_txt->text().toStdString());
 }
 
 // Signal reçu par le contexte après enregistrement du nouveau texte

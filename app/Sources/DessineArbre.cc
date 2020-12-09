@@ -66,7 +66,7 @@ void DessineArbre::paint_tree_scales(Sommet *racine, int x , int *y, int last, i
     // else { }
     /* Possède au moins un fils */
     if (racine->getFilsG() != NULL || racine->getFilsD() != NULL) {
-        pen->setColor(Qt::blue);
+        pen->setColor(Qt::darkCyan);
         pen->setStyle(Qt::SolidLine);
         p->setPen(*pen);
 
@@ -78,7 +78,7 @@ void DessineArbre::paint_tree_scales(Sommet *racine, int x , int *y, int last, i
     *y += k;
 
 
-    pen->setColor(Qt::black);
+    pen->setColor(Qt::darkBlue);
     pen->setStyle(Qt::SolidLine);
     p->setPen(*pen);
     if (racine->getFilsG() != NULL && racine->getFilsD() != NULL) {
@@ -106,7 +106,7 @@ void DessineArbre::paint_tree_scales(Sommet *racine, int x , int *y, int last, i
  */  
 void DessineArbre::paintEvent(QPaintEvent *e) {
     QPainter paint(this);
-    QPen pen(Qt::black, 2);
+    QPen pen(Qt::darkBlue, 2);
     paint.setPen(pen);
     paint.setRenderHint(QPainter::Antialiasing);
     

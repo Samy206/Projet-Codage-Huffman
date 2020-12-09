@@ -11,7 +11,6 @@ HEADERS = \
    $$PWD/CLI/Lecteur.h \
    $$PWD/CLI/Cryptage.h \
    $$PWD/Headers/DessineArbre.h \
-   $$PWD/Headers/MainMenu.h \
    $$PWD/Headers/MainWindow.h \
    $$PWD/Headers/GetUserText.h \
    $$PWD/Headers/Context.h 
@@ -22,7 +21,6 @@ SOURCES = \
    $$PWD/CLI/Lecteur.cc \
    $$PWD/CLI/Cryptage.cc \
    $$PWD/Sources/DessineArbre.cc \
-   $$PWD/Sources/MainMenu.cc \
    $$PWD/Sources/MainWindow.cc \
    $$PWD/Sources/GetUserText.cc \
    $$PWD/Sources/graphicMain.cc

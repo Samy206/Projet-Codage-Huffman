@@ -1,7 +1,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "MainMenu.h"
 #include "GetUserText.h"
 #include "DessineArbre.h"
 
@@ -20,7 +19,6 @@
  */ 
 class MainWindow : public QWidget {
 private :
-    MainMenu* wMenu;
     GetUserText* wInput;
     QGridLayout* layout; // Grid Layout pour l'affichage
 

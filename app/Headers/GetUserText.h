@@ -14,11 +14,14 @@
 class GetUserText : public QFrame {
     Q_OBJECT
 private:
-    QPushButton* bValider;
+    QPushButton *bValider;
+    QPushButton *bQuitter;
+
     QLineEdit *input_txt;
-    QGridLayout* layout; // Grid Layout pour le menu
+    QGridLayout* layout; // Grid Layout pour la saisie + quit
 
     QLabel* wContenu;
+    QLabel* wResultat;
 
 public:
     /**

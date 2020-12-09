@@ -19,8 +19,8 @@ private:
     ArbreB arbre_courant;
 
     Context() {
-        Lecteur l;
         std::ifstream mytext("Texte.txt");
+        Lecteur l;
         l.lecture(mytext);
         std::cout << "Text: " << l.getContenu() << std::endl;
 
@@ -82,25 +82,22 @@ public:
         texte = val;
         std::cout << "Nouveau texte: " << val << std::endl;
         emit textEntered();
-
-
         Lecteur l;
         l.lecture(val);
         std::cout << "Text: " << l.getContenu() << std::endl;
 
+        // Faire un nouvel arbre
         Cryptage cr(l);
         cr.construction_arbre();
         cr.encodage();
         
         std::cout << cr.get_arbre() << std::endl; // Ok !
 
-        // Vider l'arbre courant d'abord
+        // Vider l'arbre courant et set l'arbre
 
-        std::cout << "Set de l'arbre" << std::endl;
         setArbre(cr.get_arbre());
-        // Faire un nouvel arbre
+        
         // Le mettre dans arbre_courant
-        // emit arbreChanged()
     }
 
 
