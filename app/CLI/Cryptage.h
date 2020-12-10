@@ -12,7 +12,6 @@ class Cryptage
       Lecteur lecteur;
       ArbreB arbre_huffman;
       std::vector<Sommet> arbres_restants;
-      std::string contenu;
       std::pair <char,std::string> * codage;
 
    public :
@@ -21,7 +20,7 @@ class Cryptage
        */
       Cryptage(Lecteur&);
       ~Cryptage();
-
+      ArbreB& get_arbre() {return arbre_huffman;};
       void echange(const int, const int) ;
 
       /**
@@ -35,7 +34,7 @@ class Cryptage
        * 2. Création de l'arbre A (Sommet `newSomm`) étiqueté e1 + e2 et attribution de ses fils A1 et A2
        */ 
       void construction_arbre();
-      void encodage();
+      std::string encodage();
       int get_code(std::pair<char,std::string> *, char,int);
 
 };

@@ -38,7 +38,7 @@ ArbreB::ArbreB(ArbreB& arbre)
 */
 void ArbreB::operator=(ArbreB& arbre)
 {
-    free_tree(racine);
+    if(racine != NULL) {free_tree(racine);}
     ajout(arbre);
 };
 
@@ -96,7 +96,7 @@ void ArbreB::ajout(Sommet * existant,Sommet *nouveau)
 
 /*Cette méthode reprend les grandes lignes des lignes de la méthode précédente mais à partir d'un caractère et une
 fréquence on crée un sommet tout en l'ajoutant à l'arbre*/
-void ArbreB::ajout(Sommet* existant,const char car, const float occurence)
+void ArbreB::ajout(Sommet* existant,const char car, const int occurence)
 {
 
     if(existant == NULL)
@@ -137,29 +137,19 @@ void ArbreB::ajout(Sommet* existant,const char car, const float occurence)
 /* La méthode copie_sommets copie tout les sommets d'un arbre et renvoie le premier sommet qui a été copié, c'est donc
 la copie totale d'un arbre qui est faite. On se base ici sur la surcharge de l'opérateur '=' de défini dans la classe
 Sommet*/
-Sommet * ArbreB::copie_sommets(Sommet * source)
+/*Sommet * ArbreB::copie_sommets(Sommet * source)
 {
-    Sommet * nouveau = new Sommet;
-    *nouveau = *source;
-
-    if(source->getFilsG() != NULL)
-        nouveau->setFilsG(copie_sommets(source->getFilsG()));
-    else
-        nouveau->setFilsG(NULL);
-
-    if(source->getFilsD() != NULL)
-        nouveau->setFilsD(copie_sommets(source->getFilsD()));
-    else
-        nouveau->setFilsD(NULL);
-    return nouveau;
-};
+    if(source != NULL) ajout(racine,source->getLettre(),source->getFreq());
+    return NULL;
+};*/
 
 /* La méthode ajout avec un ArbreB ajoute la copie de tout ses sommets en faisant appel à la méthode précédente,
 puis on ajoute cette copie au premier sommet de libre ( conformément à l'ABR) de l'arbre *this .
 On fait cela pour éviter les problèmes d'appels au destructeurs à la fin du code.*/
 void ArbreB::ajout(ArbreB& arbre)
 {
-    ajout(racine,copie_sommets(arbre.getRacine()));
+    racine = new Sommet;
+    *racine = *arbre.getRacine();
 };
 
 
@@ -405,10 +395,10 @@ void ArbreB::decomposition(ArbreB& a_gauche, ArbreB& a_droit)
 {
 
     if(racine->filsg != NULL)
-        a_gauche.ajout(a_gauche.getRacine(),copie_sommets(racine->filsg));
+        a_gauche.ajout(a_gauche.getRacine(),racine->filsg);
 
     if(racine->filsd != NULL)
-        a_droit.ajout(a_droit.getRacine(),copie_sommets(racine->filsd));
+        a_droit.ajout(a_droit.getRacine(),racine->filsd);
 
 };
 
@@ -427,15 +417,21 @@ void ArbreB::fusion_arbre(ArbreB& arbre1, ArbreB& arbre2)
 /*On parcours l'arbre et on delete les sommet un par un*/
 void ArbreB::free_tree(Sommet * root)
 {
-    if(root != NULL)
+    if(root != NULL )
     {
-        Sommet * tmpG = root->filsg ;
-        Sommet * tmpD = root->filsd ;
+        Sommet * tmpG = NULL;
+        Sommet * tmpD = NULL;
+
+        if(root->filsg != NULL)
+           tmpG = root->filsg;
+
+        if(root->filsd != NULL)
+            tmpD = root->filsd;
 
         delete root;
-        root = NULL;
-        free_tree(tmpG);
-        free_tree(tmpD);
+        if(tmpG != NULL)free_tree(tmpG);
+        if(tmpD != NULL)free_tree(tmpD);
+
     }
 };
 

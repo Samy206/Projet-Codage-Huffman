@@ -19,7 +19,7 @@ class Sommet
 {
     private :
         char lettre;
-        float freq;
+        int freq;
         int taille;
         Sommet * filsg ;
         Sommet * filsd ;
@@ -31,7 +31,7 @@ class Sommet
          * - Constructeur vide déclaré implicitement
          * - Constructeur par copie
          */
-        Sommet(const char =' ',const float = 0, const int = 0);
+        Sommet(char =' ',int = 0, int = 0);
         // Sommet(Sommet &);
         // CONST PAR COPIE 2
         Sommet(const Sommet& source);
@@ -45,7 +45,7 @@ class Sommet
          *  Getters des attributs privés (déclarés inline) pour assurer l'encapsulation 
          * */
         char getLettre() {return lettre;};
-        float getFreq() {return freq;};
+        int getFreq() {return freq;};
         Sommet * getFilsG() {return filsg;};
         Sommet * getFilsD() {return filsd;};
         int getTaille() {return taille;};
@@ -54,7 +54,7 @@ class Sommet
          *  Setters des attributs privés (déclarés inline) pour assurer l'encapsulation 
          * */
         void setLettre(const char car) {lettre = car;};
-        void setFreq(const float part) {freq = part;};
+        void setFreq(const int part) {freq = part;};
         void setFilsG(Sommet * sommet) {filsg = sommet ; taille += sommet->getTaille();};    
         void setFilsD(Sommet * sommet) {filsd = sommet ; taille += sommet->getTaille();};
         void setTaille(const int size) {taille = size;};

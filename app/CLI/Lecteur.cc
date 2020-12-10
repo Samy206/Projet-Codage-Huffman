@@ -3,29 +3,33 @@ using namespace std;
 
 Lecteur::Lecteur()
 {
-    for(int i = 0 ; i < 26 ; i++)
-    {
-        occurences.push_back(0.0);
-    }
-    char cars[26] = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v',
-    'w','x','y','z'};
-    lettres.insert(lettres.end(),cars,cars+26);
+    ;
 };
 
 Lecteur::Lecteur(Lecteur& autre)
 {
     *this = autre;
-    char cars[26] = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v',
-        'w','x','y','z'};
-    lettres.insert(lettres.end(),cars,cars+26);
 };
 
 void Lecteur::operator=(Lecteur& donneur)
 {
     occurences = donneur.getOccurences();
     contenu = donneur.getContenu();
+    lettres = donneur.getLettres();
 };
 
+
+int Lecteur::get_indice(const char c)
+{
+    int taille = lettres.size();
+    for(int i = 0; i < taille ; i++)
+    {
+        if(c == lettres[i])
+            return i;
+    }
+
+    return -1;
+}
 
 void Lecteur::lecture(ifstream& myfile)
 {
@@ -36,73 +40,43 @@ void Lecteur::lecture(ifstream& myfile)
         contenu = strStream.str(); //str holds the content of the file
     }
     myfile.close();
-
-    int size = contenu.size();
-    if(size != 0)
-    {
-        int compteur = 0 ;
-        int ascii = -1;
-
-        for(int i = 0 ; i < size ; i++)
-        {
-            ascii = -1;
-            ascii = int(contenu[i]);
-
-            if(ascii >= 65 && ascii <= 90)
-            {
-                compteur++;
-                occurences[ascii-65] ++;
-            }
-            else if(ascii >= 97 && ascii <= 122)
-            {
-                compteur++;
-                occurences[ascii-97] = occurences[ascii-97] +1  ;
-
-            }
-            else
-                continue;
-
-        }
-    }
-
+    lecture(contenu);
 }
 
-void Lecteur::lecture(string& chaine)
+void Lecteur::lecture(string const& chaine)
 {
     contenu = chaine;
     int size = contenu.size();
     if(size != 0)
     {
-        int compteur = 0 ;
+        int indice = -1 ;
         int ascii = -1;
-
+        char convert;
         for(int i = 0 ; i < size ; i++)
         {
-            ascii = -1;
-            ascii = int(contenu[i]);
-
-            if(ascii >= 65 && ascii <= 90)
+            if(contenu[i] != ' ' && contenu[i] != ';' && contenu[i] != ',' && contenu[i] != '.')
             {
-                compteur++;
-                occurences[ascii-65] ++;
-            }
-            else if(ascii >= 97 && ascii <= 122)
-            {
-                compteur++;
-                occurences[ascii-97] = occurences[ascii-97] +1  ;
+                ascii= (int) (contenu[i]);
+                if(ascii >= 0 && ascii <= 255)
 
-            }
-            else
-                continue;
+                {
+                    convert = contenu[i];
 
-        }
-        for(int i = 0 ; i < 26 ; i++)
-        {
-            if(occurences[i] != 0.00000)
-               occurences[i] = occurences[i]*100 / compteur;
+                    if(ascii >= 65 && ascii <= 90)
+                        convert = (char) (ascii+32);
+
+                    indice = get_indice(convert);
+                    if(indice == -1)
+                    {
+                        lettres.push_back(convert);
+                        occurences.push_back(1);
+                    }
+                    else
+                        occurences[indice] += 1;
+                }
+            }
         }
     }
-
 }
 
 ostream& operator<<(ostream& flux,Lecteur& lecteur)

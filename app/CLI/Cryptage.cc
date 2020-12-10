@@ -93,17 +93,16 @@ void bubbleSort(std::vector<Sommet> *vect, int n) {
  */
 void Cryptage::construction_arbre() {
     // Les deux std::vector sont à passer idéalement en Map
-    vector<float> tmp2 = lecteur.getOccurences(); // Vector des occurences
+    vector<int> tmp2 = lecteur.getOccurences(); // Vector des occurences
     vector<char> tmp1 = lecteur.getLettres(); // Vector des lettres
 
-    // Initialement, on créé un Sommet pour chacune des lettre dont l'occurence n'est pas nulle
-        // À optimiser: on devrait pouvoir avoir le nombre exacte de lettre différentes au lieu de tester sur l'alphabet
-    for(int i = 0 ; i < 26 ; i++) {
-        if(tmp2[i] != 0.0) {
-            Sommet * tmp = new Sommet(tmp1[i], tmp2[i], 1);
-            arbres_restants.push_back(*tmp);
-            delete tmp;
-        }
+    // Initialement, on créé un Sommet pour chacune des lettre présente dans le texte
+    for(int i = 0 ; i < tmp1.size() ; i++) {
+
+       Sommet * tmp = new Sommet(tmp1[i], tmp2[i], 1);
+       arbres_restants.push_back(*tmp);
+       delete tmp;
+
     }
 
     // On trie les arbres restants par occurence à l'aide d'un Tri Fusion
@@ -150,7 +149,7 @@ void Cryptage::construction_arbre() {
 
     arbre_huffman.ajout(arbre_huffman.getRacine(), &combinaisons->back());
     //std::cout<<"Taille arbre: "<< arbre_huffman.getTaille() << endl;
-    std::cout << arbre_huffman << endl;
+    //std::cout << arbre_huffman << endl;
 
 };
 
@@ -169,8 +168,9 @@ int Cryptage::get_code(pair<char,string> * vec, char lettre, int size)
     return indice;
 };
 
-void Cryptage::encodage() {
+string Cryptage::encodage() {
     int taille = arbres_restants.size();
+    //cout<<"taille des sommets "<<taille<<"\n\n";
     codage = new std::pair <char, string> [taille];
     for(int i = 0 ; i < taille; i++) {
         codage[i].first = arbres_restants[i].getLettre();
@@ -179,10 +179,7 @@ void Cryptage::encodage() {
         arbre_huffman.create_code(arbre_huffman.getRacine(), arbres_restants[i].getLettre(), codage[i].second, 0);
     }
 
-    for(size_t i = 0; i < arbres_restants.size(); i++)
-        cout<<codage[i].first << ": " << codage[i].second<<endl;
-
-    string contenunew;
+    string * contenunew = new string;
     int ascii;
     int code;
     char c;
@@ -195,17 +192,18 @@ void Cryptage::encodage() {
         {
             c = (char) (ascii+32);
             code = get_code(codage,c,taille);
-            contenunew += codage[code].second;
+            *contenunew += codage[code].second;
         }
         else if(ascii >= 97 && ascii <= 122)
         {
              code = get_code(codage,(lecteur.getContenu()[i]),taille);
-             contenunew += codage[code].second;
+             *contenunew += codage[code].second;
         }
         else
-            contenunew += lecteur.getContenu()[i];
+            *contenunew += lecteur.getContenu()[i];
     }
 
-    cout<<"Nouveau texte : "<<contenunew<<endl;
+    cout<<"Nouveau texte : "<<*contenunew<<endl;
+    return *contenunew;
 }
 

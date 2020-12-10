@@ -7,13 +7,13 @@ principe qu'on a affaire à des sommets sans fils car ces derniers feront l'obje
 
 /*Quand on créer un sommet on ne lui donne qu'un caractère et qu'une occurence, ses fils seront ajoutés lors de la
 créations de l'arbre*/
-Sommet::Sommet(const char car, const float part,const int size)
+Sommet::Sommet(char car, int part,int size)
 {
+    filsd = NULL;
+    filsg = NULL;
     lettre = car;
     freq = part;
     taille = size;
-    filsd = NULL;
-    filsg = NULL;
 };
 
 /*on utilise l'opérateur '=' pour le constructeur par recopie*/
@@ -46,9 +46,12 @@ Sommet::Sommet(const Sommet& s)
 /*L'opérateur '=' utilise les setteurs afin de reprendre et copier les données du sommet passé en param*/
 void Sommet::operator=(const Sommet& source)
 {
-    lettre = source.lettre;
-    freq = source.freq;
-    taille = source.taille;
+    char lettrea = source.lettre;
+    int lettreb = source.freq;
+    int lettrec = source.taille;
+    lettre = lettrea;
+    freq = lettreb;
+    taille = lettrec;
     if(source.filsd != NULL )
     {
         if(filsd != NULL) delete filsd;
@@ -97,7 +100,7 @@ std::ostream& operator<<(std::ostream& flux,Sommet& sommet) //affichage de la le
 dans l'affichage d'un arbre)*/
 char* Sommet::formalize_sommet() {
     char* sommet = new char[15];
-    sprintf(sommet, "(%c : %.1f)", lettre, freq);
+    sprintf(sommet, "(%c : %d)", lettre, freq);
     sommet[14] = '\0';
     return sommet;
 }

@@ -12,7 +12,7 @@ class Lecteur
     private :
         std::string contenu;
         std::vector<char> lettres;
-        std::vector<float> occurences;
+        std::vector<int> occurences;
 
     public :
         Lecteur();
@@ -20,12 +20,12 @@ class Lecteur
         ~Lecteur();
 
         std::vector<char> getLettres() {return lettres;};
-        std::vector<float> getOccurences() {return occurences;};
+        std::vector<int> getOccurences() {return occurences;};
         std::string getContenu() {return contenu;};
 
-
+        int get_indice(const char);
         void lecture(std::ifstream&);
-        void lecture(std::string&);
+        void lecture(std::string const &);
         void operator=(Lecteur&);
         friend std::ostream& operator<<(std::ostream&,Lecteur&);
 };
