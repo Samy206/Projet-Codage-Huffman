@@ -9,7 +9,6 @@ Cryptage::Cryptage(Lecteur& l) {
 
 Cryptage::~Cryptage() {
     arbres_restants.clear();
-    // delete[] codage;
 }; 
 
 
@@ -147,63 +146,36 @@ void Cryptage::construction_arbre() {
 };
 
 
-// int Cryptage::get_code(pair<char,string> * vec, char lettre, int size)
-// {
-//     int indice = -1;
-//     for(int i = 0 ; i < size ; i++)
-//     {
-//         if(vec[i].first == lettre)
-//         {
-//             indice = i;
-//             break;
-//         }
-//     }
-//     return indice;
-// };
-
 string Cryptage::encodage() {
     int taille = arbres_restants.size();
-    // codage = new std::pair <char, string> [taille];
+    
     for(int i = 0 ; i < taille; i++) {
-        // codage[i].first = arbres_restants[i].getLettre();
-        // codage[i].second = "";
+        // On insère les pairs <Lettre, ""> dans la map des résultats
         test_map.insert(std::make_pair(arbres_restants[i].getLettre(), ""));
 
-        // arbre_huffman.create_code(arbre_huffman.getRacine(), arbres_restants[i].getLettre(), codage[i].second, 0);
+        // Chaque lettre est encodé par la fonction create_code, la string est sauvegardé dans la map
         arbre_huffman.create_code(arbre_huffman.getRacine(), arbres_restants[i].getLettre(), test_map[arbres_restants[i].getLettre()], 0);
     }
 
-    // for(int i = 0; i < taille; i++)
-    //     cout<<codage[i].first << ": " << codage[i].second<<endl;
-    
+    // Affichage des résultats un à un
     for(std::pair<char, string> p : test_map)
         cout<<p.first << ": " << p.second<<endl;
+
     string * contenunew = new string;
     int ascii;
-    // int code;
     char c;
-    cout << "Here!" << endl;
     for(size_t i = 0 ; i < lecteur.getContenu().size() ; i++)
     {
-        cout << "contenu: " << lecteur.getContenu() << endl;
-        ascii = -1;
-        ascii = int(lecteur.getContenu()[i]);
-        cout << "traitement: "<<ascii<<endl;
+        c = lecteur.getContenu()[i];
+        ascii = int(c);
         if(ascii >= 65 && ascii <= 90)
-        {
             c = (char) (ascii+32);
+        
+        // Si la lettre est dans la map, on ajoute son encodage à la chaîne
+        if (test_map.find(c) != test_map.end()) 
             *contenunew += test_map[c];
-            // code = get_code(codage,c,taille);
-            // *contenunew += codage[code].second;
-        }
-        else if(ascii >= 97 && ascii <= 122)
-        {
-            *contenunew += test_map[lecteur.getContenu()[i]];
-            //  code = get_code(codage,(lecteur.getContenu()[i]),taille);
-            //  *contenunew += codage[code].second;
-        }
-        else
-            *contenunew += lecteur.getContenu()[i];
+        else // Sinon, on ajoute le caractère
+            *contenunew += c;
     }
 
     cout<<"Nouveau texte : "<<*contenunew<<endl;

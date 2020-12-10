@@ -67,15 +67,19 @@ public slots:
     void resultsArrived()  {
         map_res = Context::getInstance().getMapRes();
         std::string tmp = "<center><b>Résultats de l'encodage</b></center><br></br>";
+        std::cout << "SIZE: " << map_res.size() << std::endl;
         for (std::pair <char,std::string> p : map_res) {
             tmp += p.first;
             tmp += " : ";
             tmp += p.second;
             tmp += "<br></br>";
         }
+        std::cout << "strlen: " << tmp << std::endl;
+       
 
         // On actualise l'affichage du texte 
         results->setText(QString::fromStdString(tmp));
+        results->setText(results->text() + "Hello la mif");
     };
 
 signals: 

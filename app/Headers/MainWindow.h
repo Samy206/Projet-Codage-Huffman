@@ -11,7 +11,7 @@
 
 
 /**
- * Fenêtre principale du programme graphique, composé d'une bannière, d'un menu et d'une zone de dessin.
+ * @brief Fenêtre principale du programme graphique, composé d'une bannière, d'un menu et d'une zone de dessin.
  * 
  * @wMenu       MainMenu*       Menu de boutons pour le déroulement du programme
  * @layout      QGridLayout*    Layout en grille pour le programme graphique

@@ -7,13 +7,18 @@
 #include <map>
 #include <utility>
 
+/**
+ * @brief Cryptage: Création de l'arbre de Huffman et encodage du texte en entrée
+ * 
+ * Cette classe constitue le corps de la Partie 2 du projet, une fois le texte lu par le Lecteur, 
+ * l'algorithme de cryptage de Huffman s'exécutera pour construire l'arbre et retourner le texte crypté.
+ */ 
 class Cryptage
 {
    private :
       Lecteur lecteur;
       ArbreB arbre_huffman;
       std::vector<Sommet> arbres_restants;
-      // std::pair <char,std::string> * codage;
       std::map <char,std::string> test_map;
 
    public :
@@ -46,8 +51,6 @@ class Cryptage
        * @brief Algorithme d'encodage: 
        */
       std::string encodage();
-      // int get_code(std::pair<char,std::string> *, char,int);
-
 };
 
 

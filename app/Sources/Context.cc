@@ -61,6 +61,7 @@ void Context::setText(std::string const& val)  {
     cr.construction_arbre();
     crypted_text = cr.encodage();
     map_res = cr.get_map();
+    std::cout << "HereSize: "<< map_res.size() << std::endl; 
 
     // Signal émis l'actualisation de l'affichage texte
     emit textEntered();
