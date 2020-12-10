@@ -2,6 +2,7 @@
 # You may attempt to use it for building too, by modifying this file here.
 
 #TARGET = ProjetPartie1 
+RESOURCES += qdarkstyle/style.qrc
 
 QT = core gui widgets
 
@@ -27,5 +28,7 @@ SOURCES = \
 
 INCLUDEPATH = \
     $$PWD/Headers
+
+
 
 #DEFINES = 

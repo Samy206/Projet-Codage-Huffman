@@ -21,6 +21,11 @@ GetUserText::GetUserText()
     bValider->show();
     layout->addWidget(bValider, 2, 1);
 
+    // Bouton Zoomer
+    bZoomer = new QPushButton("Zoom", this);
+    bZoomer->show();
+    layout->addWidget(bZoomer, 2, 2);
+
     // Label pour le texte initial
     std::string tmp = "Text: " + Context::getInstance().getText();
     wContenu = new QLabel(QString::fromStdString(tmp));
@@ -38,13 +43,15 @@ GetUserText::GetUserText()
     connect(input_txt, SIGNAL(returnPressed()), this, SLOT(setText()));
 
     connect(&Context::getInstance(), SIGNAL(textEntered()), this, SLOT(textEntered()));
+
+    connect(bZoomer, SIGNAL(clicked()), this, SLOT(zoomed()));
     
     ////
 
     // Bouton Quitter
     bQuitter = new QPushButton("Quitter", this);
     bQuitter->show();
-    layout->addWidget(bQuitter, 2, 2);
+    layout->addWidget(bQuitter, 2, 3);
 
     // On connect le bouton quitter au quitter de l'application Qt
     connect(bQuitter, SIGNAL(clicked()), qApp, SLOT(quit()));
@@ -70,4 +77,8 @@ void GetUserText::textEntered() {
     
     // On clear la barre de saisie
     input_txt->setText("");
+}
+
+void GetUserText::zoomed() {
+    Context::getInstance().changeZoom();
 }

@@ -16,6 +16,7 @@ class GetUserText : public QFrame {
 private:
     QPushButton *bValider;
     QPushButton *bQuitter;
+    QPushButton *bZoomer;
 
     QLineEdit *input_txt;
     QGridLayout* layout; // Grid Layout pour la saisie + quit
@@ -37,6 +38,8 @@ public:
 
 public slots:
     void setText();
+
+    void zoomed();
 
     void textEntered();
 

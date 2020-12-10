@@ -17,6 +17,7 @@ class Context : public QObject {
 private:
     std::string txt_to_crypt; // Texte initial à crypter
     std::string crypted_text; // Résultat crypté
+    int zoom = 0; // Permet de zoomer lors de l'affichage
     ArbreB arbre_courant;
 
     Context() {
@@ -73,6 +74,9 @@ public:
      */
     ArbreB* getArbre() { return &arbre_courant; };
 
+    int getZoom() { return zoom; };
+    void changeZoom() { zoom = 3-zoom; emit arbreChanged(); };
+
     /**
      * @brief Getter pour le texte en entrée
      * 
@@ -117,17 +121,6 @@ public slots:
     void genereArbre() {
         // setArbre(0);
     }
-
-    void decomposeGauche() {
-        // setArbre(1);
-    }
-    void decomposeDroite() {
-        // setArbre(2);
-    }
-    void fusion() {
-        // setArbre(4);
-    }
-
 
 signals:
     /**

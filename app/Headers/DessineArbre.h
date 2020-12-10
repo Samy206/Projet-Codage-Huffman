@@ -43,6 +43,7 @@ public :
      * Représente l'arbre binaire sur l'interface
      */ 
     void paint_tree_scales(Sommet *, int x , int *y, int last, int k, QPainter*, QPen*);
+    void paint_tree_scales(Sommet *, int x , int *y, int k, QPainter*, QPen*);
 
     /**
      * Déclenche l'évènement "dessin" à l'exécution du programme 

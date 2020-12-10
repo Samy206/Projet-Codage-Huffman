@@ -52,6 +52,7 @@ ${OUT_DIR}:
 
 clean:
 	rm -f *.o
+	rm -f qrc_style.cpp
 	rm -f ProjetPartie1
 	rm -f QMakefile
 	rm -rf ${OUT_DIR}
