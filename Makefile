@@ -12,9 +12,9 @@ debug: compil
 
 # Execution en GUI (Interface graphique Qt)
 gui: 
-	qmake -makefile -o QMakefile app/ProjetPartie1.pro
+	qmake -makefile -o QMakefile app/Partie2Cryptage.pro
 	make -f QMakefile
-	./ProjetPartie1
+	./Partie2Cryptage
 
 # Listing des fichiers
 listing:
@@ -53,7 +53,7 @@ ${OUT_DIR}:
 clean:
 	rm -f *.o
 	rm -f qrc_style.cpp
-	rm -f ProjetPartie1
+	rm -f Partie2Cryptage
 	rm -f QMakefile
 	rm -rf ${OUT_DIR}
 	rm -rf doc/

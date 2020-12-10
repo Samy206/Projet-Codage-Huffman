@@ -21,6 +21,7 @@ class DisplayResults : public QWidget {
 
 private :
     QLabel *results;
+    QLabel *signature;
     QVBoxLayout *layout;
 
     std::map <char,std::string> map_res;
@@ -42,11 +43,18 @@ public :
             tmp += "<br></br>";
         }
 
+        // QLabel pour afficher les résultats
         results = new QLabel(QString::fromStdString(tmp));
         // results->setAlignment(Qt::AlignCenter);
         results->setMargin(10);
         results->show();
-        layout->addWidget(results);
+        layout->addWidget(results, Qt::AlignCenter);
+
+        layout->addSpacing(40);
+        // QLabel signature
+        signature = new QLabel("<center><b>Projet LA - Partie 2</b><br></br>Samy BOUMALI & Amine ATEK</center>");
+        signature->show();
+        layout->addWidget(signature,Qt::AlignBottom);
 
         connect(&Context::getInstance(), SIGNAL(resultsArrived()), this, SLOT(resultsArrived()));
     };
@@ -67,19 +75,16 @@ public slots:
     void resultsArrived()  {
         map_res = Context::getInstance().getMapRes();
         std::string tmp = "<center><b>Résultats de l'encodage</b></center><br></br>";
-        std::cout << "SIZE: " << map_res.size() << std::endl;
         for (std::pair <char,std::string> p : map_res) {
             tmp += p.first;
             tmp += " : ";
             tmp += p.second;
             tmp += "<br></br>";
         }
-        std::cout << "strlen: " << tmp << std::endl;
        
 
         // On actualise l'affichage du texte 
         results->setText(QString::fromStdString(tmp));
-        results->setText(results->text() + "Hello la mif");
     };
 
 signals: 

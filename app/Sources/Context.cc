@@ -5,9 +5,8 @@
  */
 Context::Context()  {
     // On initie le contexte avec le texte fourni initialement
-    // A_DEAD_DAD_CEDED_A_BAD_BABE_A_BEADED_ABACA_BED
-    std::ifstream myfile("Texte.txt");
-    setText(myfile);
+    // std::ifstream myfile("Texte.txt");
+    setText("Bienvenue sur notre partie 2 !");
 }
 
 // Setters:
@@ -50,18 +49,16 @@ void Context::setText(std::ifstream & file)  {
  */
 void Context::setText(std::string const& val)  {
     txt_to_crypt = val;
-    std::cout << "Nouveau texte: " << val << std::endl;
 
     Lecteur l;
     l.lecture(val);
-    std::cout << "Text: " << l.getContenu() << std::endl;
+    std::cout << "Texte à coder: " << l.getContenu() << std::endl;
 
     // Faire un nouvel arbre
     Cryptage cr(l);
     cr.construction_arbre();
     crypted_text = cr.encodage();
     map_res = cr.get_map();
-    std::cout << "HereSize: "<< map_res.size() << std::endl; 
 
     // Signal émis l'actualisation de l'affichage texte
     emit textEntered();

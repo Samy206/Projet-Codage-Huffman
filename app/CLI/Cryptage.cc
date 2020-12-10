@@ -178,7 +178,7 @@ string Cryptage::encodage() {
             *contenunew += c;
     }
 
-    cout<<"Nouveau texte : "<<*contenunew<<endl;
+    cout<<"Texte codé: "<<*contenunew<<endl;
     return *contenunew;
 }
 

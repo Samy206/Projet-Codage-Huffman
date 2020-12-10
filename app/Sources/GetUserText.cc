@@ -8,6 +8,7 @@ GetUserText::GetUserText()
 
     // QLineEdit pour la saisie de texte
     input_txt = new QLineEdit();
+    input_txt->setPlaceholderText("Saisissez ici le texte à encoder");
     input_txt->show();
     layout->addWidget(input_txt, 2, 0); // Deuxième de la grille de menu, à gauche
 
@@ -70,6 +71,14 @@ void GetUserText::textEntered() {
     
     // On actualise l'affichage du resultat
     tmp = "<b>Texte codé : </b>" + Context::getInstance().getResult();
+    if( tmp.length() > 130)
+    {
+        for(int i = 1; i <= tmp.length()/130; i++)
+        {
+            int n = i * 130;
+            tmp.insert(n, " ");
+        }
+    }
     wResult->setText(QString::fromStdString(tmp));
     
     // On clear la barre de saisie
