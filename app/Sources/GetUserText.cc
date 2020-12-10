@@ -5,11 +5,6 @@ GetUserText::GetUserText()
 {
     layout = new QGridLayout();
     setLayout(layout);
-    // layout->setAlignment(Qt::AlignCenter);
-
-    // On définit le style et l'ombrage de Frame
-    setFrameShape(Panel);
-    setFrameShadow(Sunken);
 
     // QLineEdit pour la saisie de texte
     input_txt = new QLineEdit();
@@ -27,14 +22,16 @@ GetUserText::GetUserText()
     layout->addWidget(bZoomer, 2, 2);
 
     // Label pour le texte initial
-    std::string tmp = "Text: " + Context::getInstance().getText();
+    std::string tmp = "<b>Texte à coder : </b>"+ Context::getInstance().getText();
     wContenu = new QLabel(QString::fromStdString(tmp));
+    wContenu->setWordWrap(true);
     wContenu->show();
     layout->addWidget(wContenu, 0, 0, 1, 3); // Premier de la grille de menu
 
     // Label pour le texte codé
-    tmp = "Crypted: " + Context::getInstance().getResult();
+    tmp = "<b>Texte codé : </b>" + Context::getInstance().getResult();
     wResult = new QLabel(QString::fromStdString(tmp));
+    wResult->setWordWrap(true); // Retour à la ligne si le texte est trop long
     wResult->show();
     layout->addWidget(wResult, 1, 0, 1, 3); // Premier de la grille de menu
 
@@ -68,11 +65,11 @@ void GetUserText::setText() {
 // Signal reçu par le contexte après enregistrement du nouveau texte
 void GetUserText::textEntered() {
     // On actualise l'affichage du texte 
-    std::string tmp = "Text: " + Context::getInstance().getText();
+    std::string tmp = "<b>Texte à coder : </b>" + Context::getInstance().getText();
     wContenu->setText(QString::fromStdString(tmp));
     
     // On actualise l'affichage du resultat
-    tmp = "Crypted: " + Context::getInstance().getResult();
+    tmp = "<b>Texte codé : </b>" + Context::getInstance().getResult();
     wResult->setText(QString::fromStdString(tmp));
     
     // On clear la barre de saisie

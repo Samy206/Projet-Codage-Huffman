@@ -4,6 +4,7 @@
 #include "ArbreB.h"
 #include "Sommet.h"
 #include <string>
+#include <map>
 #include <utility>
 
 class Cryptage
@@ -12,16 +13,22 @@ class Cryptage
       Lecteur lecteur;
       ArbreB arbre_huffman;
       std::vector<Sommet> arbres_restants;
-      std::pair <char,std::string> * codage;
+      // std::pair <char,std::string> * codage;
+      std::map <char,std::string> test_map;
 
    public :
       /**
-       * Constructeur de classe
+       * Constructeur et destructeur de classe
        */
       Cryptage(Lecteur&);
       ~Cryptage();
-      ArbreB& get_arbre() {return arbre_huffman;};
+
       void echange(const int, const int) ;
+
+      // Getter pour l'arbre de Huffman
+      ArbreB& get_arbre() {return arbre_huffman;};
+      // Getter pour la map des résultats encodés
+      std::map <char,std::string> get_map() { return test_map; };
 
       /**
        * @brief Algorithme de cryptage: création de l'arbre de Huffman à partir d'un vecteur de lettres et occurences.
@@ -34,8 +41,12 @@ class Cryptage
        * 2. Création de l'arbre A (Sommet `newSomm`) étiqueté e1 + e2 et attribution de ses fils A1 et A2
        */ 
       void construction_arbre();
+
+      /**
+       * @brief Algorithme d'encodage: 
+       */
       std::string encodage();
-      int get_code(std::pair<char,std::string> *, char,int);
+      // int get_code(std::pair<char,std::string> *, char,int);
 
 };
 

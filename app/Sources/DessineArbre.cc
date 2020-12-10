@@ -178,12 +178,12 @@ void DessineArbre::paintEvent(QPaintEvent *e) {
     font.setPointSize(font.pointSize() + zoom); paint.setFont(font);
 
     // Fixe la longueur et la hauteur des rectangles selon la taille du texte
-    lrect = 0; calcul_ltext(arbre->getRacine(), &paint); lrect += lrect/5;
+    lrect = 0; calcul_ltext(arbre->getRacine(), &paint); lrect += lrect/2;
     hrect = paint.fontMetrics().height(); hrect += hrect/2;
 
     int y = 20;
     // paint_tree_scales(arbre->getRacine(), 10, &y, 1, 40*(1.2 + zoom/10), &paint, &pen); // Old version
-    paint_tree_scales(arbre->getRacine(), 10, &y, 40*(1.2 + zoom/10), &paint, &pen);
+    paint_tree_scales(arbre->getRacine(), 10, &y, 40*(1 + zoom/10), &paint, &pen);
     resize(max_x+90, y);
 };
 

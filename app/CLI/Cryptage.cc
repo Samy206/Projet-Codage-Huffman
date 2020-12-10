@@ -97,7 +97,7 @@ void Cryptage::construction_arbre() {
     vector<char> tmp1 = lecteur.getLettres(); // Vector des lettres
 
     // Initialement, on créé un Sommet pour chacune des lettre présente dans le texte
-    for(int i = 0 ; i < tmp1.size() ; i++) {
+    for(size_t i = 0 ; i < tmp1.size() ; i++) {
 
        Sommet * tmp = new Sommet(tmp1[i], tmp2[i], 1);
        arbres_restants.push_back(*tmp);
@@ -141,63 +141,66 @@ void Cryptage::construction_arbre() {
     }
 
     // On ajoute maintenant ce Sommet à l'Arbre de la classe Cryptage
-
-    //// *** PARTIE À RETIRER QUAND ON RÉUSSIRA L'AJOUT DU SOMMET À L'ARBRE DE LA CLASSE *** ////
-
-    char *indent = new char[1]; indent[0] = '\0'; // Utile pour afficher les arbres dans le terminal
-    delete[] indent;
-
     arbre_huffman.ajout(arbre_huffman.getRacine(), &combinaisons->back());
     //std::cout<<"Taille arbre: "<< arbre_huffman.getTaille() << endl;
     //std::cout << arbre_huffman << endl;
-
 };
 
 
-int Cryptage::get_code(pair<char,string> * vec, char lettre, int size)
-{
-    int indice = -1;
-    for(int i = 0 ; i < size ; i++)
-    {
-        if(vec[i].first == lettre)
-        {
-            indice = i;
-            break;
-        }
-    }
-    return indice;
-};
+// int Cryptage::get_code(pair<char,string> * vec, char lettre, int size)
+// {
+//     int indice = -1;
+//     for(int i = 0 ; i < size ; i++)
+//     {
+//         if(vec[i].first == lettre)
+//         {
+//             indice = i;
+//             break;
+//         }
+//     }
+//     return indice;
+// };
 
 string Cryptage::encodage() {
     int taille = arbres_restants.size();
-    //cout<<"taille des sommets "<<taille<<"\n\n";
-    codage = new std::pair <char, string> [taille];
+    // codage = new std::pair <char, string> [taille];
     for(int i = 0 ; i < taille; i++) {
-        codage[i].first = arbres_restants[i].getLettre();
-        codage[i].second = "";
+        // codage[i].first = arbres_restants[i].getLettre();
+        // codage[i].second = "";
+        test_map.insert(std::make_pair(arbres_restants[i].getLettre(), ""));
 
-        arbre_huffman.create_code(arbre_huffman.getRacine(), arbres_restants[i].getLettre(), codage[i].second, 0);
+        // arbre_huffman.create_code(arbre_huffman.getRacine(), arbres_restants[i].getLettre(), codage[i].second, 0);
+        arbre_huffman.create_code(arbre_huffman.getRacine(), arbres_restants[i].getLettre(), test_map[arbres_restants[i].getLettre()], 0);
     }
 
+    // for(int i = 0; i < taille; i++)
+    //     cout<<codage[i].first << ": " << codage[i].second<<endl;
+    
+    for(std::pair<char, string> p : test_map)
+        cout<<p.first << ": " << p.second<<endl;
     string * contenunew = new string;
     int ascii;
-    int code;
+    // int code;
     char c;
+    cout << "Here!" << endl;
     for(size_t i = 0 ; i < lecteur.getContenu().size() ; i++)
     {
+        cout << "contenu: " << lecteur.getContenu() << endl;
         ascii = -1;
         ascii = int(lecteur.getContenu()[i]);
-
+        cout << "traitement: "<<ascii<<endl;
         if(ascii >= 65 && ascii <= 90)
         {
             c = (char) (ascii+32);
-            code = get_code(codage,c,taille);
-            *contenunew += codage[code].second;
+            *contenunew += test_map[c];
+            // code = get_code(codage,c,taille);
+            // *contenunew += codage[code].second;
         }
         else if(ascii >= 97 && ascii <= 122)
         {
-             code = get_code(codage,(lecteur.getContenu()[i]),taille);
-             *contenunew += codage[code].second;
+            *contenunew += test_map[lecteur.getContenu()[i]];
+            //  code = get_code(codage,(lecteur.getContenu()[i]),taille);
+            //  *contenunew += codage[code].second;
         }
         else
             *contenunew += lecteur.getContenu()[i];

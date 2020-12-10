@@ -17,15 +17,20 @@ MainWindow::MainWindow() {
     layout->addWidget(label_img, 0, 0, 1, 2);
     */
 
-    // Main menu (Bottom)
-    // wMenu = new MainMenu();
-    // wMenu->show();
-    // layout->addWidget(wMenu, 3, 0, 3, 2);
-
-
+    // Zone d'intéraction avec l'utilisateur (barre de saisie et boutons)
     wInput = new GetUserText();
     wInput->show();
+    // wInput->setMaximumWidth(2000);
     layout->addWidget(wInput, 2, 0, 1, 2);
+
+    // Zone résultats
+    resultats = new DisplayResults();
+
+    wZoneResultats = new QScrollArea(this);
+    wZoneResultats->setWidget(resultats);
+    wZoneResultats->show();
+    wZoneResultats->setMaximumWidth(260);
+    layout->addWidget(wZoneResultats, 0, 1);
 
     // Zone de dessin (Mid)
     dessin = new DessineArbre();
@@ -33,7 +38,7 @@ MainWindow::MainWindow() {
     wZoneArbre = new QScrollArea(this);
     wZoneArbre->setWidget(dessin);
     wZoneArbre->show();
-    wZoneArbre->setMinimumSize(800, 300);
+    // wZoneArbre->setMinimumSize(800, 300);
     layout->addWidget(wZoneArbre, 0, 0);
 }
 

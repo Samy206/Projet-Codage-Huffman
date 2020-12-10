@@ -18,6 +18,7 @@ class Context : public QObject {
 private:
     std::string txt_to_crypt; // Texte initial à crypter
     std::string crypted_text; // Résultat crypté
+    std::map <char,std::string> map_res; // Map des résultats encodés
     int zoom = 0; // Permet de zoomer lors de l'affichage
     ArbreB arbre_courant;
 
@@ -58,10 +59,16 @@ public:
      * @brief Getter de texte en entrée @return std::string
      */
     std::string getText() { return txt_to_crypt; };
+
     /**
      * @brief Getter de texte crypté (résultat) @return std::string
      */
     std::string getResult() { return crypted_text; };
+
+    /**
+     * @brief Getter de la map du texte encodé @return std::pair <char, std::string> *
+     */
+    std::map <char,std::string> getMapRes() { return map_res; };
 
     // Setters:
 
@@ -103,4 +110,6 @@ signals:
    void arbreChanged();
 
    void textEntered();
+
+   void resultsArrived();
 };

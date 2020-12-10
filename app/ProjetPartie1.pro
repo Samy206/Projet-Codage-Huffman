@@ -14,6 +14,7 @@ HEADERS = \
    $$PWD/Headers/DessineArbre.h \
    $$PWD/Headers/MainWindow.h \
    $$PWD/Headers/GetUserText.h \
+   $$PWD/Headers/DisplayResults.h \
    $$PWD/Headers/Context.h 
 
 SOURCES = \

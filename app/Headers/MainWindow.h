@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include "GetUserText.h"
+#include "DisplayResults.h"
 #include "DessineArbre.h"
 
 #include <QMainWindow>
@@ -22,9 +23,11 @@ private :
     GetUserText* wInput;
     QGridLayout* layout; // Grid Layout pour l'affichage
 
-    QScrollArea* wZoneArbre;
+    DisplayResults* resultats;
+    QScrollArea* wZoneResultats;
 
     DessineArbre* dessin;
+    QScrollArea* wZoneArbre;
 
 public :
     /**

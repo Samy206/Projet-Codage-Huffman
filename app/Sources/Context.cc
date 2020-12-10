@@ -18,13 +18,9 @@ Context::Context()  {
  * @param e_arbre
  */
 void Context::setArbre(ArbreB arbre) {
-    // if (arbre_courant.getTaille() != 0) 
-    //     arbre_courant.free_tree(arbre_courant.getRacine());
-    
-    // arbre_courant.ajout(arbre);
-
+    // L'opérateur = de l'arbre se charge de faire les frees nécessaires
     arbre_courant = arbre;
-    std::cout << "Done !" << std::endl;
+    // Signal émis à DessineArbre pour récupérer le nouvel arbre
     emit arbreChanged();
 }
 
@@ -64,24 +60,22 @@ void Context::setText(std::string const& val)  {
     Cryptage cr(l);
     cr.construction_arbre();
     crypted_text = cr.encodage();
+    map_res = cr.get_map();
 
     // Signal émis l'actualisation de l'affichage texte
     emit textEntered();
-    
+    emit resultsArrived();
+
     // PRINT à RETIRER une FOIS QUE PLUS DE BUGS
     std::cout << cr.get_arbre() << std::endl; // Ok !
 
-    // Vider l'arbre courant et set l'arbre
-
     setArbre(cr.get_arbre());
-    
-    // Le mettre dans arbre_courant
 }
 
 /**
  * @brief Setter pour modifier le paramètre Zoom
  */
 void Context::changeZoom()  { 
-    zoom = 3-zoom; 
+    zoom = 10-zoom; 
     emit arbreChanged(); 
 };
