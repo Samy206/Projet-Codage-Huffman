@@ -32,12 +32,10 @@ Sommet::Sommet(const Sommet& s)
     taille = s.taille;
 
     if (s.filsd != NULL) {
-        if(filsd != NULL) delete filsd;
         filsd = new Sommet(*s.filsd);
     }
 
     if (s.filsg != NULL) {
-        if(filsg != NULL) delete filsg;
         filsg = new Sommet(*s.filsg);
     }
 };
@@ -46,12 +44,9 @@ Sommet::Sommet(const Sommet& s)
 /*L'opérateur '=' utilise les setteurs afin de reprendre et copier les données du sommet passé en param*/
 void Sommet::operator=(const Sommet& source)
 {
-    char lettrea = source.lettre;
-    int lettreb = source.freq;
-    int lettrec = source.taille;
-    lettre = lettrea;
-    freq = lettreb;
-    taille = lettrec;
+    lettre = source.lettre;
+    freq = source.freq;
+    taille = source.taille;
     if(source.filsd != NULL )
     {
         if(filsd != NULL) delete filsd;
@@ -105,6 +100,8 @@ char* Sommet::formalize_sommet() {
     return sommet;
 }
 
+/*Cette méthode libère la mémoire d'un sommet (et de ses fils potentiels)  avant qu'on copie d'autres données dans ce
+dernier, et on adopte la récursion comme pour les arbres*/
 void Sommet::clean_sommet()
 {
     Sommet * tmp1 = filsg;
