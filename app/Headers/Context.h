@@ -7,8 +7,9 @@
 #include <QtCore/QObject>
 
 /**
- * @brief Contexte principale de l'application
+ * @brief Contexte principal de l'application
  * 
+ * Permet de gérer l'arbre courant, les textes en entrées et sorties, ainsi que quelques options globales.
  */
 class Context : public QObject {
 
@@ -20,18 +21,10 @@ private:
     int zoom = 0; // Permet de zoomer lors de l'affichage
     ArbreB arbre_courant;
 
-    Context() {
-        std::ifstream myfile("Texte.txt");
-        std::stringstream strStream;
-        std::string contenu;
-        if(myfile.is_open()) {
-            strStream << myfile.rdbuf(); //read the file
-            contenu = strStream.str(); //str holds the content of the file
-        }
-        myfile.close();
-
-        setText(contenu);
-    }
+    /**
+     * @brief Constructeur de classe déclaré private, le getter d'instance sera public
+     */
+    Context(); 
 
 public:
 
@@ -40,8 +33,7 @@ public:
      * 
      * @return Context& 
      */
-    static Context& getInstance()
-    {
+    static Context& getInstance() {
         static Context singleton;
         return singleton;
     }
@@ -50,77 +42,58 @@ public:
     Context(Context const&) = delete;
     Context& operator=(Context const&) = delete;
 
-    /**
-     * @brief Setter pour l'arbre contexte
-     *
-     * @param e_arbre
-     */
-    void setArbre(ArbreB arbre) {
-        // if (arbre_courant.getTaille() != 0) 
-        //     arbre_courant.free_tree(arbre_courant.getRacine());
-        
-        // arbre_courant.ajout(arbre);
-
-        arbre_courant = arbre;
-        std::cout << "Done !" << std::endl;
-        emit arbreChanged();
-    }
-
+    // Getters:
 
     /**
-     * @brief Getter pour l'arbre contexte
-     *
-     * @return ArbreB
+     * @brief Getter pour l'arbre contexte @return ArbreB*
      */
     ArbreB* getArbre() { return &arbre_courant; };
 
+    /**
+     * @brief Getter pour l'option Zoom du contexte @return int
+     */
     int getZoom() { return zoom; };
-    void changeZoom() { zoom = 3-zoom; emit arbreChanged(); };
 
     /**
-     * @brief Getter pour le texte en entrée
-     * 
-     * @return std::string texte
-     */ 
+     * @brief Getter de texte en entrée @return std::string
+     */
     std::string getText() { return txt_to_crypt; };
-
+    /**
+     * @brief Getter de texte crypté (résultat) @return std::string
+     */
     std::string getResult() { return crypted_text; };
 
-    // Nouveau texte reçu, on emet le signal textEntered pour actualiser l'affichage texte
-    void setText(std::string const& val)
-    {
-        txt_to_crypt = val;
-        std::cout << "Nouveau texte: " << val << std::endl;
+    // Setters:
 
-        Lecteur l;
-        l.lecture(val);
-        std::cout << "Text: " << l.getContenu() << std::endl;
+    /**
+     * @brief Setter pour l'arbre courant du contexte
+     *
+     * @param e_arbre
+     */
+    void setArbre(ArbreB arbre);
 
-        // Faire un nouvel arbre
-        Cryptage cr(l);
-        cr.construction_arbre();
-        crypted_text = cr.encodage();
+    /**
+     * @brief Setter pour modifier le texte en entrée à partir d'un fichier (après action de l'utilisateur)
+     * 
+     * @param file
+     */
+    void setText(std::ifstream & file);
 
-        emit textEntered();
-        
-        std::cout << cr.get_arbre() << std::endl; // Ok !
+    /**
+     * @brief Setter pour modifier le texte en entrée à partir d'une string (après action de l'utilisateur)
+     * 
+     * On émet le signal textEntered() pour activer la suite du processus d'actualisation
+     * @param string
+     */
+    void setText(std::string const& val);
 
-        // Vider l'arbre courant et set l'arbre
-
-        setArbre(cr.get_arbre());
-        
-        // Le mettre dans arbre_courant
-    }
-
+    /**
+     * @brief Setter pour modifier le paramètre Zoom
+     */
+    void changeZoom(); 
 
 public slots:
-    /**
-     * @brief Re-génère un arbre binaire étiqueté aléatoire
-     *
-     */
-    void genereArbre() {
-        // setArbre(0);
-    }
+
 
 signals:
     /**

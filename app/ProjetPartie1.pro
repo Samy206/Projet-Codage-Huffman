@@ -24,6 +24,7 @@ SOURCES = \
    $$PWD/Sources/DessineArbre.cc \
    $$PWD/Sources/MainWindow.cc \
    $$PWD/Sources/GetUserText.cc \
+   $$PWD/Sources/Context.cc \
    $$PWD/Sources/graphicMain.cc
 
 INCLUDEPATH = \
