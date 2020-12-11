@@ -6,7 +6,7 @@ using namespace std;
 
 int main(int argc, char* argv[]) {
     Lecteur l;
-    ifstream mytext("Texte.txt");
+    ifstream mytext("app/text.txt");
     l.lecture(mytext);
     std::cout << "Text: " << l.getContenu() << endl;
     Cryptage cr(l);

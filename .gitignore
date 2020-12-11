@@ -39,6 +39,6 @@ build*/
 .idea/
 *.xml
 *.iml
-
+.vscode/ # VSC
 
 
