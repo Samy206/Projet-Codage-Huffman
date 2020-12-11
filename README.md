@@ -5,9 +5,7 @@ Samy BOUMALI & Amine ATEK
 
 Cette archive contient le répertoire `app/` contenant les sources et headers du programme CLI et Graphique ; un mécanisme de construction (`Makefile`) dont les commandes sont répertoriés après ce texte, un `Doxyfile` utile à la génération d'une documentation faisant office de listing commenté, d'un compte rendu `CR_Boumali_Atek.pdf`, du répertoire `qdarkstyle` permettant la personnalisation de l'affichage graphique ainsi que de ce présent fichier `README.md`. 
 
-
-
-## Commandes et utilisation
+## Commandes et utilisation
 
 1. Exécuter la partie 2 (sous interface graphique) :
 ```
