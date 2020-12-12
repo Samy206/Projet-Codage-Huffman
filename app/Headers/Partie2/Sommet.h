@@ -1,6 +1,8 @@
 #ifndef SOMMET_H
 #define SOMMET_H
 #include <iostream>
+#include <iomanip>
+#include <sstream>
 #include <vector>
 
 
@@ -63,7 +65,7 @@ class Sommet
         /**
          *  Représente un sommet sous la forme d'une chaîne de caractère (char : freq) 
          * */
-        char* formalize_sommet();
+        std::string formalize_sommet();
     
         /**
          *  Surcharge des opérateurs =, + et << 

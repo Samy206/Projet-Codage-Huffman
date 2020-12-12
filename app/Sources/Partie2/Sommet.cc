@@ -100,10 +100,10 @@ std::ostream& operator<<(std::ostream& flux,Sommet& sommet) //affichage de la le
    *Ici on affiche un sommet de façon plus 'mathématique', c-a-d qu'il est sous forme de couple de valeurs (utilisé
     dans l'affichage d'un arbre)
 */
-char* Sommet::formalize_sommet() {
-    char* sommet = new char[15];
-    sprintf(sommet, "(%c : %.1f)", lettre, freq);
-    sommet[14] = '\0';
+std::string Sommet::formalize_sommet() {
+    std::stringstream stream;
+    stream << "("<<lettre<<" : "<<std::fixed << std::setprecision(1) << freq<<")";
+    std::string sommet = stream.str();
     return sommet;
 }
 
