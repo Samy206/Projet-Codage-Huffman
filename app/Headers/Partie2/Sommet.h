@@ -20,7 +20,7 @@ class Sommet
 {
     private :
         char lettre;
-        int freq;
+        float freq;
         int taille;
         Sommet * filsg ;
         Sommet * filsd ;
@@ -32,7 +32,7 @@ class Sommet
          * - Constructeur vide déclaré implicitement
          * - Constructeur par copie
          */
-        Sommet(char =' ',int = 0, int = 0);
+        Sommet(char =' ',float = 0, int = 0);
         // Sommet(Sommet &);
         // CONST PAR COPIE 2
         Sommet(const Sommet& source);
@@ -46,7 +46,7 @@ class Sommet
          *  Getters des attributs privés (déclarés inline) pour assurer l'encapsulation 
          * */
         char getLettre() {return lettre;};
-        int getFreq() {return freq;};
+        float getFreq() {return freq;};
         Sommet * getFilsG() {return filsg;};
         Sommet * getFilsD() {return filsd;};
         int getTaille() {return taille;};

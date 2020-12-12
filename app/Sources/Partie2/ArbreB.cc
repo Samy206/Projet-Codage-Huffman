@@ -2,10 +2,12 @@
 using namespace std;
 
 
-/*Ce constructeur se base sur la méthode ajout qui est implémentée pour ajouter un sommet dans toutes les situations
-(y compris quand l'arbreB est vide), et on peut donc ajouter plusieurs sommets via un tableau et sa taille
-PS : les variables racine et taille sont mis à jour à chaque ajout , et hauteur est calculée une fois qu'on a ajouté
-tout les sommets*/
+/**
+  * Ce constructeur se base sur la méthode ajout qui est implémentée pour ajouter un sommet dans toutes les situations
+    (y compris quand l'arbreB est vide), et on peut donc ajouter plusieurs sommets via un tableau et sa taille
+    PS : les variables racine et taille sont mis à jour à chaque ajout , et hauteur est calculée une fois qu'on a ajouté
+    tout les sommets
+*/
 
 ArbreB::ArbreB(Sommet * sommets , int size )
 {
@@ -22,7 +24,9 @@ ArbreB::ArbreB(Sommet * sommets , int size )
     hauteur = calcule_hauteur(racine);
 };
 
-/*Ce deuxième constructeur se base entièrement sur l'opérateur '='*/
+/**
+    *Ce deuxième constructeur se base entièrement sur l'opérateur '='
+*/
 ArbreB::ArbreB(ArbreB& arbre)
 {
     racine = NULL;
@@ -31,9 +35,10 @@ ArbreB::ArbreB(ArbreB& arbre)
     *this = arbre;
 };
 
-/* Si l'arbre this est vide
-      on copie la taille et la hauteur, et on utilise la méthode ajout avec la variable 'arbre' en paramètre
-   Sinon
+/**
+   *Si l'arbre "this" est vide
+     on copie la taille et la hauteur, et on utilise la méthode ajout avec la variable 'arbre' en paramètre
+   *Sinon
       on commence par libérer la mémoire de l'arbre actuelle et on copie l'autre
 */
 void ArbreB::operator=(ArbreB& arbre)
@@ -42,8 +47,9 @@ void ArbreB::operator=(ArbreB& arbre)
     ajout(arbre);
 };
 
-/* Pour la première méthode récursive on a la méthode ajout avec un sommet :
-   On avance dans l'arbre avec le noeud nommée 'existant' ,
+/**
+  *Pour la première méthode récursive on a la méthode ajout avec un sommet :
+  *On avance dans l'arbre avec le noeud nommée 'existant' ,
         si on arrive sur un noeud null : ( ça ne peut arriver que pour la racine d'où la ligne 74 ) ,
             on l'ajoute à ce sommet.
 
@@ -55,7 +61,8 @@ void ArbreB::operator=(ArbreB& arbre)
                 on fait la même chose mais à droite
             et bien sûr on incrémente l'attribut 'taille'
 
-Grâce à ça on obtient un arbre binaire de recherche classé selon la fréquence.*/
+  *Grâce à ça on obtient un arbre binaire de recherche classé selon la fréquence.
+*/
 void ArbreB::ajout(Sommet * existant,Sommet *nouveau)
 {
     int freqNew = nouveau->getFreq();
@@ -94,9 +101,12 @@ void ArbreB::ajout(Sommet * existant,Sommet *nouveau)
 
 };
 
-/*Cette méthode reprend les grandes lignes des lignes de la méthode précédente mais à partir d'un caractère et une
-fréquence on crée un sommet tout en l'ajoutant à l'arbre*/
-void ArbreB::ajout(Sommet* existant,const char car, const int occurence)
+/**
+   *Cette méthode reprend les grandes lignes des lignes de la méthode précédente mais à partir d'un caractère et une
+    fréquence on crée un sommet tout en l'ajoutant à l'arbre. Ainsi, l'arbre est "responsable" de la mémoire allouée
+    afin de créer les sommets
+*/
+void ArbreB::ajout(Sommet* existant,const char car, const float occurence)
 {
 
     if(existant == NULL)
@@ -134,18 +144,12 @@ void ArbreB::ajout(Sommet* existant,const char car, const int occurence)
     hauteur = calcule_hauteur(getRacine());
 };
 
-/* La méthode copie_sommets copie tout les sommets d'un arbre et renvoie le premier sommet qui a été copié, c'est donc
-la copie totale d'un arbre qui est faite. On se base ici sur la surcharge de l'opérateur '=' de défini dans la classe
-Sommet*/
-/*Sommet * ArbreB::copie_sommets(Sommet * source)
-{
-    if(source != NULL) ajout(racine,source->getLettre(),source->getFreq());
-    return NULL;
-};*/
 
-/* La méthode ajout avec un ArbreB ajoute la copie de tout ses sommets en faisant appel à la méthode précédente,
-puis on ajoute cette copie au premier sommet de libre ( conformément à l'ABR) de l'arbre *this .
-On fait cela pour éviter les problèmes d'appels au destructeurs à la fin du code.*/
+/**
+   *La méthode ajout avec un ArbreB ajoute la copie de tout ses sommets en faisant appel à l'opérateur "=" de la classe
+    Sommet qui gère déjà les fils à partir d'un sommet quelconque. On se contente donc d'allouer de la mémoire
+    à la racine et on copie l'arbre passé en paramètre.
+*/
 void ArbreB::ajout(ArbreB& arbre)
 {
     racine = new Sommet;
@@ -153,7 +157,9 @@ void ArbreB::ajout(ArbreB& arbre)
 };
 
 
-/*Cette méthode affiche l'arbre en forme d'escaliers de manière récursive */
+/**
+   *Cette méthode affiche l'arbre en forme d'escaliers de manière récursive
+*/
 void ArbreB::print_tree(Sommet *root, char *indent, int last) {
     if (root == NULL)
         return;
@@ -182,7 +188,9 @@ void ArbreB::print_tree(Sommet *root, char *indent, int last) {
     }
 }
 
-/*Cet opérateur se contente de faire appel à la méthode précédente*/
+/**
+    Cet opérateur se contente de faire appel à la méthode précédente
+*/
 ostream& operator<<(ostream& flux ,ArbreB& arbre) {
 
     char *indent = new char[1];
@@ -192,18 +200,15 @@ ostream& operator<<(ostream& flux ,ArbreB& arbre) {
     return flux;
 }
 
-/*Celui ci fait appel à la méthode ajout avec un ArbreB sans pour autant supprimer l'arbre this avant*/
+/**
+   *Celui ci fait appel à la méthode ajout avec un ArbreB sans pour autant supprimer l'arbre "this" avant
+*/
 void ArbreB::operator+=(ArbreB& arbre)
 {
     this->ajout(arbre);
 
 };
 
-/*Grâce au paramètre 'sommet' la récursivité est permise et à chaque itération on compare sa lettre à celle qui est
-recherchée et on renvoie un pointeur sur le sommet correspondant si on le trouve, sinon on applique cela sur les fils
-gauche et droite. Dans le cas où la lettre n'est pas dans l'arbre on renvoie NULL*/
-
-//////
 
 /**
  * Algorithme d'encodage d'une lettre par parcours d'un arbre donné.
@@ -215,9 +220,9 @@ gauche et droite. Dans le cas où la lettre n'est pas dans l'arbre on renvoie NU
  * 
  * ! Cette méthode ne fonctionne que si le @car est bien dans l'arbre.
  * – Pour chaque noeud, l’arête vers son fils gauche est étiquetée 0 et celle vers son fils droit 1
- * – Le code associé à une lettre est le mot binaire composé des étiquettes entre la racinela feuille-lettre
+ * – Le code associé à une lettre est le mot binaire composé des étiquettes entre la racine la feuille-lettre
  */ 
-int ArbreB::create_code(Sommet *sommet, const char car, string& s, int curr) {
+int ArbreB::recherche_sommet(Sommet *sommet, const char car, string& s, int curr) {
     if (curr == 1) // Condition d'arrêt
         return 1;
     
@@ -226,12 +231,12 @@ int ArbreB::create_code(Sommet *sommet, const char car, string& s, int curr) {
     else {
         if (sommet->filsg != NULL){
             s.push_back('0'); // Branche gauche: On ajoute '0' au code huffman de la lettre courante
-            curr = create_code(sommet->filsg, car, s, curr);
+            curr = recherche_sommet(sommet->filsg, car, s, curr);
         }
         // On vérifie que le sommet n'a pas été trouvé dans la branche gauche en vérifiant que curr tjrs == 0
         if (!curr && sommet->filsd != NULL) {
             s.push_back('1'); // Branche droite: On ajoute '1' au code huffman de la lettre courante
-            curr = create_code(sommet->filsd, car, s, curr);
+            curr = recherche_sommet(sommet->filsd, car, s, curr);
         }
     }
     
@@ -241,47 +246,13 @@ int ArbreB::create_code(Sommet *sommet, const char car, string& s, int curr) {
     return curr;
 };
 
-/*Surcharge de la méthode recherche avec en paramètre une fréquence et une fréquence . Cette recherche est plus
-efficace que la précédente car l'arbre crée est un ABR basé sur l'occurence d'apparence des lettres.
-    Quand on est sur un sommet on vérifie qu'il ne soit pas nul:
-        S'il l'est on renvoit null
-        Sinon on compare la fréquence et la lettre qu'on recherche aux données du sommet, et selon le résultat
-        de cette comparaison on cherche à gauche ou à droite*/
-// string ArbreB::recherche_sommet(Sommet * sommet,const char car,const int part,string& res)
-// {
 
-// 	if(sommet != nullptr)
-// 	{
-//         int freq_actuel = sommet->getFreq();
-//         char c_actuel = sommet->getLettre();
-
-// 		if (freq_actuel == part && c_actuel == car)
-// 			return res;
-
-
-// 		else if(freq_actuel > part)
-// 		{
-// 		    res += '0';
-
-// 		    recherche_sommet(sommet->filsg,car,part,res);
-// 	    }
-
-// 		else
-// 		{
-// 		   res += '1';
-// 		   recherche_sommet(sommet->filsd,car,part,res);
-// 		}
-
-// 		return res;
-// 	}
-// 	else
-// 	  return NULL;
-// };
-
-/*Mis à part les actions à appliquer, cette méthode ne diffère pas de la précédente, en effet ici à la place de
-renvoyer le sommet correspondant au caractère on récupère l'adresse des ses fils, on le supprime, et on ajoute
-ses fils à nouveau.
-PS: on ajout en premier le fils droit car il a une valeur supérieure.*/
+/**
+    Mis à part les actions à appliquer, cette méthode ne diffère pas de la précédente, en effet ici à la place de
+    renvoyer le sommet correspondant au caractère, on récupère l'adresse des ses fils, on le supprime, et on ajoute
+    ses fils à nouveau.
+    PS: on ajout en premier le fils droit car il a une valeur supérieure.
+*/
 void ArbreB::supprimer_sommet(Sommet * sommet ,const char car)
 {
 
@@ -360,18 +331,10 @@ void ArbreB::supprimer_sommet(Sommet * sommet ,const char car)
 
 };
 
-/*On recherche un noeud et on met simplement à jour sa fréquence*/
-/*void ArbreB::change_etiquette(const char car,const int part)
-{
-    Sommet * tmp = recherche_sommet(racine,car);
-    if(tmp != NULL)
-    {
-        tmp->freq = part;
-    }
-};*/
-
-/* Calcul de la hauteur d'un arbre de manière récursive :
-  on incrémente la hauteur à chaque itération, et on renvoie le maximum des deux sous-arbres + 1  à chaque fois*/
+/**
+    Calcul de la hauteur d'un arbre de manière récursive :
+    on incrémente la hauteur à chaque itération, et on renvoie le maximum des deux sous-arbres + 1  à chaque fois
+*/
 int ArbreB::calcule_hauteur(Sommet * actuelle)
 {
     if(actuelle != NULL)
@@ -389,8 +352,10 @@ int ArbreB::calcule_hauteur(Sommet * actuelle)
     return 0;
 };
 
-/*Copie des noeuds en partant du fils gauche et du fils droit de la racine, et stockage de ces copies dans les
-ArbreB passés en paramètre*/
+/**
+   *Copie des noeuds en partant du fils gauche et du fils droit de la racine, et stockage de ces copies dans les
+    ArbreB passés en paramètre
+*/
 void ArbreB::decomposition(ArbreB& a_gauche, ArbreB& a_droit)
 {
 
@@ -402,7 +367,9 @@ void ArbreB::decomposition(ArbreB& a_gauche, ArbreB& a_droit)
 
 };
 
-/*Cette méthode se base sur l'opérateur += et fusionne les deux arbres passés en paramètre*/
+/**
+   *Cette méthode se base sur l'opérateur += et fusionne les deux arbres passés en paramètre
+*/
 void ArbreB::fusion_arbre(ArbreB& arbre1, ArbreB& arbre2)
 {
     if(arbre1.getRacine() != NULL)
@@ -414,28 +381,32 @@ void ArbreB::fusion_arbre(ArbreB& arbre1, ArbreB& arbre2)
 };
 
 
-/*On parcours l'arbre et on delete les sommet un par un*/
-void ArbreB::free_tree(Sommet * root)
+/**
+   *On parcours l'arbre grâce au pointeur "sommet" en paramètre et on delete les sommet un par un
+*/
+void ArbreB::free_tree(Sommet * sommet)
 {
-    if(root != NULL )
+    if(sommet != NULL )
     {
         Sommet * tmpG = NULL;
         Sommet * tmpD = NULL;
 
-        if(root->filsg != NULL)
-           tmpG = root->filsg;
+        if(sommet->filsg != NULL)
+           tmpG = sommet->filsg;
 
-        if(root->filsd != NULL)
-            tmpD = root->filsd;
+        if(sommet->filsd != NULL)
+            tmpD = sommet->filsd;
 
-        delete root;
+        delete sommet;
         if(tmpG != NULL)free_tree(tmpG);
         if(tmpD != NULL)free_tree(tmpD);
 
     }
 };
 
-/*Le destructeur fait appel à la méthode précèdente*/
+/**
+   *Le destructeur fait appel à la méthode précèdente
+*/
 ArbreB::~ArbreB()
 {
     free_tree(racine);

@@ -3,15 +3,25 @@
 using namespace std;
 
 
+/**
+    *La classe cryptage ne nécessite réellement que le résultat de l'analyse d'un texte, tout les autres attributs
+     sont mis à jour à l'issue de différentes méthodes
+*/
 Cryptage::Cryptage(Lecteur& l) {
     lecteur = l;
 };
 
-
+/**
+    *Le destructeur ne fait que vider le vecteur de sommets car aucun attributs n'est alloué dynamiquement
+*/
 Cryptage::~Cryptage() {
     arbres_restants.clear();
 }; 
 
+
+/**
+   *Échange de deux cases de sommets dans un tableau utile au tri du vecteur de sommet
+*/
 void swap(Sommet* tab, int i, int j) {
     Sommet S1 = tab[i];
     tab[i] = tab[j];
@@ -64,7 +74,7 @@ void bubbleSort(std::vector<Sommet> *vect, int n) {
  */
 void Cryptage::construction_arbre() {
     // Les deux std::vector sont à passer idéalement en Map
-    vector<int> tmp2 = lecteur.getOccurences(); // Vector des occurences
+    vector<float> tmp2 = lecteur.getOccurences(); // Vector des occurences
     vector<char> tmp1 = lecteur.getLettres(); // Vector des lettres
 
     // Initialement, on créé un Sommet pour chacune des lettre présente dans le texte
@@ -134,7 +144,7 @@ string Cryptage::encodage() {
         test_map.insert(std::make_pair(arbres_restants[i].getLettre(), ""));
 
         // Chaque lettre est encodé par la fonction create_code, la string est sauvegardé dans la map
-        arbre_huffman.create_code(arbre_huffman.getRacine(), arbres_restants[i].getLettre(), test_map[arbres_restants[i].getLettre()], 0);
+        arbre_huffman.recherche_sommet(arbre_huffman.getRacine(), arbres_restants[i].getLettre(), test_map[arbres_restants[i].getLettre()], 0);
     }
 
     // Affichage des résultats un à un

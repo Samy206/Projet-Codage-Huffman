@@ -1,17 +1,28 @@
 #include "../../Headers/Partie2/Lecteur.h"
 using namespace std;
 
-
+/**
+    *Étant donné la nature des attributs de cette classe aucune initialisation supplémentaire n'est nécessaire, il seront
+    mis à jour lors de l'analyse d'un texte
+*/
 Lecteur::Lecteur()
 {
     ;
 };
 
+/**
+   *Le constructeur par copie se base entièrement sur l'opérateur "=" qui récupère l'ensemble des données nécessaires
+   à notre projet
+*/
 Lecteur::Lecteur(Lecteur& autre)
 {
     *this = autre;
 };
 
+/**
+    *Récupération des données dans les vecteurs et dans le texte à analyser ( si ce n'est pas déjà fait ) grâce aux
+    getteurs
+*/
 void Lecteur::operator=(Lecteur& donneur)
 {
     occurences = donneur.getOccurences();
@@ -19,7 +30,11 @@ void Lecteur::operator=(Lecteur& donneur)
     lettres = donneur.getLettres();
 };
 
-
+/**
+    *Lors de l'analyse d'un texte, si on croise un caractère on s'assure d'abord de ne pas l'avoir déjà ajouté dans
+    le vecteur nommé "lettres" :
+        cette méthode renvoie l'indice dans lequel il se trouve si c'est le cas, sinon elle renvoie -1
+*/
 int Lecteur::get_indice(const char c)
 {
     int taille = lettres.size();
@@ -54,7 +69,11 @@ void Lecteur::lecture(ifstream& myfile)
  * @brief Algorithme de lecture à partir d'une chaîne de caractère.
  * 
  * La fonction stockera l'ensemble des lettres et occurrences dans les deux vectors private de la classe.
- * Pour chacun des caractères ASCII sauf l'espace, on stocke le caractère et on compte son nombre d'occurrences dans le texte.
+ * Pour chacun des caractères ASCII sauf la ponctuation, on stocke le caractère et on compte son nombre d'occurrences dans le texte.
+ * Avant d'ajouter un nouveau caractère dans le vecteur lettres on s'assure qu'il n'y est déjà pas, sinon on ne fait
+    qu'incrémenter l'indice équivalent dans le vecteur occurences.
+ * Après avoir compté le nombre de caractères distincts, on calcule dans la boucle qui suit le pourcentage correspondant
+   à chacune des occurences
  */ 
 void Lecteur::lecture(string const& chaine)
 {
@@ -65,14 +84,15 @@ void Lecteur::lecture(string const& chaine)
         int indice = -1 ;
         int ascii = -1;
         char convert;
+        int nb_carac = 0;
         for(int i = 0 ; i < size ; i++)
         {
             if(contenu[i] != ' ' && contenu[i] != ';' && contenu[i] != ',' && contenu[i] != '.')
             {
                 ascii= (int) (contenu[i]);
                 if(ascii >= 0 && ascii <= 255)
-
                 {
+                    nb_carac++;
                     convert = contenu[i];
 
                     if(ascii >= 65 && ascii <= 90)
@@ -82,40 +102,49 @@ void Lecteur::lecture(string const& chaine)
                     if(indice == -1)
                     {
                         lettres.push_back(convert);
-                        occurences.push_back(1);
+                        occurences.push_back(1.0);
                     }
                     else
-                        occurences[indice] += 1;
+                        occurences[indice] += 1.0;
                 }
             }
         }
+
+        size = occurences.size();
+        for(int i = 0 ; i < size ; i++)
+            occurences[i] = occurences[i] * 100 / nb_carac;
+
     }
 }
 
+/**
+  *La surchage de l'opérateur '<<' affiche côte à côte un caractère et son pourcentage
+*/
 ostream& operator<<(ostream& flux,Lecteur& lecteur)
 {
 
     int i = 0;
     flux<<"Pour le texte : \n[ "<<lecteur.contenu<<" ] on obtient :\n\n";
     flux<<"Lecteur : { ";
-    for(i = 0 ; i < 26 ; i++)
+    int taille = lecteur.occurences.size();
+    for(i = 0 ; i < taille ; i++)
     {
-        if(lecteur.occurences[i] != 0.0)
-        {
             if(i == 0 )
                 flux<< "( " <<lecteur.lettres[i] <<" ; "<<lecteur.occurences[i]<<" )";
 
             else
                 flux<< " | ( " <<lecteur.lettres[i] <<" ; "<<lecteur.occurences[i]<<" )";
-        }
 
     }
     flux<<"} \n";
     return flux;
 };
 
-
+/**
+    *La classe Lecteur ne contient pas d'attributs alloués dynamiquement, il n'y donc rien à delete
+*/
 Lecteur::~Lecteur()
 {
-;
+    lettres.clear();
+    occurences.clear();
 };

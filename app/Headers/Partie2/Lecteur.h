@@ -13,14 +13,14 @@
  * 
  * @private std::string         contenu       Représente le texte en entrée sous forme de chaîne
  * @private std::vector<char>   lettres       Vector de char contenant l'ensemble des lettres d'un texte
- * @private std::vector<int>    occurences    Vector d'entiers contenant les occurrences pour chaque lettre
+ * @private std::vector<float>    occurences    Vector d'entiers contenant les occurrences pour chaque lettre
  */
 class Lecteur
 {
     private :
         std::string contenu;
         std::vector<char> lettres;
-        std::vector<int> occurences;
+        std::vector<float> occurences;
 
     public :
         Lecteur(); // Constructeur par défaut
@@ -29,7 +29,7 @@ class Lecteur
 
         // Getters d'attributs :
         std::vector<char> getLettres() {return lettres;};  
-        std::vector<int> getOccurences() {return occurences;};
+        std::vector<float> getOccurences() {return occurences;};
         std::string getContenu() {return contenu;};
 
         int get_indice(const char);

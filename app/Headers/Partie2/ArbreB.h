@@ -49,7 +49,7 @@ class ArbreB
          *  Méthode ajout surchargée pour ajouter un élément de plusieurs manières 
          * */
         void ajout(Sommet *,Sommet*);
-        void ajout(Sommet *,const char,const int);
+        void ajout(Sommet *,const char,const float);
         void ajout(ArbreB&);
 
         /**
@@ -65,8 +65,7 @@ class ArbreB
         /**
          *  Recherche un sommet de l'arbre par une @lettre ou une @freq 
         */
-        int create_code(Sommet*, const char, std::string&, int);
-        // std::string recherche_sommet(Sommet*, const char, const int,std::string&);
+        int recherche_sommet(Sommet*, const char, std::string&, int);
 
         /**
          *  Fusionne deux arbre binaires 
@@ -78,10 +77,6 @@ class ArbreB
          * */
         void supprimer_sommet(Sommet *, const char);
 
-        /**
-         *  Modifie une étiquette 
-         * */
-        void change_etiquette(const char, const int);
 
         /**
          *  Décompose l'arbre binaire en sa partie gauche et droite 

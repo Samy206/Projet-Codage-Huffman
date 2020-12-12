@@ -1,13 +1,12 @@
 #include "../../Headers/Partie2/Sommet.h"
 using namespace std;
 
-/*Malgré la présence des attributs filsg et filsd dans la classe Sommet, dans les méthodes suivantes on part du
-principe qu'on a affaire à des sommets sans fils car ces derniers feront l'objet d'intérêt de la classe ArbreB*/
 
-
-/*Quand on créer un sommet on ne lui donne qu'un caractère et qu'une occurence, ses fils seront ajoutés lors de la
-créations de l'arbre*/
-Sommet::Sommet(char car, int part,int size)
+/**
+   *Quand on créer un sommet on ne lui donne qu'un caractère et une occurence, ses fils seront ajoutés lors de la
+    création de l'arbre
+*/
+Sommet::Sommet(char car, float part,int size)
 {
     filsd = NULL;
     filsg = NULL;
@@ -16,13 +15,11 @@ Sommet::Sommet(char car, int part,int size)
     taille = size;
 };
 
-/*on utilise l'opérateur '=' pour le constructeur par recopie*/
-// Sommet::Sommet(Sommet& source)
-// {
-//     *this = source;
-// };
-
-// CONST PAR COPIE AVEC UN CONST
+/**
+    *CONST PAR COPIE AVEC UN CONST :
+        on copie les données (lettre , fréquence et taille) , et si le sommet à copier comporte des fils on rappelle
+        le constructeur par copie de manière récursive
+*/
 Sommet::Sommet(const Sommet& s) 
 {
     filsg = NULL;
@@ -41,7 +38,12 @@ Sommet::Sommet(const Sommet& s)
 };
 
 
-/*L'opérateur '=' utilise les setteurs afin de reprendre et copier les données du sommet passé en param*/
+/**
+   *L'opérateur '=' copie les données du sommet passé en paramètre et gère ses fils de la même manière (récursive) que
+    le constructeur par copie. La seule différence est qu'on a peut-être à faire avec un sommet qui a déjà ses
+    propres fils, et dans ce cas on appelle la méthode clean_sommet() sur eux afin de libérer leur mémoire avant
+    de les remplacer ou juste de les supprimer si le sommet à copier n'a pas de fils lui-même.
+*/
 void Sommet::operator=(const Sommet& source)
 {
     lettre = source.lettre;
@@ -49,13 +51,13 @@ void Sommet::operator=(const Sommet& source)
     taille = source.taille;
     if(source.filsd != NULL )
     {
-        if(filsd != NULL) delete filsd;
+        if(filsd != NULL) filsd->clean_sommet();
         filsd = new Sommet;
         *filsd = (*source.filsd);
     }
     if(source.filsg != NULL )
     {
-        if(filsg != NULL) delete filsg;
+        if(filsg != NULL) filsg->clean_sommet();
         filsg = new Sommet;
         *filsg = (*source.filsg);
     }
@@ -70,8 +72,10 @@ void Sommet::operator=(const Sommet& source)
 };
 
 
-/*la somme de deux sommets nous donne un sommet sans lettre ( avec le caractère espace ) et la somme de leur
-fréquence*/
+/**
+   *La somme de deux sommets nous donne un sommet sans lettre ( avec le caractère espace ) et la somme de leur
+    fréquence
+*/
 Sommet operator+(Sommet& terme1, Sommet& terme2)
 {
    Sommet nouveau;
@@ -84,24 +88,30 @@ Sommet operator+(Sommet& terme1, Sommet& terme2)
    return nouveau;
 };
 
-/*ici on affiche un sommet de façon textuelle (utilisée pour avoir les informations d'un sommet seul)*/
+/**
+    *ici on affiche un sommet de façon textuelle (utilisée pour avoir les informations d'un sommet seul)
+*/
 std::ostream& operator<<(std::ostream& flux,Sommet& sommet) //affichage de la lettre et de sa fréquence
 {
     flux<<"Ce sommet a pour lettre "<<sommet.lettre<<" ,qui apparaît "<<sommet.freq<<" fois dans le texte\n";
     return flux;
 };
 
-/*ici on affiche un sommet de façon plus 'mathématique', c-a-d qu'il est sous forme de couple de valeurs (utilisé
-dans l'affichage d'un arbre)*/
+/**
+   *Ici on affiche un sommet de façon plus 'mathématique', c-a-d qu'il est sous forme de couple de valeurs (utilisé
+    dans l'affichage d'un arbre)
+*/
 char* Sommet::formalize_sommet() {
     char* sommet = new char[15];
-    sprintf(sommet, "(%c : %d)", lettre, freq);
+    sprintf(sommet, "(%c : %.1f)", lettre, freq);
     sommet[14] = '\0';
     return sommet;
 }
 
-/*Cette méthode libère la mémoire d'un sommet (et de ses fils potentiels)  avant qu'on copie d'autres données dans ce
-dernier, et on adopte la récursion comme pour les arbres*/
+/**
+   *Cette méthode libère la mémoire d'un sommet (et de ses fils potentiels)  avant qu'on copie d'autres données dans ce
+    dernier, et on adopte la récursion comme pour les arbres
+*/
 void Sommet::clean_sommet()
 {
     Sommet * tmp1 = filsg;
@@ -117,8 +127,9 @@ void Sommet::clean_sommet()
 }
 
 
-/*Le destructeur ne fait rien car quand on crée un sommet seul ses fils sont initiés à NULL, et les autres attributs
-sont déclarés de manière statique*/
+/**
+   *Le destructeur ne fait rien car la responsabilité de la destruction des sommets revient à l'arbre
+*/
 Sommet::~Sommet()
 {
     ;
