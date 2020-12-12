@@ -87,7 +87,7 @@ void Lecteur::lecture(string const& chaine)
         int nb_carac = 0;
         for(int i = 0 ; i < size ; i++)
         {
-            if(contenu[i] != ' ' && contenu[i] != ';' && contenu[i] != ',' && contenu[i] != '.')
+            if(contenu[i] != ' ' && contenu[i] != ';' && contenu[i] != ',' && contenu[i] != '.' && contenu[i] != '\n')
             {
                 ascii= (int) (contenu[i]);
                 if(ascii >= 0 && ascii <= 255)
@@ -112,7 +112,7 @@ void Lecteur::lecture(string const& chaine)
 
         size = occurences.size();
         for(int i = 0 ; i < size ; i++)
-            occurences[i] = occurences[i] * 100 / nb_carac;
+            occurences[i] = occurences[i] * 100.0 / nb_carac;
 
     }
 }

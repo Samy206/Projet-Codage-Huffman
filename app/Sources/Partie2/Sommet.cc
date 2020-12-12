@@ -3,9 +3,9 @@ using namespace std;
 
 
 /**
-   *Quand on créer un sommet on ne lui donne qu'un caractère et une occurence, ses fils seront ajoutés lors de la
-    création de l'arbre
-*/
+ * @brief Constructeur par défaut: Quand on créer un sommet on ne lui donne qu'un caractère et une occurence, 
+ *        ses fils seront ajoutés lors de la création de l'arbre.
+ */
 Sommet::Sommet(char car, float part,int size)
 {
     filsd = NULL;
@@ -16,30 +16,29 @@ Sommet::Sommet(char car, float part,int size)
 };
 
 /**
-    *CONST PAR COPIE AVEC UN CONST :
-        on copie les données (lettre , fréquence et taille) , et si le sommet à copier comporte des fils on rappelle
-        le constructeur par copie de manière récursive
-*/
-Sommet::Sommet(const Sommet& s) 
-{
+ * @brief Constructeur par copie: On copie les données (lettre, fréquence et taille),
+ *        si le sommet à copier comporte des fils, on rappelle le constructeur par copie de manière récursive.
+ */
+Sommet::Sommet(const Sommet& s)  {
     filsg = NULL;
     filsd = NULL;
-    freq = s.freq;
-    lettre = s.lettre;
-    taille = s.taille;
 
-    if (s.filsd != NULL) {
+    if (s.filsd != NULL)  {
         filsd = new Sommet(*s.filsd);
     }
 
-    if (s.filsg != NULL) {
+    if (s.filsg != NULL)  {
         filsg = new Sommet(*s.filsg);
     }
+
+    freq = s.freq;
+    lettre = s.lettre;
+    taille = s.taille;
 };
 
 
 /**
-   *L'opérateur '=' copie les données du sommet passé en paramètre et gère ses fils de la même manière (récursive) que
+   @brief L'opérateur '=' copie les données du sommet passé en paramètre et gère ses fils de la même manière (récursive) que
     le constructeur par copie. La seule différence est qu'on a peut-être à faire avec un sommet qui a déjà ses
     propres fils, et dans ce cas on appelle la méthode clean_sommet() sur eux afin de libérer leur mémoire avant
     de les remplacer ou juste de les supprimer si le sommet à copier n'a pas de fils lui-même.
@@ -109,28 +108,23 @@ char* Sommet::formalize_sommet() {
 }
 
 /**
-   *Cette méthode libère la mémoire d'un sommet (et de ses fils potentiels)  avant qu'on copie d'autres données dans ce
+   *Cette méthode libère la mémoire d'un sommet (et de ses fils potentiels) avant qu'on copie d'autres données dans ce
     dernier, et on adopte la récursion comme pour les arbres
 */
-void Sommet::clean_sommet()
-{
-    Sommet * tmp1 = filsg;
-    Sommet * tmp2 = filsd;
+void Sommet::clean_sommet()  {
+    if(filsg != NULL)
+        filsg->clean_sommet();
 
-    if(tmp2 != NULL)
-        tmp2->clean_sommet();
-
-    if(tmp1 != NULL)
-        tmp1->clean_sommet();
+    if(filsd != NULL)
+        filsd->clean_sommet();
 
     delete this;
 }
 
 
 /**
-   *Le destructeur ne fait rien car la responsabilité de la destruction des sommets revient à l'arbre
-*/
-Sommet::~Sommet()
-{
+ * @brief: Destructeur de Sommet: Le destructeur ne fait rien car la responsabilité de la destruction des sommets revient à l'arbre
+ */
+Sommet::~Sommet()  {
     ;
 };
