@@ -151,7 +151,7 @@ void DessineArbre::paint_tree_scales(Sommet *racine, int x , int *y, int k, QPai
         p->drawLine(x+lrect/5, btm_y, x+lrect/5, lst_y);
 
         // Ligne horizontale vers le premier fils
-        pen->setStyle(Qt::DashDotLine); p->setPen(*pen);
+        // pen->setStyle(Qt::DashDotLine); p->setPen(*pen); // Dashline pour les traits horizontaux ?
         p->drawLine(x+lrect/5, btm_y+k-hrect/3, x+(1.8*k), btm_y+k-hrect/3);
         
         // Ligne horizontale vers le deuxième fils
@@ -183,8 +183,12 @@ void DessineArbre::paintEvent(QPaintEvent *e) {
 
     int y = 20;
     // paint_tree_scales(arbre->getRacine(), 10, &y, 1, 40*(1.2 + zoom/10), &paint, &pen); // Old version
-    paint_tree_scales(arbre->getRacine(), 10, &y, 40*(1 + zoom/10), &paint, &pen);
-    resize(max_x+90, y);
+    if (arbre->getRacine() != NULL)  {
+        paint_tree_scales(arbre->getRacine(), 10, &y, 40*(1 + zoom/10), &paint, &pen);
+        resize(max_x+90, y);
+    }   
+    else
+        std::cout << "Pas d'arbre à dessiner yo" << std::endl; 
 };
 
 DessineArbre::~DessineArbre() { };

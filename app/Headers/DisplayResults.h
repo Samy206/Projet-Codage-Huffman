@@ -73,15 +73,20 @@ public slots:
      * 
      */
     void resultsArrived()  {
+        std::string tmp;
         map_res = Context::getInstance().getMapRes();
-        std::string tmp = "<center><b>Résultats de l'encodage</b></center><br></br>";
-        for (std::pair <char,std::string> p : map_res) {
-            tmp += p.first;
-            tmp += " : ";
-            tmp += p.second;
-            tmp += "<br></br>";
+        if (map_res.size() > 0)  {
+            tmp = "<center><b>Résultats de l'encodage</b></center><br></br>";
+            for (std::pair <char,std::string> p : map_res) {
+                tmp += p.first;
+                tmp += " : ";
+                tmp += p.second;
+                tmp += "<br></br>";
+            }
         }
-       
+        else
+            tmp = "<center><b>Aucun encodage nécessaire</b></center>";
+        
 
         // On actualise l'affichage du texte 
         results->setText(QString::fromStdString(tmp));

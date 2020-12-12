@@ -65,8 +65,9 @@ void GetUserText::setText() {
 
 // Signal reçu par le contexte après enregistrement du nouveau texte
 void GetUserText::textEntered() {
+    std::string tmp;
     // On actualise l'affichage du texte 
-    std::string tmp = "<b>Texte à coder : </b>" + Context::getInstance().getText();
+    tmp = "<b>Texte à coder : </b>" + Context::getInstance().getText();
     wContenu->setText(QString::fromStdString(tmp));
     
     // On actualise l'affichage du resultat

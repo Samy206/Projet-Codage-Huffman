@@ -16,7 +16,7 @@ Context::Context()  {
  *
  * @param e_arbre
  */
-void Context::setArbre(ArbreB arbre) {
+void Context::setArbre(ArbreB arbre)  {
     // L'opérateur = de l'arbre se charge de faire les frees nécessaires
     arbre_courant = arbre;
     // Signal émis à DessineArbre pour récupérer le nouvel arbre
@@ -64,10 +64,14 @@ void Context::setText(std::string const& val)  {
     emit textEntered();
     emit resultsArrived();
 
-    // PRINT à RETIRER une FOIS QUE PLUS DE BUGS
-    std::cout << cr.get_arbre() << std::endl; // Ok !
-
-    setArbre(cr.get_arbre());
+    // On envoie l'arbre seulement s'il existe
+    if (cr.get_arbre().getRacine())  {
+        // PRINT à RETIRER une FOIS QUE PLUS DE BUGS
+        std::cout << cr.get_arbre() << std::endl; // Ok !
+        setArbre(cr.get_arbre());
+    }
+    else 
+        ; // Envoie signal de clear de Dessine arbre
 }
 
 /**
