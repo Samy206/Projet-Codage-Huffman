@@ -13,7 +13,7 @@
 
 /**
  * @file DessineArbre.h
- * @brief Algorithme de dessin d'un arbre binaire sur la zone graphique, affiché de gauche à droite, utilise le PaitEvent de Qt.
+ * @brief Algorithme de dessin d'un arbre binaire sur la zone graphique, affiché de gauche à droite, utilise le PaintEvent de Qt.
  * 
  * @private   ArbreB      Arbre binaire à afficher
  */

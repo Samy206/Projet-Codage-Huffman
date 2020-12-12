@@ -1,4 +1,4 @@
-# Cryptage et décryptage : Partie 1
+# Cryptage et décryptage : Partie 2
 Samy BOUMALI & Amine ATEK
 
 ## Contenu de l'archive
