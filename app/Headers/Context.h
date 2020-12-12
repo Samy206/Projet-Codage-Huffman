@@ -1,15 +1,15 @@
 #pragma once
 
-#include "CLI/Sommet.h"
-#include "CLI/ArbreB.h"
-#include "CLI/Lecteur.h"
-#include "CLI/Cryptage.h"
+#include "Sommet.h"
+#include "ArbreB.h"
+#include "Lecteur.h"
+#include "Cryptage.h"
 #include <QtCore/QObject>
 
 /**
- * @brief Contexte principal de l'application
- * 
- * Permet de gérer l'arbre courant, les textes en entrées et sorties, ainsi que quelques options globales.
+ * @file Context.h 
+ * @brief Classe Singleton servant de contexte principal de l'application: 
+ * Instance gérant l'arbre courant, les textes en entrées et sorties, ainsi que quelques options pour lier les classes ArbreB et Cryptage à l'interface MainWindow.
  */
 class Context : public QObject {
 

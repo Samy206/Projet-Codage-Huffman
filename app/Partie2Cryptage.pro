@@ -7,10 +7,10 @@ RESOURCES += qdarkstyle/style.qrc
 QT = core gui widgets
 
 HEADERS = \
-   $$PWD/CLI/Sommet.h \
-   $$PWD/CLI/ArbreB.h \
-   $$PWD/CLI/Lecteur.h \
-   $$PWD/CLI/Cryptage.h \
+   $$PWD/Headers/Sommet.h \
+   $$PWD/Headers/ArbreB.h \
+   $$PWD/Headers/Lecteur.h \
+   $$PWD/Headers/Cryptage.h \
    $$PWD/Headers/DessineArbre.h \
    $$PWD/Headers/MainWindow.h \
    $$PWD/Headers/GetUserText.h \
@@ -18,10 +18,10 @@ HEADERS = \
    $$PWD/Headers/Context.h 
 
 SOURCES = \
-   $$PWD/CLI/Sommet.cc \
-   $$PWD/CLI/ArbreB.cc \
-   $$PWD/CLI/Lecteur.cc \
-   $$PWD/CLI/Cryptage.cc \
+   $$PWD/Sources/Sommet.cc \
+   $$PWD/Sources/ArbreB.cc \
+   $$PWD/Sources/Lecteur.cc \
+   $$PWD/Sources/Cryptage.cc \
    $$PWD/Sources/DessineArbre.cc \
    $$PWD/Sources/MainWindow.cc \
    $$PWD/Sources/GetUserText.cc \

@@ -8,7 +8,8 @@
 #include <utility>
 
 /**
- * @brief Cryptage: Création de l'arbre de Huffman et encodage du texte en entrée
+ * @file Cryptage.h
+ * @brief Partie 2 : Création de l'arbre de Huffman et encodage du texte en entrée lu par le Lecteur.
  * 
  * Cette classe constitue le corps de la Partie 2 du projet, une fois le texte lu par le Lecteur, 
  * l'algorithme de cryptage de Huffman s'exécutera pour construire l'arbre et retourner le texte crypté.
@@ -36,9 +37,9 @@ class Cryptage
       std::map <char,std::string> get_map() { return test_map; };
 
       /**
-       * @brief Algorithme de cryptage: création de l'arbre de Huffman à partir d'un vecteur de lettres et occurences.
+       * @brief Algorithme de cryptage: création de l'arbre de Huffman à partir d'un vecteur de lettres et occurrences.
        * 
-       * Initialement: On créé un arbre (Sommet) étiqueté par l'occurence de chacune des lettres du `lecteur`
+       * Initialement: On créé un arbre (Sommet) étiqueté par l'occurrence de chacune des lettres du `lecteur`
        * Le vecteur `arbres_restants` gère le nombre d'arbres restants lors de l'exécution de l'algorithme
        * 
        * Condition d'arrêt de la boucle: Tant qu'il reste plus d'un arbre dans le vecteur arbres_restants
@@ -48,7 +49,15 @@ class Cryptage
       void construction_arbre();
 
       /**
-       * @brief Algorithme d'encodage: 
+       * @brief Algorithme d'encodage: Encode chacune des lettres du texte en entrée suivant l'algorithme de Huffman.
+       * 
+       * Le résultat de l'encodage est stocké dans `std::map<char, std::string>` associant chaque lettre à son encodage.
+       * 
+       * - Pour chaque noeud de l'arbre, l’arête vers son fils gauche est étiquetée 0 et celle vers son fils droit 1.
+       * - Le code associé à une lettre est le mot binaire composé des étiquettes sur les arêtes entre la racine de 
+       *   l’arbre final et la feuille étiquetée avec cette lettre.
+       * 
+       * @return std::string     Chaîne de caractère du résultat de l'encodage mis bout à bout.
        */
       std::string encodage();
 };

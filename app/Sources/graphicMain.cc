@@ -5,8 +5,11 @@
 #include <QFile>
 #include <QTextStream>
 
-using namespace std;
 
+/**
+ * @file graphicMain.cc
+ * @brief Partie 2 : Constitue la fonction main lors de l'exécution graphique pour le Cryptage, charge le thème et lie lance la GUI.
+ */
 int main(int argc, char* argv[])
 {
     /* Qt application graphique */

@@ -1,6 +1,7 @@
-#include "Cryptage.h"
+#include "../Headers/Cryptage.h"
 
 using namespace std;
+
 
 Cryptage::Cryptage(Lecteur& l) {
     lecteur = l;
@@ -10,35 +11,6 @@ Cryptage::Cryptage(Lecteur& l) {
 Cryptage::~Cryptage() {
     arbres_restants.clear();
 }; 
-
-
-void tst_print_sommet(Sommet *root, char *indent, int last) {
-    if (root == NULL)
-        return;
-
-    cout << indent << "+- " << "("<<root->getLettre()<<" : "<<root->getFreq()<< ")\n";
-    char indent2[90];
-    if (last == 0)
-        sprintf(indent2, "%s|   ", indent);
-    else
-        sprintf(indent2, "%s    ", indent);
-
-    if (root->getFilsG() != NULL && root->getFilsD() != NULL) {
-        tst_print_sommet(root->getFilsG(), indent2, 0);
-        tst_print_sommet(root->getFilsD(), indent2, 1);
-    }
-    else {
-        if (root->getFilsD() != NULL && root->getFilsG() == NULL)
-            tst_print_sommet(root->getFilsD(), indent2, 1);
-        else
-            tst_print_sommet(root->getFilsD(), indent2, 0);
-
-        if (root->getFilsG() != NULL && root->getFilsG() == NULL)
-            tst_print_sommet(root->getFilsG(), indent2, 1);
-        else
-            tst_print_sommet(root->getFilsG(), indent2, 0);
-    }
-}
 
 void swap(Sommet* tab, int i, int j) {
     Sommet S1 = tab[i];
@@ -81,9 +53,9 @@ void bubbleSort(std::vector<Sommet> *vect, int n) {
 }
 
 /**
- * @brief Algorithme de cryptage: création de l'arbre de Huffman à partir d'un vecteur de lettres et occurences.
+ * @brief Algorithme de cryptage: création de l'arbre de Huffman à partir d'un vecteur de lettres et occurrences.
  *
- * Initialement: On créé un arbre (Sommet) étiqueté par l'occurence de chacune des lettres du `lecteur`
+ * Initialement: On créé un arbre (Sommet) étiqueté par l'occurrence de chacune des lettres du `lecteur`
  * Le vecteur `arbres_restants` gère le nombre d'arbres restants lors de l'exécution de l'algorithme
  *
  * Condition d'arrêt de la boucle: Tant qu'il reste plus d'un arbre dans le vecteur arbres_restants
@@ -133,7 +105,7 @@ void Cryptage::construction_arbre() {
         bubbleSort(combinaisons, combinaisons->size()); // On re-trie la liste des sommets restants
     }
 
-    // À la fin de cette boucle, le vecteur de gestion des arbres restants contient l'abre de cryptage fina
+    // À la fin de cette boucle, le vecteur de gestion des arbres restants contient l'abre de cryptage final
     if (combinaisons->size() != 1) {
         std::cout << "Erreur lors de la création de l'arbre de cryptage" << std::endl;
         return;
@@ -141,11 +113,19 @@ void Cryptage::construction_arbre() {
 
     // On ajoute maintenant ce Sommet à l'Arbre de la classe Cryptage
     arbre_huffman.ajout(arbre_huffman.getRacine(), &combinaisons->back());
-    //std::cout<<"Taille arbre: "<< arbre_huffman.getTaille() << endl;
-    //std::cout << arbre_huffman << endl;
 };
 
-
+/**
+ * @brief Algorithme d'encodage: Encode chacune des lettres du texte en entrée suivant l'algorithme de Huffman.
+ * 
+ * Le résultat de l'encodage est stocké dans `std::map<char, std::string>` associant chaque lettre à son encodage.
+ * 
+ * - Pour chaque noeud de l'arbre, l’arête vers son fils gauche est étiquetée 0 et celle vers son fils droit 1.
+ * - Le code associé à une lettre est le mot binaire composé des étiquettes sur les arêtes entre la racine de 
+ *   l’arbre final et la feuille étiquetée avec cette lettre.
+ * 
+ * @return std::string     Chaîne de caractère du résultat de l'encodage mis bout à bout.
+ */
 string Cryptage::encodage() {
     int taille = arbres_restants.size();
     
@@ -158,8 +138,10 @@ string Cryptage::encodage() {
     }
 
     // Affichage des résultats un à un
+    cout << "\n\033[1;37m> Résultat de l'encodage: \033[00m";
     for(std::pair<char, string> p : test_map)
-        cout<<p.first << ": " << p.second<<endl;
+        cout <<p.first << ": " << p.second<<" | ";
+    cout<<endl;
 
     string * contenunew = new string;
     int ascii;
@@ -178,7 +160,7 @@ string Cryptage::encodage() {
             *contenunew += c;
     }
 
-    cout<<"Texte codé: "<<*contenunew<<endl;
+    cout<<"\n\033[1;37m> Texte codé: \033[00m"<<*contenunew<<endl;
     return *contenunew;
 }
 

@@ -1,86 +1,29 @@
-#include "ArbreB.h"
-#include "MainWindow.h"
+#include "../Headers/ArbreB.h"
+#include "../Headers/Lecteur.h"
+#include "../Headers/Cryptage.h"
 
 
-#include <QApplication>
-#include <unistd.h>
-using namespace std;
+/**
+ * @file TestArbre.cc
+ * @brief Partie 2 : Constitue la fonction main lors de l'exécution sans interface graphique pour le Cryptage.
+ * Construit l'arbre de cryptage du texte lu depuis le fichier text.txt puis l'encode selon l'algorithme de Huffman. 
+ */
+int main(int argc, char* argv[]) {
+    std::cout << "\033[1;33mProjet LA - Partie 2 | Samy BOUMALI & Amine ATEK\033[0m - Exécution CLI\n\n" << std::endl;
+    
+    // Ouverture, lecture et calcul des occurrences des lettres pour le texte donné en entrée
+    Lecteur l;
+    std::ifstream mytext("app/text.txt");
+    l.lecture(mytext);
 
-int main(int argc, char* argv[])
-{
-/*------------------------------------------------------------------------------------------------------------------
-    Initialisation des tableaux utiles à la création des arbres
--------------------------------------------------------------------------------------------------------------------*/
-    srand(getpid());
-    const char cars[26] = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v',
-    'w','x','y','z'};
+    // Affichage du texte
+    std::cout << "\033[1;37m> Texte à coder: \033[0m" << l.getContenu() << std::endl;
+    Cryptage cr(l);
 
-    float numbers [26];
+    // Construction et affichage de l'arbre binaire de cryptage
+    cr.construction_arbre();
+    std::cout << "\n\033[1;37mArbre binaire de cryptage:\033[0m\n" << cr.get_arbre() << std::endl;
 
-/*------------------------------------------------------------------------------------------------------------------
-    Création des arbres et test des méthodes implémentées
------------------------------------------------------------------------------------------------------------------*/
-
-     /*Génération d'un arbre binaire avec fréquences aléatoires et affichage de ce dernier (ainsi que sa taille et
-     sa hauteur*/
-     ArbreB arbre1;
-     for(int i = 0 ; i < 26 ; i++)
-     {
-         numbers[i] = rand() % 100; // Initialisation aléatoires des occurrences des lettres
-         arbre1.ajout(arbre1.getRacine(),cars[i],numbers[i]);
-     }
-
-     cout << ">Test constructeur: Génération d'un arbre binaire avec fréquences aléatoires :\n+- Arbre1:" << endl;
-     cout <<arbre1 << endl;
-     cout<<"  L'Arbre1 a une hauteur de valeur égale à "<< arbre1.getHauteur()<<" et comporte "
-     <<arbre1.getTaille()<< " noeuds.\n\n";
-
-    /*Test constructeur par copie: Génération d'un arbre construit par copie, et même affichage que le précédent*/
-    ArbreB arbre2(arbre1);
-    cout << ">Test constructeur par copie: Génération d'un arbre construit par copie :\n+- Arbre2:" << endl;
-    cout <<arbre2 << endl;
-
-    cout<<"  L'Arbre2 a une hauteur de valeur égale à "<< arbre2.getHauteur()<<" et comporte "
-       <<arbre2.getTaille()<< " noeuds.\n\n";
-
-    /*Test de recherche d'un sommet dans un arbre*/
-    cout << ">Test recherche: Recherche du sommet comportant le caractère 'j':" << endl;
-    const char recherche = 'j';
-    Sommet * res = arbre2.recherche_sommet(arbre2.getRacine(),recherche);
-
-    if(res != NULL)
-        cout<< "    Sommet trouvé: " << res->formalize_sommet()<< "\n";
-    else
-        cout << "   Aucun sommet ne comporte le caractère '" << recherche << "'\n";
-
-    res = arbre2.recherche_sommet(arbre2.getRacine(),cars[5],numbers[5]);
-
-     if(res != NULL)
-         cout<< "    Sommet trouvé: " << res->formalize_sommet()<< "\n\n";
-     else
-         cout << "   Aucun sommet ne comporte le caractère '" << recherche << "'\n\n" << endl;
-
-
-    /*Test de la décomposition d'un arbre en deux sous-arbre et affichage de ces derniers*/
-    ArbreB arbre3, arbre4;
-    cout<<">Test décomposition de l'Arbre2 :\n\n";
-    arbre2.decomposition(arbre3,arbre4);
-    if(arbre3.getRacine() != NULL)
-        cout<<"     Affichage de l'Arbre3 (sous-arbre gauche) : \n\n"<<arbre3<<"\n\n";
-    else
-        cout<<"     Arbre3 (sous-arbre gauche) : inexistant dans l'Arbre2\n\n";
-
-    if(arbre4.getRacine() != NULL)
-        cout<<"     Affichage de l'Arbre4 (sous-arbre droit) : \n\n"<<arbre4<<"\n\n";
-    else
-        cout<<"     Arbre4 (sous-arbre gauche) : inexistant dans l'Arbre2\n\n";
-
-    /*Test de la fusion des arbres 3 et 4, et affichage du résultat*/
-    ArbreB arbre5;
-    arbre5.fusion_arbre(arbre3,arbre4);
-    cout<<"Affichage de l'Arbre5 ( fusion des deux arbres précédents ) : \n\n"<<arbre5<<endl<<endl;
-
-    return app.exec();
+    // Encodage et affichage du texte après exécution de l'algorithme de Huffman
+    cr.encodage();
 }
-
-

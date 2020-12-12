@@ -52,7 +52,7 @@ void Context::setText(std::string const& val)  {
 
     Lecteur l;
     l.lecture(val);
-    std::cout << "Texte à coder: " << l.getContenu() << std::endl;
+    std::cout << "\033[1;37m> Texte à coder: \033[0m" << l.getContenu() << std::endl;
 
     // Faire un nouvel arbre
     Cryptage cr(l);

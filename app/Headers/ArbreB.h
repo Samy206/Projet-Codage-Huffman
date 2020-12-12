@@ -4,7 +4,8 @@
 
 
 /**
- * Représente un arbre binaire étiqueté par sa racine, sa taille et sa hauteur.
+ * @file ArbreB.h
+ * @brief Partie 1 : Représente un arbre binaire étiqueté par sa racine, sa taille et sa hauteur.
  * 
  * Attributs privés: 
  * @racine      Sommet*     Racine de l'arbre binaire, permettant l'accès à tous les autres nœuds de l'arbre

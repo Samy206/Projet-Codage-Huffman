@@ -5,14 +5,15 @@
 
 
 /**
- * Représente un sommet d'arbre binaire étiqueté par une Lettre, une Fréquence ainsi qu'un pointeur vers chacun de ses fils.
+ * @file Sommet.h
+ * @brief Partie 1 : Représente un sommet d'ArbreB binaire étiqueté par une Lettre, une Fréquence ainsi qu'un pointeur vers chacun de ses fils.
  * 
  * Attributs privés: 
- * @lettre      char        Lettre caractérisant le sommet
- * @freq        float       Fréquence d'occurence de cette lettre
- * @taille      int         1 <= nombre de sommets <= 3
- * @filsg       Sommet*     Pointeur vers le fils gauche du sommet
- * @filsd       Sommet*     Pointeur vers le fils gauche du sommet
+ * @private       char        Lettre caractérisant le sommet
+ * @private       float       Fréquence d'occurence de cette lettre
+ * @private       int         1 <= nombre de sommets <= 3
+ * @private       Sommet*     Pointeur vers le fils gauche du sommet
+ * @private       Sommet*     Pointeur vers le fils gauche du sommet
  * 
  */
 class Sommet

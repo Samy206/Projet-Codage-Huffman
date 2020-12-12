@@ -1,4 +1,4 @@
-#include "Sommet.h"
+#include "../Headers/Sommet.h"
 using namespace std;
 
 /*Malgré la présence des attributs filsg et filsd dans la classe Sommet, dans les méthodes suivantes on part du

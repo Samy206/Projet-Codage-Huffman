@@ -1,5 +1,6 @@
-#include "Lecteur.h"
+#include "../Headers/Lecteur.h"
 using namespace std;
+
 
 Lecteur::Lecteur()
 {
@@ -31,6 +32,12 @@ int Lecteur::get_indice(const char c)
     return -1;
 }
 
+
+/**
+ * @brief Lecture à partir d'un fichier.
+ * 
+ * Lis le fichier pour le mettre dans une chaîne, puis appelle le lecteur de chaîne.
+ */ 
 void Lecteur::lecture(ifstream& myfile)
 {
     std::stringstream strStream;
@@ -43,6 +50,12 @@ void Lecteur::lecture(ifstream& myfile)
     lecture(contenu);
 }
 
+ /**
+ * @brief Algorithme de lecture à partir d'une chaîne de caractère.
+ * 
+ * La fonction stockera l'ensemble des lettres et occurrences dans les deux vectors private de la classe.
+ * Pour chacun des caractères ASCII sauf l'espace, on stocke le caractère et on compte son nombre d'occurrences dans le texte.
+ */ 
 void Lecteur::lecture(string const& chaine)
 {
     contenu = chaine;

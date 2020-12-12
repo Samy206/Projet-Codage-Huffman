@@ -72,16 +72,15 @@ void GetUserText::textEntered() {
     
     // On actualise l'affichage du resultat
     tmp = "<b>Texte codé : </b>" + Context::getInstance().getResult();
-    if( tmp.length() > 130)
+    if( (tmp.length() > 130)  ) // Texte sans espace et plus long que 130 caractères
     {
-        for(int i = 1; i <= tmp.length()/130; i++)
-        {
+        for(size_t i = 1; i <= tmp.length()/130; i++)  {
             int n = i * 130;
             tmp.insert(n, " ");
         }
     }
     wResult->setText(QString::fromStdString(tmp));
-    
+
     // On clear la barre de saisie
     input_txt->setText("");
 }
