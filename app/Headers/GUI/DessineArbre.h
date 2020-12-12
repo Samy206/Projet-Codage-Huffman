@@ -1,7 +1,7 @@
 #ifndef DESSINEARBRE_H
 #define DESSINEARBRE_H
 
-#include "ArbreB.h"
+#include "../Partie2/ArbreB.h"
 #include "Context.h"
 
 #include <QMainWindow>
@@ -12,9 +12,10 @@
 
 
 /**
- * Permet le dessin d'un arbre binaire sur la zone graphique, affiché de gauche à droite.
+ * @file DessineArbre.h
+ * @brief Algorithme de dessin d'un arbre binaire sur la zone graphique, affiché de gauche à droite, utilise le PaitEvent de Qt.
  * 
- * @arbre   ArbreB      Arbre binaire à afficher
+ * @private   ArbreB      Arbre binaire à afficher
  */
 class DessineArbre : public QWidget{
 

@@ -10,7 +10,11 @@
 #include <QLabel>
 #include <iostream>
 
-
+/**
+ * @file GetUserText.h
+ * @brief Menu principal des interactions avec l'utilisateur : comprend une barre de saisie, trois boutons et 
+ *        deux labels pour l'affichage du texte à codé et du texte codé.
+ */
 class GetUserText : public QFrame {
     Q_OBJECT
 private:

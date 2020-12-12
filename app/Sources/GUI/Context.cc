@@ -1,4 +1,4 @@
-#include "Context.h"
+#include "../../Headers/GUI/Context.h"
 
 /**
  * @brief Constructeur de classe déclaré private, le getter d'instance sera public

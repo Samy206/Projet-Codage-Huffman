@@ -1,6 +1,6 @@
-#include "../Headers/ArbreB.h"
-#include "../Headers/Lecteur.h"
-#include "../Headers/Cryptage.h"
+#include "../../Headers/Partie2/ArbreB.h"
+#include "../../Headers/Partie2/Lecteur.h"
+#include "../../Headers/Partie2/Cryptage.h"
 
 
 /**

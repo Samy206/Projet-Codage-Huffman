@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Sommet.h"
-#include "ArbreB.h"
-#include "Lecteur.h"
-#include "Cryptage.h"
+#include "../Partie2/Sommet.h"
+#include "../Partie2/ArbreB.h"
+#include "../Partie2/Lecteur.h"
+#include "../Partie2/Cryptage.h"
 #include <QtCore/QObject>
 
 /**

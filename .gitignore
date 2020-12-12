@@ -40,5 +40,5 @@ build*/
 *.xml
 *.iml
 .vscode/ # VSC
-
+.qmake*
 

@@ -1,4 +1,4 @@
-#include "DessineArbre.h"
+#include "../../Headers/GUI/DessineArbre.h"
 #include <math.h>
 #include <QColor>
 #include <QtGui/QPaintDevice>

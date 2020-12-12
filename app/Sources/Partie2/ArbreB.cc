@@ -1,4 +1,4 @@
-#include "../Headers/ArbreB.h"
+#include "../../Headers/Partie2/ArbreB.h"
 using namespace std;
 
 

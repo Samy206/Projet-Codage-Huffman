@@ -11,17 +11,20 @@
 
 
 /**
+ * @file MainWindow.h
  * @brief Fenêtre principale du programme graphique, composé d'une bannière, d'un menu et d'une zone de dessin.
  * 
- * @wMenu       MainMenu*       Menu de boutons pour le déroulement du programme
- * @layout      QGridLayout*    Layout en grille pour le programme graphique
- * @wZoneArbre  QScrollArea*    Zone à barre de défilement pour l'affichage du dessin
- * @dessin      DessineArbre*   Dessin de l'arbre binaire
+ * @private      QGridLayout*    Layout en grille pour le programme graphique
+ * @private      GetUserText*    Menu principal des interactions avec l'utilisateur (barre de saisie, boutons et labels)
+ * @private      QScrollArea*    Zone à barre de défilement pour l'affichage du dessin
+ * @private      QScrollArea*    Zone à barre de défilement pour l'affichage des résultats
+ * @private      DessineArbre*   Dessin de l'arbre binaire
  */ 
 class MainWindow : public QWidget {
 private :
-    GetUserText* wInput;
     QGridLayout* layout; // Grid Layout pour l'affichage
+    
+    GetUserText* wInput; // Menu principal des interactions avec l'utilisateur (barre de saisie, boutons et labels)
 
     DisplayResults* resultats;
     QScrollArea* wZoneResultats;

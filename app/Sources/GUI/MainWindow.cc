@@ -1,4 +1,4 @@
-#include "MainWindow.h"
+#include "../../Headers/GUI/MainWindow.h"
 
 
 MainWindow::MainWindow() {

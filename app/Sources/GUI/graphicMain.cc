@@ -1,4 +1,4 @@
-#include "MainWindow.h"
+#include "../../Headers/GUI/MainWindow.h"
 
 #include <QApplication>
 
@@ -8,10 +8,12 @@
 
 /**
  * @file graphicMain.cc
- * @brief Partie 2 : Constitue la fonction main lors de l'exécution graphique pour le Cryptage, charge le thème et lie lance la GUI.
+ * @brief Partie 2 : Constitue la fonction main lors de l'exécution graphique pour le Cryptage, charge le thème et l'interface graphique.
  */
 int main(int argc, char* argv[])
 {
+    std::cout << "\033[1;33mProjet LA - Partie 2 | Samy BOUMALI & Amine ATEK\033[0m - Exécution GUI\n\n" << std::endl;
+
     /* Qt application graphique */
     QApplication app(argc, argv);
     

@@ -1,5 +1,5 @@
-#include "GetUserText.h"
-#include "Context.h"
+#include "../../Headers/GUI/GetUserText.h"
+#include "../../Headers/GUI/Context.h"
 
 GetUserText::GetUserText()
 {

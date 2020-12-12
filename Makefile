@@ -28,20 +28,20 @@ compil: ${OUT_DIR} ${OUT_DIR}/TestArbre.o ${OUT_DIR}/ArbreB.o ${OUT_DIR}/Sommet.
 
 ### Représentations intermédiaires
 
-${OUT_DIR}/TestArbre.o: app/Sources/TestArbre.cc app/Headers/ArbreB.h app/Headers/Sommet.h
-	g++ -Wall -g -c -o ${OUT_DIR}/TestArbre.o app/Sources/TestArbre.cc
+${OUT_DIR}/TestArbre.o: app/Sources/Partie2/TestArbre.cc app/Headers/Partie2/ArbreB.h app/Headers/Partie2/Sommet.h
+	g++ -Wall -g -c -o ${OUT_DIR}/TestArbre.o app/Sources/Partie2/TestArbre.cc
 
-${OUT_DIR}/ArbreB.o: app/Sources/ArbreB.cc app/Headers/ArbreB.h app/Headers/Sommet.h
-	g++ -Wall -g -c -o ${OUT_DIR}/ArbreB.o app/Sources/ArbreB.cc
+${OUT_DIR}/ArbreB.o: app/Sources/Partie2/ArbreB.cc app/Headers/Partie2/ArbreB.h app/Headers/Partie2/Sommet.h
+	g++ -Wall -g -c -o ${OUT_DIR}/ArbreB.o app/Sources/Partie2/ArbreB.cc
 
-${OUT_DIR}/Sommet.o: app/Sources/Sommet.cc app/Headers/Sommet.h
-	g++ -Wall -g -c -o ${OUT_DIR}/Sommet.o app/Sources/Sommet.cc
+${OUT_DIR}/Sommet.o: app/Sources/Partie2/Sommet.cc app/Headers/Partie2/Sommet.h
+	g++ -Wall -g -c -o ${OUT_DIR}/Sommet.o app/Sources/Partie2/Sommet.cc
 
-${OUT_DIR}/Lecteur.o: app/Sources/Lecteur.cc app/Headers/Lecteur.h
-	g++ -Wall -g -c -o ${OUT_DIR}/Lecteur.o app/Sources/Lecteur.cc
+${OUT_DIR}/Lecteur.o: app/Sources/Partie2/Lecteur.cc app/Headers/Partie2/Lecteur.h
+	g++ -Wall -g -c -o ${OUT_DIR}/Lecteur.o app/Sources/Partie2/Lecteur.cc
 
-${OUT_DIR}/Cryptage.o: app/Sources/Cryptage.cc app/Headers/Cryptage.h
-	g++ -Wall -g -c -o ${OUT_DIR}/Cryptage.o app/Sources/Cryptage.cc
+${OUT_DIR}/Cryptage.o: app/Sources/Partie2/Cryptage.cc app/Headers/Partie2/Cryptage.h
+	g++ -Wall -g -c -o ${OUT_DIR}/Cryptage.o app/Sources/Partie2/Cryptage.cc
 
 # ======= #
 

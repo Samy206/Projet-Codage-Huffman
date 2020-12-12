@@ -11,9 +11,10 @@
 
 
 /**
- * Permet l'affichage des résultats de l'encodage
+ * @file DisplayResults.h
+ * @brief Permet l'affichage des résultats de l'encodage sous la forme d'un Label dans un Layout positionné à droite de l'interface graphique.
  * 
- * @results   QLabel      Résultats à afficher
+ * @private   QLabel      Résultats à afficher
  */
 class DisplayResults : public QWidget {
 
