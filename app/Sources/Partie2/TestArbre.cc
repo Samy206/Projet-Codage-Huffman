@@ -26,4 +26,5 @@ int main(int argc, char* argv[]) {
 
     // Encodage et affichage du texte après exécution de l'algorithme de Huffman
     cr.encodage();
+
 }

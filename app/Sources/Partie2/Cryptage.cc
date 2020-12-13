@@ -12,12 +12,12 @@ Cryptage::Cryptage(Lecteur& l) {
 };
 
 /**
-    *Le destructeur ne fait que vider le vecteur de sommets car aucun attributs n'est alloué dynamiquement
+    *Le destructeur détruit les éléments que le vecteur et la map contiennent
 */
 Cryptage::~Cryptage() {
-    arbres_restants.clear();
+    arbres_restants.erase(arbres_restants.begin(),arbres_restants.end());
+    test_map.erase ( test_map.begin(), test_map.end() );
 }; 
-
 
 /**
    *Échange de deux cases de sommets dans un tableau utile au tri du vecteur de sommet
@@ -28,7 +28,10 @@ void swap(Sommet* tab, int i, int j) {
     tab[j] = S1;
 }
 
-// An optimized version of Bubble Sort
+/**
+    *Version optimisée du tri à bulles des sommets afin d'éviter de chercher les deux sommets de plus petites fréquences
+    à chaque fois
+*/
 void bubbleSort(std::vector<Sommet> *vect, int n) {
     Sommet *tmp_tab = new Sommet[vect->size()];
     int i = 0;
@@ -124,27 +127,28 @@ void Cryptage::construction_arbre() {
     *combinaisons = arbres_restants;
     bubbleSort(combinaisons, combinaisons->size());
 
-    Sommet A1, A2; // Deux sommets avec les plus faibles occurences
+    Sommet *A1;
+                            // Deux sommets qui stockeront les sommets de plus petites fréquences
+    Sommet *A2;
     Sommet *newSomm; // Nouveau sommet créé, racine de A1 et A2
 
     // Condition d'arrêt: Tant qu'il y a plus d'un arbre dans le vecteur de gestion des arbres restants
     while(combinaisons->size() > 1) {
         // On considère les deux sommets ayant l'occurence la plus faible
-        A1 = combinaisons->back();  combinaisons->pop_back();
-        A2 = combinaisons->back();  combinaisons->pop_back();
+        A1 = new Sommet (combinaisons->back());  combinaisons->pop_back();
+        A2 = new Sommet (combinaisons->back());  combinaisons->pop_back();
 
         // Création de l'arbre A (Sommet newSomm) étiqueté e1 + e2
-        newSomm = new Sommet(' ', A1.getFreq() + A2.getFreq(), 1);
+        newSomm = new Sommet(' ', A1->getFreq() + A2->getFreq(), 1);
 
         // Le nouvel arbre a pour fils les racines de A1 et A2
-        newSomm->setFilsD(&A2);
-        newSomm->setFilsG(&A1);
+        newSomm->setFilsD(A2);
+        newSomm->setFilsG(A1);
 
         // On place le nouvel arbre dans la liste des sommets courants (La surcharde de l'opérateur = copie aussi les fils)
         combinaisons->push_back(*newSomm);
 
         delete newSomm; // Suppression de l'arbre A maintenant stocké dans la liste des sommets restants
-
         bubbleSort(combinaisons, combinaisons->size()); // On re-trie la liste des sommets restants
     }
 
@@ -186,7 +190,7 @@ string Cryptage::encodage() {
         cout <<p.first << ": " << p.second<<" | ";
     cout<<endl;
 
-    string * contenunew = new string;
+    string contenunew ;
     int ascii;
     char c;
     for(size_t i = 0 ; i < lecteur.getContenu().size() ; i++)
@@ -198,12 +202,13 @@ string Cryptage::encodage() {
         
         // Si la lettre est dans la map, on ajoute son encodage à la chaîne
         if (test_map.find(c) != test_map.end()) 
-            *contenunew += test_map[c];
+            contenunew += test_map[c];
+
         else // Sinon, on ajoute le caractère
-            *contenunew += c;
+            contenunew += c;
     }
 
-    cout<<"\n\033[1;37m> Texte codé: \033[00m"<<*contenunew<<endl;
-    return *contenunew;
+    cout<<"\n\033[1;37m> Texte codé: \033[00m"<<contenunew<<endl;
+    return contenunew;
 }
 

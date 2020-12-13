@@ -145,6 +145,6 @@ ostream& operator<<(ostream& flux,Lecteur& lecteur)
 */
 Lecteur::~Lecteur()
 {
-    lettres.clear();
-    occurences.clear();
+    lettres.erase(lettres.begin(),lettres.end());
+    occurences.erase(occurences.begin(),occurences.end());
 };

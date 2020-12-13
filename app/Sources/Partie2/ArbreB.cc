@@ -25,7 +25,7 @@ ArbreB::ArbreB(Sommet * sommets , int size )
 };
 
 /**
-    *Ce deuxième constructeur se base entièrement sur l'opérateur '='
+    *Ce deuxième constructeur se base sur l'opérateur '=' (après avoir copié les données "facilement" atteignables)
 */
 ArbreB::ArbreB(ArbreB& arbre)
 {
@@ -43,7 +43,7 @@ ArbreB::ArbreB(ArbreB& arbre)
 */
 void ArbreB::operator=(ArbreB& arbre)
 {
-    if(racine != NULL) {free_tree(racine);}
+    if(racine != NULL) {delete racine;}
     ajout(arbre);
 };
 
@@ -415,9 +415,13 @@ void ArbreB::free_tree(Sommet * sommet)
 };
 
 /**
-   *Le destructeur fait appel à la méthode précèdente
+   *Ce destructeur fait appel au destructeur de la classe Sommet qui gère déjà les cas où les sommets ont des fils
 */
 ArbreB::~ArbreB()
 {
-    free_tree(racine);
+    if(racine != NULL)
+    {
+        racine->clean_sommet();
+        delete racine;
+    }
 };

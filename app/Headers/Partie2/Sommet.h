@@ -35,8 +35,6 @@ class Sommet
          * - Constructeur par copie
          */
         Sommet(char =' ',float = 0, int = 0);
-        // Sommet(Sommet &);
-        // CONST PAR COPIE 2
         Sommet(const Sommet& source);
 
         /**
@@ -61,11 +59,10 @@ class Sommet
         void setFilsG(Sommet * sommet) {filsg = sommet ; taille += sommet->getTaille();};    
         void setFilsD(Sommet * sommet) {filsd = sommet ; taille += sommet->getTaille();};
         void setTaille(const int size) {taille = size;};
-
         /**
          *  Représente un sommet sous la forme d'une chaîne de caractère (char : freq) 
          * */
-        std::string formalize_sommet();
+        char * formalize_sommet();
     
         /**
          *  Surcharge des opérateurs =, + et << 
