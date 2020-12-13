@@ -143,6 +143,7 @@ void Sommet::clean_sommet()
         delete filsd;
         filsd = NULL;
     }
+}
 
 
 /**
