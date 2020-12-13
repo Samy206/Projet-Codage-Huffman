@@ -70,8 +70,7 @@ void Context::setText(std::string const& val)  {
         std::cout << cr.get_arbre() << std::endl; // Ok !
         setArbre(cr.get_arbre());
     }
-    else 
-        ; // Envoie signal de clear de Dessine arbre
+    // else: Envoie signal de clear de Dessine arbre
 }
 
 /**

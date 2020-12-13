@@ -87,15 +87,15 @@ void Lecteur::lecture(string const& chaine)
         int nb_carac = 0;
         for(int i = 0 ; i < size ; i++)
         {
-            if(contenu[i] != ' ' && contenu[i] != ';' && contenu[i] != ',' && contenu[i] != '.' && contenu[i] != '\n')
+            if(contenu[i] != ' ' && contenu[i] != ';' && contenu[i] != ',' && contenu[i] != '.' && contenu[i] != '\n' && contenu[i] != '\0')
             {
                 ascii= (int) (contenu[i]);
-                if(ascii >= 0 && ascii <= 255)
+                if( (ascii >= -96 && ascii <= -65) || (ascii >= 0 && ascii <= 127)) // -96 à -65 pour les accentués (ASCII Etendu)
                 {
                     nb_carac++;
                     convert = contenu[i];
 
-                    if(ascii >= 65 && ascii <= 90)
+                    if(ascii >= 65 && ascii <= 90) // Si c'est une majuscule, on la considère minuscule
                         convert = (char) (ascii+32);
 
                     indice = get_indice(convert);
@@ -104,7 +104,7 @@ void Lecteur::lecture(string const& chaine)
                         lettres.push_back(convert);
                         occurences.push_back(1.0);
                     }
-                    else
+                    else 
                         occurences[indice] += 1.0;
                 }
             }
