@@ -18,9 +18,9 @@ class Cryptage
 {
    private :
       Lecteur lecteur;
-      ArbreB arbre_huffman;
-      std::vector<Sommet> arbres_restants;
-      std::map <char,std::string> test_map;
+      ArbreB arbre_huffman; // Arbre binaire de cryptage construit
+      std::vector<Sommet> arbres_restants; // Vector de gestion des arbres lors de l'algorithme
+      std::map <char,std::string> encod_map; // Map des résultats de l'encodage
 
    public :
       /**
@@ -34,7 +34,7 @@ class Cryptage
       // Getter pour l'arbre de Huffman
       ArbreB& get_arbre() {return arbre_huffman;};
       // Getter pour la map des résultats encodés
-      std::map <char,std::string> get_map() { return test_map; };
+      std::map <char,std::string> get_map() { return encod_map; };
 
       /**
        * @brief Algorithme de cryptage: création de l'arbre de Huffman à partir d'un vecteur de lettres et occurrences.

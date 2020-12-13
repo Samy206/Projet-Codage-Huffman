@@ -163,8 +163,9 @@ void ArbreB::ajout(ArbreB& arbre)
 void ArbreB::print_tree(Sommet *root, char *indent, int last) {
     if (root == NULL)
         return;
-
-    cout << indent << "+- " << root->formalize_sommet() << endl; //  "("<<root->getLettre()<<" : "<<root->getFreq()<< ")\n";
+    char *tmp = root->formalize_sommet();
+    cout << indent << "+- " << tmp  << endl;
+    delete[] tmp;
     char indent2[90];
     if (last == 0)
         sprintf(indent2, "%s|   ", indent);
@@ -386,23 +387,6 @@ void ArbreB::fusion_arbre(ArbreB& arbre1, ArbreB& arbre2)
 */
 void ArbreB::free_tree(Sommet * sommet)
 {
-    // if(sommet != NULL )
-    // {
-    //     Sommet * tmpG = NULL;
-    //     Sommet * tmpD = NULL;
-
-    //     if(sommet->filsg != NULL)
-    //        tmpG = sommet->filsg;
-
-    //     if(sommet->filsd != NULL)
-    //         tmpD = sommet->filsd;
-
-    //     delete sommet;
-    //     if(tmpG != NULL)free_tree(tmpG);
-    //     if(tmpD != NULL)free_tree(tmpD);
-
-    // }
-
     if(sommet != NULL)  {
         if(sommet->filsg != NULL)
            free_tree(sommet->filsg);

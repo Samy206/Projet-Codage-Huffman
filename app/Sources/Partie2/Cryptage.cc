@@ -16,7 +16,7 @@ Cryptage::Cryptage(Lecteur& l) {
 */
 Cryptage::~Cryptage() {
     arbres_restants.erase(arbres_restants.begin(),arbres_restants.end());
-    test_map.erase ( test_map.begin(), test_map.end() );
+    encod_map.erase ( encod_map.begin(), encod_map.end() );
 }; 
 
 /**
@@ -65,39 +65,6 @@ void bubbleSort(std::vector<Sommet> *vect, int n) {
     delete[] tmp_tab;
 }
 
-// V TEST
-void bubbleSort2(std::vector<Sommet> vect, int n) {
-    // Sommet *tmp_tab = new Sommet[vect->size()];
-    // int i = 0;
-    // for (Sommet s : *vect) {
-    //     tmp_tab[i] = vect->back(); vect->pop_back();
-    //     i++;
-    // }
-
-    int i, j;
-    bool swapped;
-    Sommet S1;
-    for (i = 0; i < n-1; i++)
-    {
-        swapped = false;
-        for (j = 0; j < n-i-1; j++)
-        {
-            if (vect[j].getFreq() > vect[j+1].getFreq())
-            {
-                // swap(tmp_tab, j, j+1);
-                S1 = vect[j];
-                vect[j] = vect[j+1];
-                vect[j+1] = S1; 
-                swapped = true;
-            }
-        }
-
-        // IF no two elements were swapped by inner loop, then break
-        if (swapped == false)
-            break;
-    }
-}
-
 /**
  * @brief Algorithme de cryptage: création de l'arbre de Huffman à partir d'un vecteur de lettres et occurrences.
  *
@@ -127,9 +94,7 @@ void Cryptage::construction_arbre() {
     *combinaisons = arbres_restants;
     bubbleSort(combinaisons, combinaisons->size());
 
-    Sommet *A1;
-                            // Deux sommets qui stockeront les sommets de plus petites fréquences
-    Sommet *A2;
+    Sommet *A1, *A2; // Deux sommets qui stockeront les sommets de plus petites fréquences
     Sommet *newSomm; // Nouveau sommet créé, racine de A1 et A2
 
     // Condition d'arrêt: Tant qu'il y a plus d'un arbre dans le vecteur de gestion des arbres restants
@@ -160,6 +125,9 @@ void Cryptage::construction_arbre() {
 
     // On ajoute maintenant ce Sommet à l'Arbre de la classe Cryptage
     arbre_huffman.ajout(arbre_huffman.getRacine(), &combinaisons->back());
+
+    // delete[] combinaisons; // Ça free mais Seg-fault
+    // combinaisons->erase(combinaisons->begin(),combinaisons->end()); // Ça free pas ET seg-fault
 };
 
 /**
@@ -178,15 +146,15 @@ string Cryptage::encodage() {
     
     for(int i = 0 ; i < taille; i++) {
         // On insère les pairs <Lettre, ""> dans la map des résultats
-        test_map.insert(std::make_pair(arbres_restants[i].getLettre(), ""));
+        encod_map.insert(std::make_pair(arbres_restants[i].getLettre(), ""));
 
         // Chaque lettre est encodé par la fonction create_code, la string est sauvegardé dans la map
-        arbre_huffman.recherche_sommet(arbre_huffman.getRacine(), arbres_restants[i].getLettre(), test_map[arbres_restants[i].getLettre()], 0);
+        arbre_huffman.recherche_sommet(arbre_huffman.getRacine(), arbres_restants[i].getLettre(), encod_map[arbres_restants[i].getLettre()], 0);
     }
 
     // Affichage des résultats un à un
     cout << "\n\033[1;37m> Résultat de l'encodage: \033[00m";
-    for(std::pair<char, string> p : test_map)
+    for(std::pair<char, string> p : encod_map)
         cout <<p.first << ": " << p.second<<" | ";
     cout<<endl;
 
@@ -201,8 +169,8 @@ string Cryptage::encodage() {
             c = (char) (ascii+32);
         
         // Si la lettre est dans la map, on ajoute son encodage à la chaîne
-        if (test_map.find(c) != test_map.end()) 
-            contenunew += test_map[c];
+        if (encod_map.find(c) != encod_map.end()) 
+            contenunew += encod_map[c];
 
         else // Sinon, on ajoute le caractère
             contenunew += c;
