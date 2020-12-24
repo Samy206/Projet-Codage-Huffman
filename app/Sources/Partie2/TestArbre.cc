@@ -34,7 +34,12 @@ int main(int argc, char* argv[]) {
     dr.decrypte();
 
     std::cout << "\n\033[1;37m> Test de décryptage avec une mauvaise combinaison: \033[0m" << std::endl;
-    std::map<char, std::string> foo_map = { {'t', "00"}, {'e', "11"}, {'a', "01"} };
+    std::map<char, std::string> foo_map = { {'t', "00"}, {'e', "11"}, {'i', "10"} };
     Decryptage dr2(crypted, foo_map);
     dr2.decrypte();
+
+    std::cout << "\n\033[1;37m> Test de décryptage avec les bons encodages mais pas les mêmes caractères: \033[0m" << std::endl;
+    std::map<char, std::string> foo_map2 = { {'t', "00"}, {'e', "11"}, {'i', "10"}, {'a', "01"} };
+    Decryptage dr3(crypted, foo_map2);
+    dr3.decrypte();
 }
