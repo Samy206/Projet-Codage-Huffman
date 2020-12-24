@@ -22,8 +22,8 @@ listing:
 	firefox doc/html/files.html
 
 # Compilation CLI
-compil: ${OUT_DIR} ${OUT_DIR}/TestArbre.o ${OUT_DIR}/ArbreB.o ${OUT_DIR}/Sommet.o ${OUT_DIR}/Lecteur.o ${OUT_DIR}/Cryptage.o
-	g++ -Wall -g -o ${OUT_DIR}/TestArbre ${OUT_DIR}/TestArbre.o ${OUT_DIR}/ArbreB.o ${OUT_DIR}/Sommet.o ${OUT_DIR}/Lecteur.o ${OUT_DIR}/Cryptage.o
+compil: ${OUT_DIR} ${OUT_DIR}/TestArbre.o ${OUT_DIR}/ArbreB.o ${OUT_DIR}/Sommet.o ${OUT_DIR}/Lecteur.o ${OUT_DIR}/Cryptage.o ${OUT_DIR}/Decryptage.o
+	g++ -Wall -g -o ${OUT_DIR}/TestArbre ${OUT_DIR}/TestArbre.o ${OUT_DIR}/ArbreB.o ${OUT_DIR}/Sommet.o ${OUT_DIR}/Lecteur.o ${OUT_DIR}/Cryptage.o ${OUT_DIR}/Decryptage.o
 
 
 ### Représentations intermédiaires
@@ -42,6 +42,9 @@ ${OUT_DIR}/Lecteur.o: app/Sources/Partie2/Lecteur.cc app/Headers/Partie2/Lecteur
 
 ${OUT_DIR}/Cryptage.o: app/Sources/Partie2/Cryptage.cc app/Headers/Partie2/Cryptage.h
 	g++ -Wall -g -c -o ${OUT_DIR}/Cryptage.o app/Sources/Partie2/Cryptage.cc
+
+${OUT_DIR}/Decryptage.o: app/Sources/Partie2/Decryptage.cc app/Headers/Partie2/Decryptage.h 
+	g++ -Wall -g -c -o ${OUT_DIR}/Decryptage.o app/Sources/Partie2/Decryptage.cc
 
 # ======= #
 

@@ -2,6 +2,7 @@
 #include "../../Headers/Partie2/Lecteur.h"
 #include "../../Headers/Partie2/Cryptage.h"
 
+#include "../../Headers/Partie2/Decryptage.h"
 
 /**
  * @file TestArbre.cc
@@ -25,6 +26,15 @@ int main(int argc, char* argv[]) {
     std::cout << "\n\033[1;37mArbre binaire de cryptage:\033[0m\n" << cr.get_arbre() << std::endl;
 
     // Encodage et affichage du texte après exécution de l'algorithme de Huffman
-    cr.encodage();
+    std::string crypted = cr.encodage();
 
+    // Test de décryptage avec une bonne combinaison
+    std::cout << "\n\033[1;37m> Test de décryptage avec la bonne combinaison: \033[0m" << std::endl;
+    Decryptage dr(crypted, cr.get_map());
+    dr.decrypte();
+
+    std::cout << "\n\033[1;37m> Test de décryptage avec une mauvaise combinaison: \033[0m" << std::endl;
+    std::map<char, std::string> foo_map = { {'t', "00"}, {'e', "11"}, {'a', "01"} };
+    Decryptage dr2(crypted, foo_map);
+    dr2.decrypte();
 }
