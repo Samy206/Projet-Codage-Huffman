@@ -1,11 +1,20 @@
 #include "../../Headers/Partie2/Decryptage.h"
-
+using namespace std;
 /**
  * @brief Constructeur de classe: constitué d'un chaine cryptée et d'une map
  */
 Decryptage::Decryptage(std::string text, std::map <char,std::string> map) {
     crypted = text;
     encod_map = map;
+};
+
+/**
+ * @brief Constructeur de classe: constitué d'un chaine cryptée et d'un arbre de huffman
+ */
+Decryptage::Decryptage(std::string text, ArbreB huffman)
+{
+    arbre_huffman = huffman;
+    crypted = text;
 };
 
 /** 
@@ -18,7 +27,7 @@ int Decryptage::calcul_taille_max(std::map <char,std::string> encod_map) {
             max = p.second.size();
     }
     return max;
-}
+};
 
 /**
  * @brief Algorithme de décryptage 
@@ -32,7 +41,7 @@ int Decryptage::calcul_taille_max(std::map <char,std::string> encod_map) {
  *      A l'inverse, si le texte est correctement retranscrit, on conclue que le texte donné pourrait avoir été codé avec cette map (ses lettres sont inclus dans celles de la map)
  * 
  */
-void Decryptage::decrypte()  {
+void Decryptage::decrypte_map()  {
     int taille_max = calcul_taille_max(encod_map); // On calcule la taille maximale pour définir la condition d'arrêt
     std::string current; // Stocke les caractères lus dans @crypted tant qu'une lettre n'est pas reconnue
     std::string decrypted; // String résultat du décryptage
@@ -81,4 +90,71 @@ void Decryptage::decrypte()  {
 };
 
 
-Decryptage::~Decryptage() { };
+void Decryptage::decrypte_arbre()
+{
+
+    //std::string current_s; // Stocke les caractères lus dans @crypted tant qu'une lettre n'est pas reconnue
+    std::string decrypted; // String résultat du décryptage
+    Sommet * current = arbre_huffman.getRacine();
+    for(char c: crypted)
+    {
+        cout<<"caractere : "<<c<<" ; "<<decrypted<<endl;
+        if(c == '1')
+        {
+            if(current->filsd == NULL)
+            {
+                cout << "\033[1;31mErreur lors de l'exécution de l'algorithme de décryptage\033[00m" << std::endl;
+                return;
+            }
+            current = current->filsd;
+            if(current->lettre != ' ')
+            {
+
+                decrypted += current->lettre;
+                current = arbre_huffman.getRacine();
+            }
+        }
+
+        else if(c == '0')
+        {
+            if(current->filsg == NULL)
+            {
+                cout << "\033[1;31mErreur lors de l'exécution de l'algorithme de décryptage\033[00m" << std::endl;
+                return;
+            }
+            current = current->filsg;
+            if(current->lettre != ' ')
+            {
+                decrypted += current->lettre;
+                current = arbre_huffman.getRacine();
+            }
+        }
+
+        else
+        {
+            if(current->lettre != ' ')
+            {
+                cout << "\033[1;31mErreur lors de l'exécution de l'algorithme de décryptage\033[00m" << std::endl;
+                return;
+            }
+
+            else
+            {
+                decrypted += c;
+            }
+        }
+    }
+    if(current != arbre_huffman.getRacine())
+    {
+        cout << "\033[1;31mErreur lors de l'exécution de l'algorithme de décryptage\033[00m" << std::endl;
+        return;
+    }
+
+    std::cout <<"Le code "<<crypted<<" a peut-être été codé par la partie 2 mais on ne peut pas être sûrs"
+     <<" résultat : "<<decrypted<<std::endl;
+};
+
+Decryptage::~Decryptage()
+{
+    encod_map.erase(encod_map.begin(),encod_map.end());
+};

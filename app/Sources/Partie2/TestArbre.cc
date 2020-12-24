@@ -3,7 +3,7 @@
 #include "../../Headers/Partie2/Cryptage.h"
 
 #include "../../Headers/Partie2/Decryptage.h"
-
+using namespace std;
 /**
  * @file TestArbre.cc
  * @brief Partie 2 : Constitue la fonction main lors de l'exécution sans interface graphique pour le Cryptage.
@@ -29,17 +29,26 @@ int main(int argc, char* argv[]) {
     std::string crypted = cr.encodage();
 
     // Test de décryptage avec une bonne combinaison
-    std::cout << "\n\033[1;37m> Test de décryptage avec la bonne combinaison: \033[0m" << std::endl;
+    /*std::cout << "\n\033[1;37m> Test de décryptage avec la bonne combinaison: \033[0m" << std::endl;
     Decryptage dr(crypted, cr.get_map());
-    dr.decrypte();
+    dr.decrypte_map();
 
     std::cout << "\n\033[1;37m> Test de décryptage avec une mauvaise combinaison: \033[0m" << std::endl;
     std::map<char, std::string> foo_map = { {'t', "00"}, {'e', "11"}, {'i', "10"} };
     Decryptage dr2(crypted, foo_map);
-    dr2.decrypte();
+    dr2.decrypte_map();
 
     std::cout << "\n\033[1;37m> Test de décryptage avec les bons encodages mais pas les mêmes caractères: \033[0m" << std::endl;
     std::map<char, std::string> foo_map2 = { {'t', "00"}, {'e', "11"}, {'i', "10"}, {'a', "01"} };
     Decryptage dr3(crypted, foo_map2);
-    dr3.decrypte();
+    dr3.decrypte_map();*/
+    //std::cout<<"cr arbre : \n"<<cr.get_arbre();
+
+    string truc("abcd");
+    Lecteur l1;
+    l1.lecture(truc);
+    Cryptage cr1(l1);
+    cr1.construction_arbre();
+    Decryptage dr4("111111",cr1.get_arbre());
+    dr4.decrypte_arbre();
 }

@@ -82,6 +82,7 @@ class Sommet
          *  Classe ArbreB déclarée classe amie afin de pouvoir modifier les données de l'arbre de manière optimale 
          * */
         friend class ArbreB;
+        friend class Decryptage;
 };
 
 

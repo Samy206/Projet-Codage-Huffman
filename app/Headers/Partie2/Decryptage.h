@@ -1,6 +1,6 @@
 #ifndef DECRYPTAGE_H
 #define DECRYPTAGE_H
-
+#include "ArbreB.h"
 #include <iostream> // cout 
 #include <string>
 #include <map>
@@ -14,7 +14,7 @@ class Decryptage
 {
     private:
         std::string crypted; // Texte crypté 
-        // ArbreB arbre_huffman; // Arbre binaire de cryptage - A IMPLEMENTER ?
+        ArbreB arbre_huffman; // Arbre binaire de cryptage - A IMPLEMENTER ?
         std::map <char,std::string> encod_map; // Map des encodages
 
     public:
@@ -22,7 +22,7 @@ class Decryptage
          * @brief Constructeur de classe: constitué d'un chaine cryptée et d'une map
          */
         Decryptage(std::string, std::map <char,std::string>);
-
+        Decryptage(std::string, ArbreB);
         ~Decryptage();
 
         /** 
@@ -43,7 +43,8 @@ class Decryptage
          *      A l'inverse, si le texte est correctement retranscrit, on conclue que le texte donné pourrait avoir été codé avec cette map (ses lettres sont inclus dans celles de la map)
          * 
          */
-        void decrypte();
+        void decrypte_map();
+        void decrypte_arbre();
 };
 
 #endif // DECRYPTAGE_H
