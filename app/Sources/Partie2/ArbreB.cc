@@ -258,33 +258,34 @@ int ArbreB::recherche_sommet(Sommet *sommet, const char car, string& s, int curr
  * – Si le 'sommet' ne correspond pas à la lettre qu'on recherche, on cherche à gauche et à droite
  * – Sinon on renvoie la fréquence associé à la lettre
  */
-int ArbreB::get_occ_sommet(Sommet *sommet,const char lettre)
+float ArbreB::get_occ_sommet(Sommet *sommet,const char lettre)
 {
-
     if(sommet == NULL)
-        return -1;
+        return -1.0;
 
     else
     {
-        int tmp = -1;
+        float tmp = -1.0;
+
         if(sommet->lettre == lettre)
             return sommet->freq;
 
         else
         {
-            int tmp1 = get_occ_sommet(sommet->filsg,lettre);
-            int tmp2 = get_occ_sommet(sommet->filsd,lettre);
+            float tmp1 = get_occ_sommet(sommet->filsg,lettre);
+            float tmp2 = get_occ_sommet(sommet->filsd,lettre);
 
-            if(tmp1 == -1 && tmp2 == -1)
+            if(tmp1 == -1.0 && tmp2 == -1.0)
                 return -1;
 
-            else if(tmp1 != -1)
+            else if(tmp1 != -1.0)
                 tmp = tmp1;
 
-            else if(tmp2 != -1)
+            else if(tmp2 != -1.0)
                 tmp = tmp2;
+
+            return tmp;
         }
-        return tmp;
     }
 }
 

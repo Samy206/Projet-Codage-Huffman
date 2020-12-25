@@ -157,10 +157,11 @@ void Decryptage::decrypte_arbre()
         vector<char> lettres = l.getLettres();
         vector<float> occurences = l.getOccurences();
         int taille = lettres.size();
-        float comparateur;
+        float comparateur = 0.0;
 
         for(int i = 0 ; i < taille ; i++)
         {
+
             comparateur = arbre_huffman.get_occ_sommet(arbre_huffman.getRacine(),lettres[i]);
             if(comparateur != occurences[i])
             {

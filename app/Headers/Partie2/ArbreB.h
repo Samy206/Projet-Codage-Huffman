@@ -71,7 +71,7 @@ class ArbreB
           *  Recherche un sommet de l'arbre par une @lettre et renvoie son occurence si elle la trouve, sinon
           elle renvoie -1
          */
-        int get_occ_sommet(Sommet *sommet,const char lettre);
+        float get_occ_sommet(Sommet *sommet,const char lettre);
 
         /**
          *  Fusionne deux arbre binaires 
