@@ -48,8 +48,9 @@ class Lecteur
          */ 
         void lecture(std::string const &);
 
-        // Surcharges des opérateurs = et << :
+        // Surcharges des opérateurs = , << , == :
         void operator=(Lecteur&);
+        friend bool operator==(Lecteur&,Lecteur&);
         friend std::ostream& operator<<(std::ostream&,Lecteur&);
 };
 

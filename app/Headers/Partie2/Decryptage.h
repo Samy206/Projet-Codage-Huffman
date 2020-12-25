@@ -1,7 +1,8 @@
 #ifndef DECRYPTAGE_H
 #define DECRYPTAGE_H
 #include "ArbreB.h"
-#include <iostream> // cout 
+#include "Lecteur.h"
+#include <iostream> // cout
 #include <string>
 #include <map>
 

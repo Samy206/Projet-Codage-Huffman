@@ -44,11 +44,21 @@ int main(int argc, char* argv[]) {
     dr3.decrypte_map();*/
     //std::cout<<"cr arbre : \n"<<cr.get_arbre();
 
-    string truc("abcd");
+    string truc("abcde");
     Lecteur l1;
     l1.lecture(truc);
     Cryptage cr1(l1);
     cr1.construction_arbre();
-    Decryptage dr4("111111",cr1.get_arbre());
+    string autre = cr1.encodage();
+    Decryptage dr4(autre,cr.get_arbre());
     dr4.decrypte_arbre();
+    /*ArbreB arbre;
+    arbre.ajout(arbre.getRacine(),'a',43);
+    arbre.ajout(arbre.getRacine(),'b',433);
+    arbre.ajout(arbre.getRacine(),'c',431);
+    arbre.ajout(arbre.getRacine(),'g',8431);
+    arbre.ajout(arbre.getRacine(),'d',4331);
+    arbre.ajout(arbre.getRacine(),'e',4311);
+    arbre.ajout(arbre.getRacine(),'f',6431);
+    cout<<"wtf : "<<arbre.get_occ_sommet(arbre.getRacine(),'d')<<endl;*/
 }

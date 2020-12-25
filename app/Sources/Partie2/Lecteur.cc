@@ -140,6 +140,18 @@ ostream& operator<<(ostream& flux,Lecteur& lecteur)
     return flux;
 };
 
+
+bool operator==(Lecteur& premier, Lecteur& second)
+{
+    if(premier.lettres != second.lettres)
+        return false;
+
+    if(premier.occurences != second.occurences)
+        return false;
+
+    return true;
+}
+
 /**
     *La classe Lecteur ne contient pas d'attributs alloués dynamiquement, il n'y donc rien à delete
 */

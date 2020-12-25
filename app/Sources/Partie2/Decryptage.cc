@@ -98,7 +98,6 @@ void Decryptage::decrypte_arbre()
     Sommet * current = arbre_huffman.getRacine();
     for(char c: crypted)
     {
-        cout<<"caractere : "<<c<<" ; "<<decrypted<<endl;
         if(c == '1')
         {
             if(current->filsd == NULL)
@@ -144,15 +143,36 @@ void Decryptage::decrypte_arbre()
             }
         }
     }
+
     if(current != arbre_huffman.getRacine())
     {
-        cout << "\033[1;31mErreur lors de l'exécution de l'algorithme de décryptage\033[00m" << std::endl;
+        cout << "\033[1;31mErreur lors de l'exécution de l'algorithme de décryptage, l'arbre ne correspond donc pas au texte\033[00m" << std::endl;
         return;
     }
 
-    std::cout <<"Le code "<<crypted<<" a peut-être été codé par la partie 2 mais on ne peut pas être sûrs"
-     <<" résultat : "<<decrypted<<std::endl;
+    else
+    {
+        Lecteur l;
+        l.lecture(decrypted);
+        vector<char> lettres = l.getLettres();
+        vector<float> occurences = l.getOccurences();
+        int taille = lettres.size();
+        float comparateur;
+
+        for(int i = 0 ; i < taille ; i++)
+        {
+            comparateur = arbre_huffman.get_occ_sommet(arbre_huffman.getRacine(),lettres[i]);
+            if(comparateur != occurences[i])
+            {
+                 std::cout <<"\033[1;37m> Le texte n'a pas été codé par la partie 2, mais l'arbre fourni peut effectivement servir à décoder ce texte.\n> Résultat : \033[0m"<<decrypted<<std::endl;
+                 return;
+            }
+        }
+        std::cout <<"\033[1;37m> Le texte a peut-être été codé par la partie 2 mais on ne peut pas être sûrs.\n> Résultat : \033[0m"<<decrypted<<std::endl;
+    }
 };
+
+
 
 Decryptage::~Decryptage()
 {

@@ -249,6 +249,46 @@ int ArbreB::recherche_sommet(Sommet *sommet, const char car, string& s, int curr
 
 
 /**
+ * Algorithme de recherche de la fréquence d'une lettre
+ *
+ * @sommet      Sommet courant de l'arbre de Huffman final
+ * @lettre         Caractère à encoder
+ *
+ * ! Cette méthode ne fonctionne que si le @car est bien dans l'arbre, sinon elle renvoie -1.
+ * – Si le 'sommet' ne correspond pas à la lettre qu'on recherche, on cherche à gauche et à droite
+ * – Sinon on renvoie la fréquence associé à la lettre
+ */
+int ArbreB::get_occ_sommet(Sommet *sommet,const char lettre)
+{
+
+    if(sommet == NULL)
+        return -1;
+
+    else
+    {
+        int tmp = -1;
+        if(sommet->lettre == lettre)
+            return sommet->freq;
+
+        else
+        {
+            int tmp1 = get_occ_sommet(sommet->filsg,lettre);
+            int tmp2 = get_occ_sommet(sommet->filsd,lettre);
+
+            if(tmp1 == -1 && tmp2 == -1)
+                return -1;
+
+            else if(tmp1 != -1)
+                tmp = tmp1;
+
+            else if(tmp2 != -1)
+                tmp = tmp2;
+        }
+        return tmp;
+    }
+}
+
+/**
     Mis à part les actions à appliquer, cette méthode ne diffère pas de la précédente, en effet ici à la place de
     renvoyer le sommet correspondant au caractère, on récupère l'adresse des ses fils, on le supprime, et on ajoute
     ses fils à nouveau.
