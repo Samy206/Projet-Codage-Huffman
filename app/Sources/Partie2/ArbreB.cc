@@ -224,7 +224,14 @@ void ArbreB::operator+=(ArbreB& arbre)
  * – Le code associé à une lettre est le mot binaire composé des étiquettes entre la racine la feuille-lettre
  */ 
 int ArbreB::recherche_sommet(Sommet *sommet, const char car, string& s, int curr) {
-    if (curr == 1) // Condition d'arrêt
+
+    if (racine->lettre == car) /* Condition d'arrêt 1 : la lettre correspond au premier sommet de l'arbre => Arbre à 1
+                                sommet*/
+    {
+        s.push_back('1');
+        return 1;
+    }
+    if (curr == 1) // Condition d'arrêt 2 : la lettre recherchée est trouvée et encodée
         return 1;
     
     if (sommet->getLettre() == car) // La lettre du sommet est celle que l'on cherche

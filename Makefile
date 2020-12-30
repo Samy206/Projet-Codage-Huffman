@@ -12,8 +12,8 @@ debug: compil
 
 # Execution en GUI (Interface graphique Qt)
 gui: 
-	qmake -makefile -o QMakefile app/Partie2Cryptage.pro
-	make -f QMakefile
+	@qmake -makefile -o QMakefile app/Partie2Cryptage.pro > /dev/null
+	@make -f QMakefile > /dev/null
 	./Partie2Cryptage
 
 # Listing des fichiers

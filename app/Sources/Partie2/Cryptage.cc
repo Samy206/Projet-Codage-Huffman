@@ -143,7 +143,7 @@ void Cryptage::construction_arbre() {
  */
 string Cryptage::encodage() {
     int taille = arbres_restants.size();
-    
+
     for(int i = 0 ; i < taille; i++) {
         // On insère les pairs <Lettre, ""> dans la map des résultats
         encod_map.insert(std::make_pair(arbres_restants[i].getLettre(), ""));
