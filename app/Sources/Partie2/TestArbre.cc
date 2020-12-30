@@ -28,7 +28,19 @@ int main(int argc, char* argv[]) {
     // Encodage et affichage du texte après exécution de l'algorithme de Huffman
     std::string crypted = cr.encodage();
 
-    cout<<"crypted : "<<crypted<<endl;
+    // Décryptage d'un mauvais texte
+    std::cout << "\n\033[1;37m> Essai de décryptage du texte : '00011'\033[0m (Symboles non contenus dans l'arbre)" << std::endl;
+    Decryptage dr1("00011", cr.get_arbre());
+    dr1.speakerine(dr1.decrypte_arbre());
 
+    // Décryptage d'un bon texte avec mauvaises occurrences
+    std::cout << "\n\033[1;37m> Essai de décryptage du texte : '000111110'\033[0m (Symboles contenus dans l'arbre mais avec occurrences différentes)" << std::endl;
+    Decryptage dr2("000111110", cr.get_arbre());
+    dr2.speakerine(dr2.decrypte_arbre());
+
+    // Décryptage du bon texte
+    std::cout << "\n\033[1;37m> Essai de décryptage du texte : '101111100100 110101110100'\033[0m (Bon texte crypté initialement par l'arbre)" << std::endl;
+    Decryptage dr(crypted, cr.get_arbre());
+    dr.speakerine(dr.decrypte_arbre());
 
 }

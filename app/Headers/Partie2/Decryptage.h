@@ -50,6 +50,8 @@ class Decryptage
          */
         void decrypte_map();
         int decrypte_arbre();
+
+        void speakerine(int);
 };
 
 #endif // DECRYPTAGE_H

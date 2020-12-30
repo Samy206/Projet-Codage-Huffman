@@ -170,8 +170,23 @@ int Decryptage::decrypte_arbre()  {
 };
 
 // faire une fonction pour print en fonction du code pour la partie cli
+void Decryptage::speakerine(int status)  {
+    switch (status)  {
+        case -1:
+            // Erreur lors de l'exécution de l'algorithme de décryptage, l'arbre ne correspond donc pas au texte 
+            std::cout << "\033[1;31mCe texte ne peut être décodé avec l'arbre binaire de cryptage défini.\033[0m" << std::endl;
+            break;
+        case 1:
+            // Le texte n'a pas été codé par la partie 2, mais l'arbre fourni peut effectivement servir à décoder ce texte
+            std::cout << "\033[1;33mCe texte n'a pas été encodé par l'arbre binaire de cryptage défini mais il peut tout de même servir à le décoder\n\033[00mTexte décodé : " << decrypted << std::endl;
+            break;
+        case 2:
+            std::cout << "\033[1;36mCe texte a pu être été codé par l'arbre binaire de cryptage défini car les codes et occurences correspondent.\n\033[00mTexte décodé : " << decrypted << "\nOn ne peut toutefois pas s'assurer que l'arbre binaire de cryptage défini a permis d'encoder ce texte."<< std::endl;
+            break;
+    }
+       
+};
 
-Decryptage::~Decryptage()
-{
+Decryptage::~Decryptage()  {
     encod_map.erase(encod_map.begin(),encod_map.end());
 };
