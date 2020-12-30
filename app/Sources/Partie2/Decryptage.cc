@@ -181,7 +181,7 @@ void Decryptage::speakerine(int status)  {
             std::cout << "\033[1;33mCe texte n'a pas été encodé par l'arbre binaire de cryptage défini mais il peut tout de même servir à le décoder\n\033[00mTexte décodé : " << decrypted << std::endl;
             break;
         case 2:
-            std::cout << "\033[1;36mCe texte a pu être été codé par l'arbre binaire de cryptage défini car les codes et occurences correspondent.\n\033[00mTexte décodé : " << decrypted << "\nOn ne peut toutefois pas s'assurer que l'arbre binaire de cryptage défini a permis d'encoder ce texte."<< std::endl;
+            std::cout << "\033[1;36mCe texte a pu être été codé par l'arbre binaire de cryptage défini car les codes et occurences correspondent.\n\033[00mTexte décodé : " << decrypted << "\n\033[3mOn ne peut toutefois pas s'assurer que l'arbre binaire de cryptage défini a permis d'encoder ce texte.\033[00m"<< std::endl;
             break;
     }
        

@@ -10,7 +10,7 @@ using namespace std;
  * Construit l'arbre de cryptage du texte lu depuis le fichier text.txt puis l'encode selon l'algorithme de Huffman. 
  */
 int main(int argc, char* argv[]) {
-    std::cout << "\033[1;33mProjet LA - Partie 2 | Samy BOUMALI & Amine ATEK\033[0m - Exécution CLI\n\n" << std::endl;
+    std::cout << "\033[1;33mProjet LA - Cryptage et décryptage | Samy BOUMALI & Amine ATEK\033[0m - Exécution CLI\n" << std::endl;
 
     // Ouverture, lecture et calcul des occurrences des lettres pour le texte donné en entrée
     Lecteur l;
