@@ -11,6 +11,7 @@ HEADERS = \
    $$PWD/Headers/Partie2/ArbreB.h \
    $$PWD/Headers/Partie2/Lecteur.h \
    $$PWD/Headers/Partie2/Cryptage.h \
+   $$PWD/Headers/Partie2/Decryptage.h \
    $$PWD/Headers/GUI/DessineArbre.h \
    $$PWD/Headers/GUI/MainWindow.h \
    $$PWD/Headers/GUI/GetUserText.h \
@@ -22,6 +23,7 @@ SOURCES = \
    $$PWD/Sources/Partie2/ArbreB.cc \
    $$PWD/Sources/Partie2/Lecteur.cc \
    $$PWD/Sources/Partie2/Cryptage.cc \
+   $$PWD/Sources/Partie2/Decryptage.cc \
    $$PWD/Sources/GUI/DessineArbre.cc \
    $$PWD/Sources/GUI/MainWindow.cc \
    $$PWD/Sources/GUI/GetUserText.cc \

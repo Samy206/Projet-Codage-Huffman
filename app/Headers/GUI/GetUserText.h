@@ -10,6 +10,12 @@
 #include <QLabel>
 #include <iostream>
 
+#include <QDebug>
+#include <QRegularExpression>
+#include <QValidator>
+
+// #include "../Partie2/Decryptage.h"
+
 /**
  * @file GetUserText.h
  * @brief Menu principal des interactions avec l'utilisateur : comprend une barre de saisie, trois boutons et 
@@ -18,8 +24,6 @@
 class GetUserText : public QFrame {
     Q_OBJECT
 private:
-    QPushButton *bValider;
-    QPushButton *bQuitter;
     QPushButton *bZoomer;
 
     QLineEdit *input_txt;
@@ -27,6 +31,11 @@ private:
 
     QLabel* wContenu;
     QLabel* wResult;
+
+    // Partie 3 :
+    QLabel* wP3; // Titre pour séparation
+    QLineEdit *input_cry; // Input pour le texte crypté
+    QLabel *decode_result; // Résultat pour le décryptage
 
 public:
     /**
@@ -46,6 +55,10 @@ public slots:
     void zoomed();
 
     void textEntered();
+
+    void checkChange(const QString &);
+
+    void textDecrypted();
 
 signals:
 

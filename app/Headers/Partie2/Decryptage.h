@@ -15,8 +15,10 @@ class Decryptage
 {
     private:
         std::string crypted; // Texte crypté 
-        ArbreB arbre_huffman; // Arbre binaire de cryptage - A IMPLEMENTER ?
+        ArbreB arbre_huffman; // Arbre binaire de cryptage 
         std::map <char,std::string> encod_map; // Map des encodages
+        int status; // Valeur de retour -> Faire un énumération des cas possibles et le mettre dans le status ?
+        std::string decrypted; // Texte décrypté si réussi
 
     public:
         /**
@@ -25,6 +27,8 @@ class Decryptage
         Decryptage(std::string, std::map <char,std::string>);
         Decryptage(std::string, ArbreB);
         ~Decryptage();
+
+        std::string getDecrypted() { return decrypted; };
 
         /** 
          * @brief Renvoie la taille de chaîne maximale parmi les chaine d'encodage de caractères de la map
@@ -45,7 +49,7 @@ class Decryptage
          * 
          */
         void decrypte_map();
-        void decrypte_arbre();
+        int decrypte_arbre();
 };
 
 #endif // DECRYPTAGE_H

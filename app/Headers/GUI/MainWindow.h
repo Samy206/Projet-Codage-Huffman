@@ -9,6 +9,8 @@
 #include <QScrollArea>
 #include <QLabel>
 
+#include <QKeyEvent>
+
 
 /**
  * @file MainWindow.h
@@ -38,6 +40,12 @@ public :
      */ 
     MainWindow();
     
+
+    /**
+     * @brief Surcharge de l'évènement Qt keyPressEvent pour permettre de quitter l'application par touche ESC
+     */
+    void keyPressEvent(QKeyEvent* event);
+
     /**
      * Destructeur de classe
      */ 

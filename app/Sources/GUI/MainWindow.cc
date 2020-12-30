@@ -32,4 +32,14 @@ MainWindow::MainWindow() {
     layout->addWidget(wZoneArbre, 0, 0);
 }
 
+/**
+ * @brief Surcharge de l'évènement Qt keyPressEvent pour permettre de quitter l'application par touche ESC
+ */
+void MainWindow::keyPressEvent(QKeyEvent* event)  {
+    if(event->key() == Qt::Key_Escape)
+        QCoreApplication::quit();   
+    else
+        QWidget::keyPressEvent(event);
+}
+
 MainWindow::~MainWindow() { }

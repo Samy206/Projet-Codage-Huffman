@@ -30,7 +30,7 @@ int Decryptage::calcul_taille_max(std::map <char,std::string> encod_map) {
 };
 
 /**
- * @brief Algorithme de décryptage 
+ * @brief Algorithme de décryptage
  * 
  * - Pour vérifier que le texte crypté correspond bien à la map de l'encodage : 
  *      On récupère la taille de l'encodage maximal de la map
@@ -90,11 +90,8 @@ void Decryptage::decrypte_map()  {
 };
 
 
-void Decryptage::decrypte_arbre()
-{
-
+int Decryptage::decrypte_arbre()  {
     //std::string current_s; // Stocke les caractères lus dans @crypted tant qu'une lettre n'est pas reconnue
-    std::string decrypted; // String résultat du décryptage
     Sommet * current = arbre_huffman.getRacine();
     for(char c: crypted)
     {
@@ -103,7 +100,7 @@ void Decryptage::decrypte_arbre()
             if(current->filsd == NULL)
             {
                 cout << "\033[1;31mErreur lors de l'exécution de l'algorithme de décryptage\033[00m" << std::endl;
-                return;
+                return -1;
             }
             current = current->filsd;
             if(current->lettre != ' ')
@@ -119,7 +116,7 @@ void Decryptage::decrypte_arbre()
             if(current->filsg == NULL)
             {
                 cout << "\033[1;31mErreur lors de l'exécution de l'algorithme de décryptage\033[00m" << std::endl;
-                return;
+                return -1;
             }
             current = current->filsg;
             if(current->lettre != ' ')
@@ -134,7 +131,7 @@ void Decryptage::decrypte_arbre()
             if(current->lettre != ' ')
             {
                 cout << "\033[1;31mErreur lors de l'exécution de l'algorithme de décryptage\033[00m" << std::endl;
-                return;
+                return -1;
             }
 
             else
@@ -146,12 +143,11 @@ void Decryptage::decrypte_arbre()
 
     if(current != arbre_huffman.getRacine())
     {
-        cout << "\033[1;31mErreur lors de l'exécution de l'algorithme de décryptage, l'arbre ne correspond donc pas au texte\033[00m" << std::endl;
-        return;
+        // cout << "\033[1;31mErreur lors de l'exécution de l'algorithme de décryptage, l'arbre ne correspond donc pas au texte\033[00m" << std::endl;
+        return -1;
     }
 
-    else
-    {
+    else  {
         Lecteur l;
         l.lecture(decrypted);
         vector<char> lettres = l.getLettres();
@@ -163,17 +159,17 @@ void Decryptage::decrypte_arbre()
         {
 
             comparateur = arbre_huffman.get_occ_sommet(arbre_huffman.getRacine(),lettres[i]);
-            if(comparateur != occurences[i])
-            {
-                 std::cout <<"\033[1;37m> Le texte n'a pas été codé par la partie 2, mais l'arbre fourni peut effectivement servir à décoder ce texte.\n> Résultat : \033[0m"<<decrypted<<std::endl;
-                 return;
+            if(comparateur != occurences[i])  {
+                 // std::cout <<"\033[1;37m> Le texte n'a pas été codé par la partie 2, mais l'arbre fourni peut effectivement servir à décoder ce texte.\n> Résultat : \033[0m"<<decrypted<<std::endl;
+                 return 1;
             }
         }
-        std::cout <<"\033[1;37m> Le texte a peut-être été codé par la partie 2 mais on ne peut pas être sûrs.\n> Résultat : \033[0m"<<decrypted<<std::endl;
+        // std::cout <<"\033[1;37m> Le texte a peut-être été codé par la partie 2 mais on ne peut pas être sûrs.\n> Résultat : \033[0m"<<decrypted<<std::endl;
+        return 2;
     }
 };
 
-
+// faire une fonction pour print en fonction du code pour la partie cli
 
 Decryptage::~Decryptage()
 {

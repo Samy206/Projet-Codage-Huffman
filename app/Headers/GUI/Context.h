@@ -4,6 +4,7 @@
 #include "../Partie2/ArbreB.h"
 #include "../Partie2/Lecteur.h"
 #include "../Partie2/Cryptage.h"
+#include "../Partie2/Decryptage.h"
 #include <QtCore/QObject>
 
 /**
@@ -21,6 +22,9 @@ private:
     std::map <char,std::string> map_res; // Map des résultats encodés
     int zoom = 0; // Permet de zoomer lors de l'affichage
     ArbreB arbre_courant;
+
+    int decrypte_status; // Indicateur du résultat du décryptage
+    std::string decrypted;
 
     /**
      * @brief Constructeur de classe déclaré private, le getter d'instance sera public
@@ -70,6 +74,9 @@ public:
      */
     std::map <char,std::string> getMapRes() { return map_res; };
 
+    int getDecrypteStatus() { return decrypte_status; };
+    std::string getDecrypted() { return decrypted; };
+
     // Setters:
 
     /**
@@ -94,6 +101,8 @@ public:
      */
     void setText(std::string const& val);
 
+    void decrypteText(std::string const& val);
+
     /**
      * @brief Setter pour modifier le paramètre Zoom
      */
@@ -112,4 +121,6 @@ signals:
    void textEntered();
 
    void resultsArrived();
+
+   void textDecrypted();
 };

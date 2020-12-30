@@ -73,6 +73,15 @@ void Context::setText(std::string const& val)  {
     // else: Envoie signal de clear de Dessine arbre
 }
 
+void Context::decrypteText(std::string const& crypted)  {
+    Decryptage d(crypted, arbre_courant);
+    decrypte_status = d.decrypte_arbre();
+    if (decrypte_status > 0)
+        decrypted = d.getDecrypted();
+    
+    emit textDecrypted(); // Signal émis pour actualiser l'affichage du résultat 
+}
+
 /**
  * @brief Setter pour modifier le paramètre Zoom
  */
