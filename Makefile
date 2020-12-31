@@ -1,27 +1,9 @@
-ifneq ($(words $(MAKECMDGOALS)),1) # if no argument was given to make...
-.DEFAULT_GOAL = final # set the default goal to all
-
-%:                   # define a last resort default rule
-	@$(MAKE) $@ --no-print-directory -rRf $(firstword $(MAKEFILE_LIST)) # recursive make call, 
-else
-ifndef ECHO
-#  execute a dry run of make, defining echo beforehand, and count all the instances of "COUNTTHIS"
-T := $(shell $(MAKE) $(MAKECMDGOALS) --no-print-directory \
-         -nrRf $(firstword $(MAKEFILE_LIST)) \
-         ECHO="COUNTTHIS" | grep -c "COUNTTHIS")
-#  eval = evaluate the text and read the results as makefile commands
-N := x
-#  Recursively expand C for each instance of ECHO to count more x's
-C = $(words $N)$(eval N := x $N)
-#  Multipy the count of x's by 100, and divide by the count of "COUNTTHIS"
-#  Followed by a percent sign and wrap it all in square brackets
-ECHO = echo -ne "\r [`expr $C '*' 100 / $T`%]"
-endif
-
 OUT_DIR = target
 
-final: gui
-	@$(ECHO) Fin d'exécution
+final: # gui
+	@cmake app/CMakeLists.txt
+	@cd app; make
+	./app/Partie3Cryptage
 
 # Execution en CLI (Affichage sur terminal)
 cli: compil
@@ -32,14 +14,10 @@ debug: compil
 	valgrind ./${OUT_DIR}/TestArbre
 
 # Execution en GUI (Interface graphique Qt)
-# @echo "Compilation graphique en cours.. L'opération peut prendre jusqu'à 15 secondes."
 gui: 
-	@$(ECHO) Préparation de la compilation graphique..  
-	@qmake -makefile -o QMakefile app/Partie2Cryptage.pro 
-	@$(ECHO) Compilation graphique en cours.. L'opération peut prendre jusqu'à 15 secondes. 
-	@make -f QMakefile > /dev/null
-	@$(ECHO) Exécution 
-	@./Partie2Cryptage
+	@qmake -makefile -o QMakefile app/Partie3Cryptage.pro 
+	make -f QMakefile
+	@./Partie3Cryptage
 
 # Listing des fichiers
 listing:
@@ -78,14 +56,16 @@ ${OUT_DIR}/Decryptage.o: app/Sources/Partie2/Decryptage.cc app/Headers/Partie2/D
 ${OUT_DIR}:
 	mkdir -p ${OUT_DIR}
 
+# @rm -f QMakefile
+# @rm -f moc_*
 clean:
-	rm -f *.o
-	rm -f qrc_style.cpp
-	rm -f Partie2Cryptage
-	rm -f QMakefile
-	rm -rf ${OUT_DIR}
-	rm -rf doc/
-	rm -f moc_*
-
-#----- Progressbar endif at end Makefile
-endif
+	@rm -f qrc_style.cpp
+	@rm -f app/Partie3Cryptage
+	@rm -rf app/CMakeFiles
+	@rm -rf app/Partie3Cryptage_autogen/
+	@rm -f app/CMakeCache.txt
+	@rm -f app/cmake_install.cmake
+	@rm -f app/Makefile
+	@rm -f *.o
+	@rm -rf ${OUT_DIR}
+	@rm -rf doc/
