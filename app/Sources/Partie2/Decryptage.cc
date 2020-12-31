@@ -89,19 +89,35 @@ void Decryptage::decrypte_map()  {
     }
 };
 
-
+/**
+ * @brief Algorithme de décryptage avec un arbre
+ *
+ * - Pour vérifier que le texte crypté correspond bien à la map de l'encodage :
+ *      On se place à la racine de l'arbre
+ *      Pour chaque caractère qu'on lit :
+ *         Si c'est un 1 on va à droite dans l'arbre et on regarde si ce sommet correspond à une lettre,
+ *            si c'est le cas on l'ajoute dans la string nommée "decrypted" et on revient à la racine.
+ *            Sinon on continue à lire le texte
+ *         Si c'est un 0 on va à gauche et on applique le même traitement
+ *         Si c'est un caractère de ponctuation (';' | ',' | ' ') on vérifie bien qu'on est à la racine et qu'il
+ *            ne s'agit pas du premier caractère du texte (avec la variable marqueur qui passe de 0 à 1 dès qu'on
+ *            va à gauche ou à droite ) et si c'est le cas on ajoute donc la ponctuation au texte décrypté, sinon
+ *            on renvoie une valeur qui correspond à une erreur
+ *      À la fin si tout a bien été retranscrit on enregistre le texte, on ne renvoie pas de valeur associée à une erreur
+ *     et on conclue que le texte donné pourrait avoir été codé avec cet arbre.
+ */
 int Decryptage::decrypte_arbre()  {
-    //std::string current_s; // Stocke les caractères lus dans @crypted tant qu'une lettre n'est pas reconnue
     Sommet * current = arbre_huffman.getRacine();
+    int marqueur = 0;
     for(char c: crypted)
     {
         if(c == '1')
         {
+            marqueur = 1;
+
             if(current->filsd == NULL)
-            {
-                cout << "\033[1;31mErreur lors de l'exécution de l'algorithme de décryptage\033[00m" << std::endl;
                 return -1;
-            }
+
             current = current->filsd;
             if(current->lettre != ' ')
             {
@@ -113,11 +129,11 @@ int Decryptage::decrypte_arbre()  {
 
         else if(c == '0')
         {
+            marqueur = 1;
+
             if(current->filsg == NULL)
-            {
-                cout << "\033[1;31mErreur lors de l'exécution de l'algorithme de décryptage\033[00m" << std::endl;
                 return -1;
-            }
+
             current = current->filsg;
             if(current->lettre != ' ')
             {
@@ -128,13 +144,13 @@ int Decryptage::decrypte_arbre()  {
 
         else
         {
-            if(current->lettre != ' ')
+            if (current != arbre_huffman.getRacine() || marqueur == 0)
             {
                 cout << "\033[1;31mErreur lors de l'exécution de l'algorithme de décryptage\033[00m" << std::endl;
                 return -1;
             }
 
-            else
+            else if (current == arbre_huffman.getRacine() && marqueur == 1)
             {
                 decrypted += c;
             }
@@ -142,12 +158,10 @@ int Decryptage::decrypte_arbre()  {
     }
 
     if(current != arbre_huffman.getRacine())
-    {
-        // cout << "\033[1;31mErreur lors de l'exécution de l'algorithme de décryptage, l'arbre ne correspond donc pas au texte\033[00m" << std::endl;
         return -1;
-    }
 
-    else  {
+    else
+    {
         Lecteur l;
         l.lecture(decrypted);
         vector<char> lettres = l.getLettres();
@@ -159,17 +173,17 @@ int Decryptage::decrypte_arbre()  {
         {
 
             comparateur = arbre_huffman.get_occ_sommet(arbre_huffman.getRacine(),lettres[i]);
-            if(comparateur != occurences[i])  {
-                 // std::cout <<"\033[1;37m> Le texte n'a pas été codé par la partie 2, mais l'arbre fourni peut effectivement servir à décoder ce texte.\n> Résultat : \033[0m"<<decrypted<<std::endl;
+            if(comparateur != occurences[i])
                  return 1;
-            }
+
         }
-        // std::cout <<"\033[1;37m> Le texte a peut-être été codé par la partie 2 mais on ne peut pas être sûrs.\n> Résultat : \033[0m"<<decrypted<<std::endl;
         return 2;
     }
 };
 
-// faire une fonction pour print en fonction du code pour la partie cli
+/**
+ * @brief fonction qui affiche le résultat de la méthode précédente selon la valeur qui est retournée par cette dernière
+ */
 void Decryptage::speakerine(int status)  {
     switch (status)  {
         case -1:
@@ -187,6 +201,10 @@ void Decryptage::speakerine(int status)  {
        
 };
 
+/**
+ * @brief destructeur de la classe qui se contente d'effacer et de free (automatiquement) le contenu de la map
+ * d'encodage
+ */
 Decryptage::~Decryptage()  {
     encod_map.erase(encod_map.begin(),encod_map.end());
 };
