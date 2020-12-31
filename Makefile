@@ -1,6 +1,27 @@
+ifneq ($(words $(MAKECMDGOALS)),1) # if no argument was given to make...
+.DEFAULT_GOAL = final # set the default goal to all
+
+%:                   # define a last resort default rule
+	@$(MAKE) $@ --no-print-directory -rRf $(firstword $(MAKEFILE_LIST)) # recursive make call, 
+else
+ifndef ECHO
+#  execute a dry run of make, defining echo beforehand, and count all the instances of "COUNTTHIS"
+T := $(shell $(MAKE) $(MAKECMDGOALS) --no-print-directory \
+         -nrRf $(firstword $(MAKEFILE_LIST)) \
+         ECHO="COUNTTHIS" | grep -c "COUNTTHIS")
+#  eval = evaluate the text and read the results as makefile commands
+N := x
+#  Recursively expand C for each instance of ECHO to count more x's
+C = $(words $N)$(eval N := x $N)
+#  Multipy the count of x's by 100, and divide by the count of "COUNTTHIS"
+#  Followed by a percent sign and wrap it all in square brackets
+ECHO = echo -ne "\r [`expr $C '*' 100 / $T`%]"
+endif
+
 OUT_DIR = target
 
 final: gui
+	@$(ECHO) Fin d'exécution
 
 # Execution en CLI (Affichage sur terminal)
 cli: compil
@@ -11,9 +32,14 @@ debug: compil
 	valgrind ./${OUT_DIR}/TestArbre
 
 # Execution en GUI (Interface graphique Qt)
+# @echo "Compilation graphique en cours.. L'opération peut prendre jusqu'à 15 secondes."
 gui: 
-	@qmake -project -Wnone -o QMakefile app/Partie2Cryptage.pro > /dev/null
-	@./script.sh
+	@$(ECHO) Préparation de la compilation graphique..  
+	@qmake -makefile -o QMakefile app/Partie2Cryptage.pro 
+	@$(ECHO) Compilation graphique en cours.. L'opération peut prendre jusqu'à 15 secondes. 
+	@make -f QMakefile > /dev/null
+	@$(ECHO) Exécution 
+	@./Partie2Cryptage
 
 # Listing des fichiers
 listing:
@@ -60,3 +86,6 @@ clean:
 	rm -rf ${OUT_DIR}
 	rm -rf doc/
 	rm -f moc_*
+
+#----- Progressbar endif at end Makefile
+endif

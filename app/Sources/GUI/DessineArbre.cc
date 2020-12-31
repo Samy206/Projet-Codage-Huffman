@@ -167,7 +167,7 @@ void DessineArbre::paint_tree_scales(Sommet *racine, int x , int *y, int k, QPai
 /**
  * Déclenche l'évènement "dessin" à l'exécution du programme 
  */  
-void DessineArbre::paintEvent(QPaintEvent *e) {
+void DessineArbre::paintEvent(QPaintEvent *) {
     QPainter paint(this);
     QPen pen(Qt::white, 2);
     paint.setPen(pen);
