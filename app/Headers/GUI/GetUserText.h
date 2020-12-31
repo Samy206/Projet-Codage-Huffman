@@ -8,13 +8,9 @@
 #include <QLineEdit>
 #include <QPushButton>
 #include <QLabel>
+#include <QRegularExpression>
 #include <iostream>
 
-#include <QDebug>
-#include <QRegularExpression>
-#include <QValidator>
-
-// #include "../Partie2/Decryptage.h"
 
 /**
  * @file GetUserText.h
@@ -36,6 +32,7 @@ private:
     QLabel* wP3; // Titre pour séparation
     QLineEdit *input_cry; // Input pour le texte crypté
     QLabel *decode_result; // Résultat pour le décryptage
+    QPushButton *bRealTxt;
 
 public:
     /**
@@ -57,6 +54,8 @@ public slots:
     void textEntered();
 
     void checkChange(const QString &);
+
+    void useReal();
 
     void textDecrypted();
 

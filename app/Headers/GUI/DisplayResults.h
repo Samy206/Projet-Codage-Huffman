@@ -24,6 +24,7 @@ private :
     QLabel *results;
     QLabel *signature;
     QVBoxLayout *layout;
+    int max_h; // Utile pour resize la ScrollArea pour afficher le texte 
 
     std::map <char,std::string> map_res;
 
@@ -37,11 +38,13 @@ public :
 
         map_res = Context::getInstance().getMapRes();
         std::string tmp = "<center><b>Résultats de l'encodage</b></center><br></br>";
+        max_h = 3;
         for (std::pair <char,std::string> p : map_res) {
             tmp += p.first;
             tmp += " : ";
             tmp += p.second;
             tmp += "<br></br>";
+            max_h += 1;
         }
 
         // QLabel pour afficher les résultats
@@ -78,11 +81,13 @@ public slots:
         map_res = Context::getInstance().getMapRes();
         if (map_res.size() > 0)  {
             tmp = "<center><b>Résultats de l'encodage</b></center><br></br>";
+            max_h = 3;
             for (std::pair <char,std::string> p : map_res) {
                 tmp += p.first;
                 tmp += " : ";
                 tmp += p.second;
                 tmp += "<br></br>";
+                max_h += 1;
             }
         }
         else
@@ -90,7 +95,11 @@ public slots:
         
 
         // On actualise l'affichage du texte 
-        results->setText(QString::fromStdString(tmp));
+        QString tmp2 = QString::fromStdString(tmp);
+
+        this->resize(300, max_h*40);
+        results->setText(tmp2);
+        
     };
 
 signals: 

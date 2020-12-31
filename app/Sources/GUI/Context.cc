@@ -6,7 +6,7 @@
 Context::Context()  {
     // On initie le contexte avec le texte fourni initialement
     // std::ifstream myfile("Texte.txt");
-    setText("Bienvenue sur notre partie 2 !");
+    setText("elbow below");
 }
 
 // Setters:

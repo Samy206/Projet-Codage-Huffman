@@ -58,7 +58,7 @@ GetUserText::GetUserText()
     // input_cry->setValidator(validator);
     input_cry->setPlaceholderText("Saisissez ici le texte à décoder");
     input_cry->show();
-    layout->addWidget(input_cry, 4, 0, 1, 3); // Cinquieme de la grille de menu à gauche
+    layout->addWidget(input_cry, 4, 0, 1, 2); // Cinquieme de la grille de menu à gauche
 
     connect(input_cry, SIGNAL(textChanged(QString)), this, SLOT(checkChange(const QString&)));
 
@@ -66,6 +66,12 @@ GetUserText::GetUserText()
     decode_result->setWordWrap(true); // Retour à la ligne si le texte est trop long
     decode_result->show();
     layout->addWidget(decode_result, 5, 0, 1, 3); // Sixieme de la grille de menu 
+
+    // Utiliser le bon texte codé
+    bRealTxt = new QPushButton("Utiliser le Texte codé", this);
+    bRealTxt->show();
+    layout->addWidget(bRealTxt, 4, 2);
+    connect(bRealTxt, SIGNAL(clicked()), this, SLOT(useReal()));
 }
 
 GetUserText::~GetUserText() { }
@@ -103,7 +109,10 @@ void GetUserText::zoomed()  {
 }
 
 void GetUserText::checkChange(const QString & text)  {
-    QRegularExpression regex("^[0-1]+$");
+    if (text.isEmpty())
+        return;
+    // QRegularExpression regex("^[0-1]+$"); // ' ' && contenu[i] != ';' && contenu[i] != ',' && contenu[i] != '.'
+    QRegularExpression regex("^(1|0| |'|,|;)+$");
     QRegularExpressionMatch match = regex.match(text);
     if (!match.hasMatch()) 
         decode_result->setText("<font color='red'>L'expression à décoder doit contenir uniquement des 0 ou des 1.</font>");
@@ -113,6 +122,12 @@ void GetUserText::checkChange(const QString & text)  {
         // Envoyer au contexte pour décryptage  
         Context::getInstance().decrypteText(text.toStdString());
     }
+}
+
+void GetUserText::useReal()  {
+    QString crypted = QString::fromStdString(Context::getInstance().getResult());
+    input_cry->setText(crypted);
+    checkChange(crypted);
 }
 
 void GetUserText::textDecrypted()  {

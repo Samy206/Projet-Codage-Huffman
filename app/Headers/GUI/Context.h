@@ -6,6 +6,7 @@
 #include "../Partie2/Cryptage.h"
 #include "../Partie2/Decryptage.h"
 #include <QtCore/QObject>
+#include <QDebug>
 
 /**
  * @file Context.h 
