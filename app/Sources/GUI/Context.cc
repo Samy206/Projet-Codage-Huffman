@@ -42,9 +42,8 @@ void Context::setText(std::ifstream & file)  {
 }
 
 /**
- * @brief Setter pour modifier le texte en entrée à partir d'une string (après action de l'utilisateur)
- * 
- * On émet le signal textEntered() pour activer la suite du processus d'actualisation
+ * @brief Appelle les classes Lecteur et Cryptage Setter pour modifier le texte en entrée à partir d'une string (après action de l'utilisateur)
+ * On émet le signal textCrypted() pour activer la suite du processus d'actualisation
  * @param string
  */
 void Context::setText(std::string const& val)  {
@@ -61,7 +60,7 @@ void Context::setText(std::string const& val)  {
     map_res = cr.get_map();
 
     // Signal émis l'actualisation de l'affichage texte
-    emit textEntered();
+    emit textCrypted();
     emit resultsArrived();
 
     // On envoie l'arbre seulement s'il existe
@@ -73,6 +72,10 @@ void Context::setText(std::string const& val)  {
     // else: Envoie signal de clear de Dessine arbre
 }
 
+/**
+ * @brief Appelle la classe Decryptage pour décrypter le texte entré par l'utilisateur et stocke le résultat dans decrypte_status. 
+ *        Emet le signal textDecrypted() une fois que c'est fait.
+ */
 void Context::decrypteText(std::string const& crypted)  {
     Decryptage d(crypted, arbre_courant);
     decrypte_status = d.decrypte_arbre();

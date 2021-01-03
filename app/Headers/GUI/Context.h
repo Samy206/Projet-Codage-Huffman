@@ -97,11 +97,15 @@ public:
     /**
      * @brief Setter pour modifier le texte en entrée à partir d'une string (après action de l'utilisateur)
      * 
-     * On émet le signal textEntered() pour activer la suite du processus d'actualisation
+     * On émet le signal textCrypted() pour activer la suite du processus d'actualisation
      * @param string
      */
     void setText(std::string const& val);
 
+    /**
+     * @brief Appelle la classe Decryptage pour décrypter le texte entré par l'utilisateur et stocke le résultat dans decrypte_status. 
+     *        Emet le signal textDecrypted() une fois que c'est fait.
+     */
     void decrypteText(std::string const& val);
 
     /**
@@ -114,14 +118,22 @@ public slots:
 
 signals:
     /**
-     * @brief Emitted when the arbre changed
-     *
+     * @brief Signal émis à DessineArbre quand le nouvel arbre est construit
      */
-   void arbreChanged();
+    void arbreChanged();
 
-   void textEntered();
+    /**
+     * @brief Signal émis à GetUserText quand le texte clair est crypté
+     */ 
+    void textCrypted();
 
-   void resultsArrived();
+    /**
+     * @brief Signal émis à GetUserText quand le texte entré est décrypté
+     */ 
+    void textDecrypted();
 
-   void textDecrypted();
+    /**
+     * @brief Signal émis à DisplayResults quand la map des résultats est chargée
+     */ 
+    void resultsArrived();
 };
