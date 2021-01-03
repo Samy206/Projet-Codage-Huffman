@@ -56,7 +56,7 @@ public :
 
         layout->addSpacing(40);
         // QLabel signature
-        signature = new QLabel("<center><b>Projet LA - Partie 2</b><br></br>Samy BOUMALI & Amine ATEK</center>");
+        signature = new QLabel("<center><b>Projet LA - Partie 3</b><br></br>Samy BOUMALI & Amine ATEK</center>");
         signature->show();
         layout->addWidget(signature,Qt::AlignBottom);
 

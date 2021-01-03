@@ -1,4 +1,4 @@
-#include "../../Headers/Partie2/Lecteur.h"
+#include "../../Headers/Projet/Lecteur.h"
 using namespace std;
 
 /**

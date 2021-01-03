@@ -8,7 +8,7 @@
 
 /**
  * @file graphicMain.cc
- * @brief Partie 2 : Constitue la fonction main lors de l'exécution graphique pour le Cryptage, charge le thème et l'interface graphique.
+ * @brief Partie 3 : Constitue la fonction main lors de l'exécution graphique pour le Cryptage et le Decryptage, charge le thème et l'interface graphique.
  */
 int main(int argc, char* argv[])
 {

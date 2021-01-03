@@ -1,13 +1,13 @@
-#include "../../Headers/Partie2/ArbreB.h"
-#include "../../Headers/Partie2/Lecteur.h"
-#include "../../Headers/Partie2/Cryptage.h"
-
-#include "../../Headers/Partie2/Decryptage.h"
+#include "../../Headers/Projet/ArbreB.h"
+#include "../../Headers/Projet/Lecteur.h"
+#include "../../Headers/Projet/Cryptage.h"
+#include "../../Headers/Projet/Decryptage.h"
 using namespace std;
 /**
  * @file TestArbre.cc
- * @brief Partie 2 : Constitue la fonction main lors de l'exécution sans interface graphique pour le Cryptage.
+ * @brief Partie 3 : Constitue la fonction main lors de l'exécution sans interface graphique pour le Cryptage et le Decryptage.
  * Construit l'arbre de cryptage du texte lu depuis le fichier text.txt puis l'encode selon l'algorithme de Huffman. 
+ * Trois exemples de décryptages sont ensuite effectués pour tester la méthode.
  */
 int main(int argc, char* argv[]) {
     std::cout << "\033[1;33mProjet LA - Cryptage et décryptage | Samy BOUMALI & Amine ATEK\033[0m - Exécution CLI\n" << std::endl;

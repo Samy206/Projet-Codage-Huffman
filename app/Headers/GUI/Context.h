@@ -1,17 +1,16 @@
 #pragma once
 
-#include "../Partie2/Sommet.h"
-#include "../Partie2/ArbreB.h"
-#include "../Partie2/Lecteur.h"
-#include "../Partie2/Cryptage.h"
-#include "../Partie2/Decryptage.h"
+#include "../Projet/Sommet.h"
+#include "../Projet/ArbreB.h"
+#include "../Projet/Lecteur.h"
+#include "../Projet/Cryptage.h"
+#include "../Projet/Decryptage.h"
 #include <QtCore/QObject>
-#include <QDebug>
 
 /**
  * @file Context.h 
  * @brief Classe Singleton servant de contexte principal de l'application: 
- * Instance gérant l'arbre courant, les textes en entrées et sorties, ainsi que quelques options pour lier les classes ArbreB et Cryptage à l'interface MainWindow.
+ * Instance gérant l'arbre courant, les textes en entrées et sorties, ainsi que quelques options pour lier les classes ArbreB, Cryptage et Decryptage à l'interface MainWindow.
  */
 class Context : public QObject {
 

@@ -1,12 +1,9 @@
 #ifndef DESSINEARBRE_H
 #define DESSINEARBRE_H
 
-#include "../Partie2/ArbreB.h"
 #include "Context.h"
 
 #include <QMainWindow>
-#include <QScrollArea>
-
 #include <QtGui/QPainter>
 #include <QtGui/QPaintDevice>
 

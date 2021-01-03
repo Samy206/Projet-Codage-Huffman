@@ -104,7 +104,7 @@ void GetUserText::checkChangeDecrypte(const QString & text)  {
     if (text.isEmpty())
         return;
     // QRegularExpression regex("^[0-1]+$"); 
-    QRegularExpression regex("^(1|0| |.|,|;)+$");
+    QRegularExpression regex("^(1|0| |,|;)+$");
     QRegularExpressionMatch match = regex.match(text);
     if (!match.hasMatch()) 
         texte_decrypte->setText("<font color='red'>L'expression à décoder doit contenir uniquement des 0 ou des 1.</font>");
