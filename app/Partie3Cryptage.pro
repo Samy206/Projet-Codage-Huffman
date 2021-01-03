@@ -6,11 +6,11 @@ RESOURCES += qdarkstyle/style.qrc
 QT = core gui widgets
 
 HEADERS = \
-   $$PWD/Headers/Partie2/Sommet.h \
-   $$PWD/Headers/Partie2/ArbreB.h \
-   $$PWD/Headers/Partie2/Lecteur.h \
-   $$PWD/Headers/Partie2/Cryptage.h \
-   $$PWD/Headers/Partie2/Decryptage.h \
+   $$PWD/Headers/Projet/Sommet.h \
+   $$PWD/Headers/Projet/ArbreB.h \
+   $$PWD/Headers/Projet/Lecteur.h \
+   $$PWD/Headers/Projet/Cryptage.h \
+   $$PWD/Headers/Projet/Decryptage.h \
    $$PWD/Headers/GUI/DessineArbre.h \
    $$PWD/Headers/GUI/MainWindow.h \
    $$PWD/Headers/GUI/GetUserText.h \
@@ -18,11 +18,11 @@ HEADERS = \
    $$PWD/Headers/GUI/Context.h 
 
 SOURCES = \
-   $$PWD/Sources/Partie2/Sommet.cc \
-   $$PWD/Sources/Partie2/ArbreB.cc \
-   $$PWD/Sources/Partie2/Lecteur.cc \
-   $$PWD/Sources/Partie2/Cryptage.cc \
-   $$PWD/Sources/Partie2/Decryptage.cc \
+   $$PWD/Sources/Projet/Sommet.cc \
+   $$PWD/Sources/Projet/ArbreB.cc \
+   $$PWD/Sources/Projet/Lecteur.cc \
+   $$PWD/Sources/Projet/Cryptage.cc \
+   $$PWD/Sources/Projet/Decryptage.cc \
    $$PWD/Sources/GUI/DessineArbre.cc \
    $$PWD/Sources/GUI/MainWindow.cc \
    $$PWD/Sources/GUI/GetUserText.cc \
